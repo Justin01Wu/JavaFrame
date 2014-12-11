@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+	
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>		
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/test</property>		
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password">tun21gle</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+		<property name="hibernate.show_sql">true</property>		
+		
+		<property name="hibernate.hbm2ddl.auto" >update</property> <!-- set to 'update' to enable -->
+		
+		<!-- xml set for an entity bean -->
+		<!-- 
+		<mapping resource="com/justin/test/hibernate/bean/Event.hbm.xml"></mapping>
+		 -->
+		 
+		 <!-- annotation set for an entity bean -->
+		<mapping class="com.justin.test.hibernate.bean._Base"></mapping>
+		<mapping class="com.justin.test.hibernate.bean.Event"></mapping>
+		
+		<mapping class="com.justin.test.hibernate.bean.Employee"></mapping>
+		<mapping class="com.justin.test.hibernate.bean.Department"></mapping>		
+		 <!-- 
+		<mapping class="com.justin.test.hibernate.bean.CategorizedItem"></mapping>	
+		<mapping class="com.justin.test.hibernate.bean.Category"></mapping>	
+		<mapping class="com.justin.test.hibernate.bean.Item"></mapping>	
+		 -->
+		
+		<event type="save-update">
+    		<listener class="com.justin.test.hibernate.SaveOrUpdateDateListener"/>
+    		<listener class="org.hibernate.event.def.DefaultSaveOrUpdateEventListener"/>
+		</event>
+	</session-factory>
+</hibernate-configuration>

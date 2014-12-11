@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+	
+<!--  this config is designed for unit testing, it will overwrite product config -->
+	
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.connection.driver_class">org.h2.Driver</property>
+		
+		<property name="hibernate.connection.url">jdbc:h2:mem:mytest</property>
+		<!--  connect to a in memory database, because of H2 feature, you don't need to install db sever or create db before do this -->
+		
+		<property name="hibernate.connection.username">sa</property>
+		<property name="hibernate.connection.password"></property>
+		<property name="hibernate.default_schema">PUBLIC</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.H2Dialect</property>
+		<property name="hibernate.show_sql">true</property>		
+		
+		<property name="hibernate.hbm2ddl.auto" >update</property> <!-- set to 'update' to enable -->
+		
+		<!-- xml set for an entity bean -->
+		<!-- 
+		<mapping resource="com/justin/test/hibernate/bean/Event.hbm.xml"></mapping>
+		 -->
+		 
+		 <!-- annotation set for an entity bean -->
+		<mapping class="com.justin.test.hibernate.bean._Base"></mapping>
+		<mapping class="com.justin.test.hibernate.bean.Event"></mapping>
+		
+		<mapping class="com.justin.test.hibernate.bean.Employee"></mapping>
+		<mapping class="com.justin.test.hibernate.bean.Department"></mapping>		
+		 <!-- 
+		<mapping class="com.justin.test.hibernate.bean.CategorizedItem"></mapping>	
+		<mapping class="com.justin.test.hibernate.bean.Category"></mapping>	
+		<mapping class="com.justin.test.hibernate.bean.Item"></mapping>	
+		 -->
+		
+		<event type="save-update">
+    		<listener class="com.justin.test.hibernate.SaveOrUpdateDateListener"/>
+    		<listener class="org.hibernate.event.def.DefaultSaveOrUpdateEventListener"/>
+		</event>
+	</session-factory>
+</hibernate-configuration>
