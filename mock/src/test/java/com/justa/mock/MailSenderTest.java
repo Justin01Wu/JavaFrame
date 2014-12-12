@@ -52,7 +52,7 @@ public class MailSenderTest {
 	    this.wiser.stop();
 	}
 
-	@Test
+	//@Test
 	public void testGmail() throws AddressException, MessagingException {
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
