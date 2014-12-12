@@ -8,10 +8,11 @@ public class ProgramVo {
 	
 	private Integer id  = 34; 	
 	private String name; 	
+	private JSFUtil jsfUtils;
 	
 	public ProgramVo(){
 		new JSFUtil().getInstance();
-		JSFUtil.getCurrentInstance();
+		jsfUtils = JSFUtil.getCurrentInstance();
 	}
 
 	public Integer getId() {
@@ -31,6 +32,10 @@ public class ProgramVo {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getDisplayName() {
+		return jsfUtils.getName();
 	}
 
 }

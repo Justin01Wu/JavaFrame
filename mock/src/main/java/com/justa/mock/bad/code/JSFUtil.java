@@ -16,5 +16,10 @@ public class JSFUtil {
 	public JSFUtil getInstance() {
 		throw new RuntimeException("can't call it.");
 	}
+	
+	public String getName() {
+		throw new RuntimeException("can't call it.");
+	}
+	
 
 }

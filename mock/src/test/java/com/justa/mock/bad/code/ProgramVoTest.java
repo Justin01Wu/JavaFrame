@@ -1,10 +1,14 @@
 package com.justa.mock.bad.code;
 
 import static org.junit.Assert.assertEquals;
+import mockit.Deencapsulation;
+import mockit.Invocation;
 import mockit.Mock;
 import mockit.MockUp;
 
 import org.junit.Test;
+
+import com.justa.mock.bad.code.JSFUtilTest.JSFUtilMock;
 
 //it comes from http://jmockit.googlecode.com/svn/trunk/www/tutorial/StateBasedTesting.html
 public final class ProgramVoTest {
@@ -18,8 +22,16 @@ public final class ProgramVoTest {
 		}   
 		
 		@Mock(invocations = 1)
-		void $init() {   // this line means we mock constructor ProgramVo(){}
+		void $init(Invocation inv) {   // this line means we mock constructor ProgramVo(){}
 			System.out.println("default constructor is bypassed");
+			ProgramVo programVo = inv.getInvokedInstance();
+			System.out.println("   ProgramVo ->  going to inject mocked jSFUtil");
+			
+			new JSFUtilMock();  // start mock magic 
+			JSFUtil jSFUtil = new JSFUtil();
+	        Deencapsulation.setField( programVo, "jsfUtils", jSFUtil);
+	        System.out.println("   ProgramVo ->  injected jSFUtil");
+
 		}   
 		
 		@Mock
@@ -50,20 +62,14 @@ public final class ProgramVoTest {
 		
 		p.setName("dffg");
 		assertEquals(p.getName(), "name6789"); // why? because getName method is mocked, but setName is not mocked
+		assertEquals(p.getDisplayName(), "mocked name"); // why? because getDisplayName method is mocked in JSFUtilTest
 	}
 	
 	public class ProgramVo2 extends ProgramVo{
 		public ProgramVo2(){			
 		}
 	}
-//	
-//	@Test
-//	public void test2() {
-//		
-//		ProgramVo p = new ProgramVo2();
-//
-//		
-//	}
+
 
 }
 
