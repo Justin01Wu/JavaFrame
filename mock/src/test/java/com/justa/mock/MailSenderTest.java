@@ -17,6 +17,23 @@ import org.junit.Before;
 import org.junit.Test;
 import org.subethamail.wiser.Wiser;
 
+/** this will demo how to use Wiser to do email sending and receiving in unit test env <br/> 
+  Wiser is the best in-Memory smtp server<br/>
+  it is designed for unit test: 
+  <ul>   
+	<li>light weight</li>
+	<li>pure java</li>
+	<li>in memory</li>
+	<li>latest and most recently player in the area</li>
+	<li>fast</li>
+	<li>easy to use</li>
+ </ul>
+ For details, please see:  
+ <a href="http://www.javatronic.fr/articles/2014/02/15/a_smtp_server_in_java_for_unit_test.html"> here</a>
+
+
+ * 
+ * */
 public class MailSenderTest {
 
 	private Wiser wiser;
