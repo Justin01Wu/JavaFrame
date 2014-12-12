@@ -52,6 +52,8 @@ public class ProjectTest {
 
 	}
 
+// you can't mix 	NonStrictExpectations with extended MockUp ProgramVoMock, otherwise it will get weird exceptions 
+	
 //	@Mocked
 //	private ProgramVo programVoMock;
 //
