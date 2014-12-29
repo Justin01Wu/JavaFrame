@@ -37,4 +37,9 @@ public class SystemConfig implements SystemConfigMBean {
 	    	System.out.println("  ==>> doConfig is called");
 	        return "No of Threads="+this.threadCount+" and DB Schema Name="+this.schemaName;
 	    }
+	    
+	    public void stopApp(){
+	    	System.out.println("  ==>> setThreadCount to Zero to stop the app");
+	        this.threadCount=0;	    	
+	    }
 }

@@ -12,4 +12,6 @@ public interface SystemConfigMBean {
     // as attributes getter and setter methods, so I am 
     // using do* for operation.
     public String doConfig();
+    
+    public void stopApp();
 }

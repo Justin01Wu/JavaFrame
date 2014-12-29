@@ -9,6 +9,8 @@ import javax.management.ObjectName;
  * This is a sample of JMX bean 
  * it comes from
  * http://www.journaldev.com/1352/what-is-jmx-mbean-jconsole-tutorial
+ * 
+ * please use jconsole to connect this app and watch the registered mbean
  *
  */
 public class JmxApp {
@@ -19,12 +21,20 @@ public class JmxApp {
     public static void main(String[] args) throws Exception {
         
     	//Get the MBean server
-        MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
+        MBeanServer server = ManagementFactory.getPlatformMBeanServer();
         
         //register the MBean
         SystemConfig mBean = new SystemConfig(DEFAULT_THREAD_AMOUNT, DEFAULT_SCHEMA);
-        ObjectName name = new ObjectName("com.justa.jmx:type=SystemConfig");
-        mbs.registerMBean(mBean, name);
+        
+        String domain = "com.justa.jmx";  
+        String key = "type";
+        String value = "SystemConfig";
+        ObjectName objectName = new ObjectName(domain, key, value);
+		if(server.isRegistered(objectName)){
+			System.out.println("unregister old SystemConfig...");
+			server.unregisterMBean(objectName);
+		}
+		server.registerMBean(mBean, objectName);
         
         // in case jconsole have time to connect this mbean, we design an infinite loop 
     	boolean stop = false;
