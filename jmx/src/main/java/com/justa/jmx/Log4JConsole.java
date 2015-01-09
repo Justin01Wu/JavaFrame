@@ -8,84 +8,73 @@ public class Log4JConsole implements Log4JConsoleMBean{
 	
 	private static Logger log = Logger.getLogger(Log4JConsole.class);
 	
-	private Class<?> getClass(String classPath){
-		// classPath sample: com.validus.util.MessageLoggerTest
+	/**
+	 * loggerPath can be package name or class full path, for example:
+	 *   com.justa.jmx.JmxApp
+	 *   or com.justa.jmx
+	 */	
+	@Override
+	public String getClassOrPackageLevel(String loggerPath){	
 		
-		if(classPath == null || classPath.isEmpty()){
-			System.out.println("classPath is empty");
-			return null;
+		Logger logger = LogManager.getLogger(loggerPath); 
+		if( logger == null){
+			String  msg = "class or package not found: " + loggerPath;
+			log.info(msg);
+			return msg;
+		}
+		if(logger.getLevel() != null){
+			return "real level: " + logger.getLevel().toString();
+		}else{
+			return "inherited level: " + logger.getEffectiveLevel().toString();
 		}		
-		Class<?> clazz =  null;
-		try {
-			clazz  = Class.forName(classPath);
-		} catch (ClassNotFoundException e) {
-			return null;
-		}
-		return clazz;
-	}
-	
-	public String getAllLevels(){	
-		
-		Level level = Level.TRACE;
-		
-		StringBuilder sb = new StringBuilder();
-		sb.append(level.toString()).append(" :").append(level.toInt());
-		level = Level.DEBUG;
-		sb.append("\n\r  ").append(level.toString()).append(": ").append(level.toInt());
-		level = Level.INFO;
-		sb.append("\n\r  ").append(level.toString()).append(": ").append(level.toInt());
-		level = Level.WARN;
-		sb.append("\n\r  ").append(level.toString()).append(": ").append(level.toInt());
-		level = Level.ERROR;
-		sb.append("\n\r  ").append(level.toString()).append(": ").append(level.toInt());
-		level = Level.FATAL;
-		sb.append("\n\r  ").append(level.toString()).append(": ").append(level.toInt());
-		
-		return sb.toString();
 		
 	}
-	
-	@Override
-	public String getLevel(String classPath){	
-		
-		// classPath sample: com.validus.util.MessageLoggerTest
-		Class<?> clazz =  getClass(classPath);
-		if(clazz == null){
-			return "class not found:" + classPath;
-		}
-		
-		return LogManager.getLogger(clazz).getEffectiveLevel().toString();
-		
-	}
-	
-	@Override
-	public int getLevelInt(String classPath){
 
-		// classPath sample: com.validus.util.MessageLoggerTest
-		Class<?> clazz =  getClass(classPath);
-		if(clazz == null){
-			return -1;
-		}
-		
-		return LogManager.getLogger(clazz).getEffectiveLevel().toInt();
-		
-	}
-	
+	/**
+	 * loggerPath can be package name or class full path, for example:
+	 *   com.justa.jmx.JmxApp
+	 *   or com.justa.jmx
+	 *   levelStr :  must be one of TRACE, DEBUG, INFO, WARN, ERROR, FATAL
+	 */
 	@Override
-	public String setLevel(String classPath, int levelInt){
+	public String setClassOrPackageLevel(String loggerPath, String levelStr){
 		
-
-		// classPath sample: com.validus.util.MessageLoggerTest
-		Class<?> clazz =  getClass(classPath);
-		if(clazz == null){
-			return "class not found: " + classPath;
+		Logger logger = LogManager.getLogger(loggerPath); 
+		if(logger == null){
+			String  msg = "class or package not found: " + loggerPath;
+			log.info(msg);
+			return msg;
 		}
-		Level level  = Level.toLevel(levelInt);
 		
-		LogManager.getLogger(clazz).setLevel(level);
-		String msg =  String.format("successfully set level %s for %s", level, classPath);
+		if(levelStr == null){
+			return "ERROR: need level";
+		}
+		
+		Level level;
+		if(levelStr.equalsIgnoreCase("TRACE")){
+			level = Level.TRACE;
+		}else if(levelStr.equalsIgnoreCase("DEBUG")){
+			level = Level.DEBUG;
+		}else if(levelStr.equalsIgnoreCase("INFO")){
+			level = Level.INFO;
+		}else if(levelStr.equalsIgnoreCase("WARN")){
+			level = Level.WARN;
+		}else if(levelStr.equalsIgnoreCase("ERROR")){
+			level = Level.ERROR;
+		}else if(levelStr.equalsIgnoreCase("FATAL")){
+			level = Level.FATAL;
+		}else{
+			String  msg = "ERROR: incorrect level String, it must be one of TRACE, DEBUG, INFO, WARN, ERROR, FATAL";
+			log.info(msg);
+			return msg;
+		}
+		
+		logger.setLevel(level);
+
+		String msg =  String.format("successfully set level %s for %s", level, loggerPath);
 		log.info(msg);
 		return msg;
+
 		
 	}
 
