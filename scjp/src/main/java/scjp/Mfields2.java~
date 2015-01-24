@@ -1,0 +1,23 @@
+/*
+What will happen when you attempt to compile and run the following code?
+
+ 1) Compile time error
+ 2) Compilation and output fo 3.5
+ 3) Compilation and output of 3
+ 4) Compilation but no output at runtime
+
+ The answer is 1
+*/
+package scjp;
+
+class Base{
+    public int iAcres=3;
+}
+public class Mfields extends Base{
+    private int iAcres=3.5;
+        public static void main(String args[]){
+        Base mf = new Mfields();
+        System.out.println(mf.iAcres);
+    }
+}
+
