@@ -9,6 +9,8 @@
 
 package scjp.typesafe;
 
+import scjp.typesafe.Enums.LightState3;
+
 /**
  *
  * @author justinwu

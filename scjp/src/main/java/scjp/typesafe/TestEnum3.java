@@ -9,6 +9,8 @@
 
 package scjp.typesafe;
 
+import scjp.typesafe.Enums.LightState3;
+
 /**
  *
  * @author justinwu
@@ -16,7 +18,7 @@ package scjp.typesafe;
 public class TestEnum3 {
     
     public static void test() {
-        // this is enum sample(new feture of JDK 1.5)
+        // this is enum sample(new feature of JDK 1.5)
         TrafficLight3 nextTrafficLight3 =new TrafficLight3();
         nextTrafficLight3.setState(LightState3.GREEN);
         LightState3 state3=nextTrafficLight3.getState();
