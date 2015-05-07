@@ -16,7 +16,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import wu.justin.jdbc.Employee;
 import wu.justin.jdbc.old.EmployeeDAOImpl;
 
-public class EmployeeDAOTest {
+public class EmployeeDAOImplTest {
 
 	public static final String CreateTableStr = "CREATE TABLE Employee (ID INTEGER NOT NULL AUTO_INCREMENT,"
 			+ "NAME VARCHAR(100) NOT NULL,"

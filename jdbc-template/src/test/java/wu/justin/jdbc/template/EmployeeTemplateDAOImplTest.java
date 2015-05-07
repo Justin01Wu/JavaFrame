@@ -8,14 +8,14 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import wu.justin.jdbc.Employee;
-import wu.justin.jdbc.old.EmployeeDAOTest;
+import wu.justin.jdbc.old.EmployeeDAOImplTest;
 
 public class EmployeeTemplateDAOImplTest {
 
 	@BeforeClass
 	public static void globalSetUp() throws Exception {
 
-		EmployeeDAOTest.createEmployeeTable();
+		EmployeeDAOImplTest.createEmployeeTable();
 	}
 	
 	@Test
