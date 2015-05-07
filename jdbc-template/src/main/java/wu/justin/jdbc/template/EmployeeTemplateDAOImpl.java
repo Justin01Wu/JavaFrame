@@ -5,8 +5,9 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import wu.justin.jdbc.Employee;
+import wu.justin.jdbc.EmployeeDAO;
 
-public class EmployeeTemplateDAOImpl implements JDBCEmployeeDAO {
+public class EmployeeTemplateDAOImpl implements EmployeeDAO {
 
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
