@@ -30,6 +30,12 @@ public class EmployeeTemplateDAOImplTest {
 		
 		EmployeeDAOImpl employeeDAO = (EmployeeDAOImpl) context.getBean("employeeDAO");
 		Employee employee2 = employeeDAO.findById(123);
+		
+		assertEquals(employee2.getId(), employee1.getId());
+		assertEquals(employee2.getName(), employee1.getName());
+		assertEquals(employee2.getAge(), employee1.getAge());
+
+		
 		System.out.println(employee2);
 		context.close();
 	}

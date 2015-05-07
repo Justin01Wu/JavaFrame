@@ -1,5 +1,7 @@
 package wu.justin.jdbc.template;
 
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertEquals;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -50,6 +52,9 @@ public class EmployeeDAOTest {
 		Employee employee1 = new Employee(123, "Justin Wu", 30);
 		employeeDAO.insert(employee1);
 		Employee employee2 = employeeDAO.findById(123);
+		assertEquals(employee2.getId(), employee1.getId());
+		assertEquals(employee2.getName(), employee1.getName());
+		assertEquals(employee2.getAge(), employee1.getAge());
 		System.out.println(employee2);
 		context.close();
 	}
