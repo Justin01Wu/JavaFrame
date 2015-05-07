@@ -23,7 +23,7 @@ public class EmployeeDAOTest {
 		createEmployeeTable();
 	}
 
-	private static final void createEmployeeTable() throws ClassNotFoundException, SQLException {
+	public static final void createEmployeeTable() throws ClassNotFoundException, SQLException {
 
 		// load the driver class
 		Class.forName("org.h2.Driver");
