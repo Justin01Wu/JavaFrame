@@ -18,15 +18,11 @@ public class EmployeeTemplateDAOImpl implements EmployeeDAO {
 
 	public void insert(Employee employee) {
 
-		String sql = "INSERT INTO EMPLOYEE "
-				+ "(ID, NAME, AGE) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO EMPLOYEE (ID, NAME, AGE) VALUES (?, ?, ?)";
 
 		jdbcTemplate = new JdbcTemplate(dataSource);
 
-		jdbcTemplate.update(
-				sql,
-				new Object[] { employee.getId(), employee.getName(),
-						employee.getAge() });
+		jdbcTemplate.update(sql, employee.getId(), employee.getName(), employee.getAge());
 	}
 
 	public Employee findById(int id) {
@@ -34,8 +30,7 @@ public class EmployeeTemplateDAOImpl implements EmployeeDAO {
 		String sql = "SELECT * FROM EMPLOYEE WHERE ID = ?";
 
 		jdbcTemplate = new JdbcTemplate(dataSource);
-		Employee employee = (Employee) jdbcTemplate.queryForObject(sql,
-				new Object[] { id }, new EmployeeRowMapper());
+		Employee employee = (Employee) jdbcTemplate.queryForObject(sql,	new Object[] { id }, new EmployeeRowMapper());
 
 		return employee;
 	}
