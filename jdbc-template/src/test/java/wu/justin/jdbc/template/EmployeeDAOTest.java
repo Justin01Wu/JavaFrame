@@ -2,6 +2,7 @@ package wu.justin.jdbc.template;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,6 +12,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import wu.justin.jdbc.Employee;
+import wu.justin.jdbc.old.EmployeeDAOImpl;
 
 public class EmployeeDAOTest {
 

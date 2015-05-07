@@ -1,4 +1,5 @@
-package wu.justin.jdbc.template;
+package wu.justin.jdbc;
+
 
 public interface EmployeeDAO {
 

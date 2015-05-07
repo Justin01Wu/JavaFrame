@@ -5,6 +5,8 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
+import wu.justin.jdbc.Employee;
+
 public class EmployeeRowMapper implements RowMapper<Employee> {
 	
 	public Employee mapRow(ResultSet rs, int rowNum) throws SQLException {

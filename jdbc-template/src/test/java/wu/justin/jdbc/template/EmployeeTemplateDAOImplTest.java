@@ -7,6 +7,8 @@ import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import wu.justin.jdbc.Employee;
+
 public class EmployeeTemplateDAOImplTest {
 
 	@BeforeClass

@@ -1,4 +1,4 @@
-package wu.justin.jdbc.template;
+package wu.justin.jdbc;
 
 public class Employee {
 

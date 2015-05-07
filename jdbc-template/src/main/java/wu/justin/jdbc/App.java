@@ -1,7 +1,9 @@
-package wu.justin.jdbc.template;
+package wu.justin.jdbc;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import wu.justin.jdbc.old.EmployeeDAOImpl;
 
 public class App {
 

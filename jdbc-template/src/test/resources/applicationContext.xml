@@ -17,7 +17,7 @@
 	http://www.springframework.org/schema/task/spring-task-3.2.xsd">
 
 
-	<bean id="employeeDAO" class="wu.justin.jdbc.template.EmployeeDAOImpl">		
+	<bean id="employeeDAO" class="wu.justin.jdbc.old.EmployeeDAOImpl">		
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
