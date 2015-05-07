@@ -23,18 +23,15 @@ public class EmployeeTemplateDAOImplTest {
 
 		ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(
 				"applicationContext.xml");
-		EmployeeTemplateDAOImpl employeeTemplateDAO = (EmployeeTemplateDAOImpl) context.getBean("employeeTemplateDAO");
+		EmployeeTemplateDAOImpl employeeDAO = (EmployeeTemplateDAOImpl) context.getBean("employeeTemplateDAO");
 		Employee employee1 = new Employee(123, "Justin Wu", 30);
-		employeeTemplateDAO.insert(employee1);
+		employeeDAO.insert(employee1);
 		
-		
-		EmployeeDAOImpl employeeDAO = (EmployeeDAOImpl) context.getBean("employeeDAO");
 		Employee employee2 = employeeDAO.findById(123);
 		
 		assertEquals(employee2.getId(), employee1.getId());
 		assertEquals(employee2.getName(), employee1.getName());
 		assertEquals(employee2.getAge(), employee1.getAge());
-
 		
 		System.out.println(employee2);
 		context.close();

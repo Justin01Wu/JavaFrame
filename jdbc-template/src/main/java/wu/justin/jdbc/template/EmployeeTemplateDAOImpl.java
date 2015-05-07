@@ -20,8 +20,21 @@ public class EmployeeTemplateDAOImpl implements JDBCEmployeeDAO {
 
 		jdbcTemplate = new JdbcTemplate(dataSource);
 
-		jdbcTemplate.update(sql, new Object[] { employee.getId(), employee.getName(),
+		jdbcTemplate.update(
+				sql,
+				new Object[] { employee.getId(), employee.getName(),
 						employee.getAge() });
+	}
+
+	public Employee findById(int id) {
+
+		String sql = "SELECT * FROM EMPLOYEE WHERE ID = ?";
+
+		jdbcTemplate = new JdbcTemplate(dataSource);
+		Employee employee = (Employee) jdbcTemplate.queryForObject(sql,
+				new Object[] { id }, new EmployeeRowMapper());
+
+		return employee;
 	}
 
 }
