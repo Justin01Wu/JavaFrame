@@ -8,6 +8,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import wu.justin.jdbc.Employee;
+import wu.justin.jdbc.old.EmployeeDAOTest;
 
 public class EmployeeTemplateDAOImplTest {
 

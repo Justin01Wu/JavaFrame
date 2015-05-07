@@ -1,4 +1,4 @@
-package wu.justin.jdbc.template;
+package wu.justin.jdbc.old;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertEquals;
