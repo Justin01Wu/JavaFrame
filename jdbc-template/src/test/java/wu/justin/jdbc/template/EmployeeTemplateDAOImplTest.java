@@ -41,6 +41,27 @@ public class EmployeeTemplateDAOImplTest {
 		context.close();
 	}
 	
+	@Test
+	public void testCreate() {
+
+		// This example comes from
+		// http://www.tutorialspoint.com/spring/spring_jdbc_example.htm
+
+		ConfigurableApplicationContext context = new ClassPathXmlApplicationContext(
+				"applicationContext.xml");
+		EmployeeTemplateDAOImpl employeeDAO = (EmployeeTemplateDAOImpl) context.getBean("employeeTemplateDAO");
+
+		int pk = employeeDAO.create("no id", 34);
+		
+		Employee employee2 = employeeDAO.findById(pk);
+		
+		assertEquals(employee2.getName(), "no id");
+		assertEquals(employee2.getAge(), 34);
+		
+		System.out.println(employee2);
+		context.close();
+	}
+	
 	@Test(expected = DataIntegrityViolationException.class)
 	public void testInsertFailure() {
 
