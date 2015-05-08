@@ -15,11 +15,11 @@ public class EmployeeTemplateDAOImplTest {
 
 	@BeforeClass
 	public static void globalSetUp() throws Exception {
-
+		System.out.println("   =>> creating employee table...");
 		EmployeeDAOImplTest.createEmployeeTable();
 	}
 	
-	//@Test
+	@Test
 	public void testInsert() {
 
 		// This example comes from
@@ -46,7 +46,7 @@ public class EmployeeTemplateDAOImplTest {
 
 		ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 		EmployeeTemplateDAOImpl employeeDAO = (EmployeeTemplateDAOImpl) context.getBean("employeeTemplateDAO");
-		Employee employee1 = new Employee(123, "Justin Wu name is too long, Justin Wu name is too long", 30);
+		Employee employee1 = new Employee(456, "Justin Wu name is too long, Justin Wu name is too long", 30);
 		employeeDAO.insert(employee1);
 
 		context.close();
