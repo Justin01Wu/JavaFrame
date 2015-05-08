@@ -40,7 +40,7 @@ public class EmployeeDAOImplTest {
 
 		// connect to a in memory database, because of H2 feature, you don't
 		// need to install db sever or create db before do this
-		Connection con = DriverManager.getConnection("jdbc:h2:mem:mytest",	"sa", "");
+		con = DriverManager.getConnection("jdbc:h2:mem:mytest",	"sa", "");
 
 		// here you create the table
 		Statement sst = con.createStatement();
