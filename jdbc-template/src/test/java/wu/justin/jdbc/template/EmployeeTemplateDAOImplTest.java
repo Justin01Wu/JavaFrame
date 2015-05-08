@@ -1,11 +1,12 @@
 package wu.justin.jdbc.template;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import wu.justin.jdbc.Employee;
 import wu.justin.jdbc.old.EmployeeDAOImplTest;
@@ -18,7 +19,7 @@ public class EmployeeTemplateDAOImplTest {
 		EmployeeDAOImplTest.createEmployeeTable();
 	}
 	
-	@Test
+	//@Test
 	public void testInsert() {
 
 		// This example comes from
@@ -37,6 +38,17 @@ public class EmployeeTemplateDAOImplTest {
 		assertEquals(employee2.getAge(), employee1.getAge());
 		
 		System.out.println(employee2);
+		context.close();
+	}
+	
+	@Test(expected = DataIntegrityViolationException.class)
+	public void testInsertFailure() {
+
+		ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+		EmployeeTemplateDAOImpl employeeDAO = (EmployeeTemplateDAOImpl) context.getBean("employeeTemplateDAO");
+		Employee employee1 = new Employee(123, "Justin Wu name is too long, Justin Wu name is too long", 30);
+		employeeDAO.insert(employee1);
+
 		context.close();
 	}
 

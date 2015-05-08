@@ -19,7 +19,7 @@ import wu.justin.jdbc.old.EmployeeDAOImpl;
 public class EmployeeDAOImplTest {
 
 	public static final String CreateTableStr = "CREATE TABLE Employee (ID INTEGER NOT NULL AUTO_INCREMENT,"
-			+ "NAME VARCHAR(100) NOT NULL,"
+			+ "NAME VARCHAR(20) NOT NULL,"
 			+ "AGE INT(10) UNSIGNED NOT NULL,"
 			+ "PRIMARY KEY (ID)" + ")";
 
