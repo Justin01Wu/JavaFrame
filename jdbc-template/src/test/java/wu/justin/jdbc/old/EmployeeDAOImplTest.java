@@ -22,6 +22,10 @@ public class EmployeeDAOImplTest {
 			+ "NAME VARCHAR(20) NOT NULL,"
 			+ "AGE INT(10) UNSIGNED NOT NULL,"
 			+ "PRIMARY KEY (ID)" + ")";
+	
+	private static Connection con;   
+	// connect must keep as static because it is in memory database, 
+    // if connection is closed, then all tables will disappear
 
 	@BeforeClass
 	public static void globalSetUp() throws Exception {
@@ -36,12 +40,20 @@ public class EmployeeDAOImplTest {
 
 		// connect to a in memory database, because of H2 feature, you don't
 		// need to install db sever or create db before do this
-		Connection con = DriverManager.getConnection("jdbc:h2:mem:mytest",	"sa", "");
+		con = DriverManager.getConnection("jdbc:h2:mem:mytest",	"sa", "");
 
 		// here you create the table
 		Statement sst = con.createStatement();
 		sst.executeUpdate(CreateTableStr);
-
+		
+        con.commit();
+        System.out.println(  "    ===>>>    created employee table" );
+        
+        sst.close();        
+        
+        // can't close connection, because it is in memory database, 
+        // if connection is closed, then all tables will disappear
+        //con.close();
 	}
 
 	@Test
@@ -56,10 +68,12 @@ public class EmployeeDAOImplTest {
 		Employee employee1 = new Employee(123, "Justin Wu", 30);
 		employeeDAO.insert(employee1);
 		Employee employee2 = employeeDAO.findById(123);
+		
 		assertEquals(employee2.getId(), employee1.getId());
 		assertEquals(employee2.getName(), employee1.getName());
 		assertEquals(employee2.getAge(), employee1.getAge());
 		System.out.println(employee2);
+		
 		context.close();
 	}
 
