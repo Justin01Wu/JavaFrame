@@ -30,7 +30,7 @@ class MyStudent {
 }
 
 class MyDao {
-	public <T extends MyStudent> List<T> findAllStudentsBySchoold(Integer schoolId, Class<T> type) throws InstantiationException, IllegalAccessException {
+	public <T extends MyStudent> List<T> findAllStudentsBySchoolId(Integer schoolId, Class<T> type) throws InstantiationException, IllegalAccessException {
 		List<T> rows = new ArrayList<T>();
 		if(schoolId == null || schoolId <= 0){
 			return rows;
@@ -38,7 +38,7 @@ class MyDao {
 		
 		T student;
 		for(int i=1;i<=2;i++) {
-			student = type.newInstance();
+			student = type.newInstance();   // this line will call new MyStudent();
 			student.setId(i);
 			student.setName("name"+i);
 			rows.add(student);
@@ -56,9 +56,15 @@ public class GenericTest {
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException{
 		MyDao myDao = new MyDao();
 		
-		// List<MyStudent> students = myDao.findAllStudentsBySchoold(12, MyStudent2.class); this line will get compile error
-		List<MyStudent2> students = myDao.findAllStudentsBySchoold(12, MyStudent2.class);
-		for(MyStudent2 student: students){
+		// List<MyStudent> students = myDao.findAllStudentsBySchoolId(12, MyStudent2.class); this line will get compile error
+
+		List<MyStudent> students = myDao.findAllStudentsBySchoolId(12, MyStudent.class); 
+		for(MyStudent student: students){
+			System.out.println(student.toString());
+		}
+		
+		List<MyStudent2> student2s = myDao.findAllStudentsBySchoolId(12, MyStudent2.class);
+		for(MyStudent2 student: student2s){
 			System.out.println(student.toString());
 		}
 		
