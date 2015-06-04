@@ -56,7 +56,7 @@ public class GenericTest {
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException{
 		MyDao myDao = new MyDao();
 		
-		// List<MyStudent> students = myDao.findAllStudentsBySchoolId(12, MyStudent2.class); this line will get compile error
+		// List<MyStudent> students = myDao.findAllStudentsBySchoolId(12, MyStudent2.class); // this line will get compile error
 
 		List<MyStudent> students = myDao.findAllStudentsBySchoolId(12, MyStudent.class); 
 		for(MyStudent student: students){
