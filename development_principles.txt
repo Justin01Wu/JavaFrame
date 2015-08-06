@@ -1,0 +1,82 @@
+My development principles
+
+Must follow :
+
+	Name: Be Open to the Future
+	Statement: few thing is always correct, few thing is always wrong. Changing always happens, even for development principles list
+	
+	Name: Don’t reinvent wheels
+	Statement: Every common Tasks already exists somewhere. Most common VCAPS Tasks already exists somewhere, 
+		If you didn’t find it, please improve searching skills and search again
+
+	Name: code review
+	Statement: 	improve software quality, share knowledge
+	
+	Name: Evaluate 3rd party library, architecture, solution before use it
+	Statement: 
+
+	Name: Unit test on Complex code with few dependencies 
+	Statement: Typically this means self-contained algorithms for business rules or for things like sorting or parsing data. 
+		This cost-benefit argument goes strongly in favour of unit testing this code, because it’s cheap to do and highly beneficial.
+	It comes from http://blog.stevensanderson.com/2009/11/04/selective-unit-testing-costs-and-benefits/
+	
+	Name: design testability
+	Statement: from the beginning, you need to know how to make it easy to test your code	
+	
+	Name: Don't over design
+	Statement: don't design for the unclear future requirement, don't design for not measured performance tuning or non-critical performance
+		Keep It Simple: All design should be as simple as possible, but no simpler. 
+		This facilitates having a more easily understood, and easily maintained system. 
+		This is not to say that features, even internal features, should be discarded in the name of simplicity. 
+		Indeed, the more elegant designs are usually the more simple ones. Simple also does not mean "quick and dirty." 
+		In fact, it often takes a lot of thought and work over multiple iterations to simplify. 
+		The payoff is software that is more maintainable and less error-prone
+		
+	Name: control dependency
+	Statement: Good dependency looks like a tree, Bad dependency looks like a net
+
+	Name: refactoring when it is needed before it is too late
+	Statement: Refactoring should be done as a part of our every day workflow. Don’t wait for massive “big bang”  refactorings.
+
+	Name: improve readability
+	Statement: Any fool can write code that a computer can understand. Good programmers write code that humans can understand, 
+		It’s much more important to write code that will be easy to understand by other developer than just understood by a computer.
+		clarity enables performance, Some of you have heard that “Premature optimization is the root of all evil”.
+		Its easier to optimize clean code than to clean up "optimized" code
+		
+	Name: don't exposure implementation details
+	Statement: 
+
+	Name: try best to remove compile warning and running warning
+	Statement: warning sometimes means potential bugs or future bugs.
+	
+	Name: use @deprecated if a piece of code is deprecated
+	Statement: 	
+	
+	Name: proper logging level
+	Statement: 	when you are in troubleshooting, you will know how value the logging is
+		do not do over logging, logging is not for debugging. 
+		
+	Name: good enough documentation
+	Statement: 	
+	
+Nice to follow
+
+	Name: control size of the code
+	Statement: split it if it is too big, merge them if they are too small
+	
+	Name: defensible programming
+	Statement: 
+	
+	Name: Continuous Integration
+	Statement: 
+	
+	Name: Automated Integration testing
+	Statement: 
+	
+	Name: one line of code only does one thing
+	Statement: benefits:  improve readability, reduce troubleshooting difficulty
+	
+	Name: use TODO when refactoring is too big, too late (close to the release date), or too risk
+	Statement: 
+	

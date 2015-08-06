@@ -1,0 +1,28 @@
+(software tips)
+    search files with string DnfEDMLocationAccountMBean.class under a folder(include all jars) 
+	forfiles /S /M *.jar /C "cmd /c jar -tvf @file | findstr /C:"DnfEDMLocationAccountMBean.class" && echo @path"
+	
+	create a symbolic link for the folder:
+	mklink /J mylink C:\samples\javascript
+	
+	you can mock a static method without declare static in jmockit
+	Method modifiers (including public, final, and even static), however, don't have to be the same.
+	
+
+
+     // how to call a stored procedure with input and output parameter
+	 // 
+	//  ALTER PROCEDURE [sp_a]  	
+	//@ContractID int, @BudgetClass varchar(100) OUTPUT
+
+
+		//call sp_a to get some string	
+		String sql = "{CALL sp_a (?, ?)}";
+		CallableStatement cs = con.prepareCall(sql);
+	    cs.setInt(1, contract.getContractId());              // this is input value 
+	    cs.registerOutParameter(2, java.sql.Types.VARCHAR);  // this is return value
+	    cs.execute();
+	    String newBudgetClass = cs.getString(2);
+	    MessageLogger.log(MessageLogger.kLOGDEBUG, String.format("new BudgetClass of Contact %s is %s", contract.getContractId(), newBudgetClass));
+		
+		
