@@ -14,7 +14,7 @@
 		<class>com.justin.test.hibernate.bean.Category</class>
 		<class>com.justin.test.hibernate.bean.Item</class>
 		<class>com.justin.test.hibernate.bean.CategorizedItem</class>
-
+<!-- for my SQL
 		<properties>        	
 			<property name="connection.driver_class" value="com.mysql.jdbc.Driver" />
 			<property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/test" />
@@ -24,6 +24,20 @@
 			<property name="hibernate.connection.password" value ="tun21gle" />
 			<property name="hibernate.show_sql" value="true" />
 		</properties>
+-->		
+
+<!--  for SQL server -->
+		<properties>        	
+			<property name="connection.driver_class" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+			<property name="hibernate.connection.url" value="jdbc:sqlserver://CAVCDBDEV01:1433;databaseName=Justin_test" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect" />
+			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
+			<property name="hibernate.connection.username" value="vcapstest" />
+			<property name="hibernate.connection.password" value ="vcapstest" />
+			<property name="hibernate.show_sql" value="true" />
+		</properties>
+		
+		
 	</persistence-unit>
 
 </persistence>
