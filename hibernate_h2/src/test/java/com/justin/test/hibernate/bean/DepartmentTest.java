@@ -3,6 +3,10 @@ package com.justin.test.hibernate.bean;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -10,6 +14,7 @@ import javax.persistence.Persistence;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
+import org.hibernate.jdbc.Work;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -88,5 +93,40 @@ public class DepartmentTest {
 		entityManager.getTransaction().commit();
 
 	}
+	
+	
+	@Test 
+	public void testHibernateWork(){
+		
+		// from  https://www.informit.com/guides/content.aspx?g=java&seqNum=575
+		// and http://www.programcreek.com/java-api-examples/index.php?api=org.hibernate.jdbc.Work
+		
+		entityManager.getTransaction().begin();
+		org.hibernate.Session session = (Session) entityManager.getDelegate();
+		session.doWork(new Work(){		    
+		    public void execute(Connection conn) throws SQLException{
+		    	jdbcInsertDept(conn);
+		    }
+		  }
+		);
+		
+		entityManager.getTransaction().commit();
+		
+		System.out.println("done: insert department from WORK");
+	}
+	
+    private static void jdbcInsertDept( Connection conn) throws SQLException {    	
+    	
+    	
+    	System.out.println("insert department from WORK... ");
+    	
+    	String sql = "INSERT INTO department (ID, NAME) VALUES (?, ?)";
+		PreparedStatement ps = conn.prepareStatement(sql);
+		ps.setInt(1, 1234);
+		ps.setString(2, "from work");
+
+		ps.executeUpdate();
+      
+    }
 
 }
