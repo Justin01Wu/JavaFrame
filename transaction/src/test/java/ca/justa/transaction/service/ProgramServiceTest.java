@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import static org.junit.Assert.assertEquals;
 
 import ca.justa.transaction.bean.Program;
 
@@ -57,18 +58,16 @@ public class ProgramServiceTest {
 		Program program = new Program();
 		
 		program.setId(99999);
-		program.setName("from work");
+		program.setName("from work gghjas");
 		programService.addProgram(program);
 	}
 	
 	@Test
 	public void testAddManyPrograms() {		
 		
-		System.out.println( "  ==>> testAddManyPrograms... ");
-		
-		ProgramService programService = (ProgramService) context.getBean("programService");
+		System.out.println( "  ==>> testAddManyPrograms... ");		
 
-		for(int i = 1; i <= 10000; i++){
+		for(int i = 1; i <= 1000; i++){
 			Program program = new Program();
 			
 			program.setId(i);
@@ -76,5 +75,16 @@ public class ProgramServiceTest {
 			programService.addProgram(program);			
 		}
 	}	
+	
+	@Test
+	public void testQueryProgram() {		
+		// this will always run after add methods because of  @FixMethodOrder(MethodSorters.NAME_ASCENDING)
+		System.out.println( "  ==>> testQueryProgram... ");
+		
+
+			Program program = programService.getProgramById(99999);
+			assertEquals(program.getName(), "from work gghjas");
+	}
+		
 
 }

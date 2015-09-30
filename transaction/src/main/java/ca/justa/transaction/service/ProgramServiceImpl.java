@@ -47,9 +47,10 @@ public class ProgramServiceImpl implements ProgramService{
 		}
 	}
 
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public Program findById(Connection conn, int id) {
 
-		String sql = "SELECT * FROM EMPLOYEE WHERE ID = ?";
+		String sql = "SELECT * FROM program WHERE ID = ?";
 
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -103,6 +104,32 @@ public class ProgramServiceImpl implements ProgramService{
 		Session session = sessionFactory.getCurrentSession();
 		session.doWork(work);
 	}
+	
+	//@Transactional(propagation = Propagation.SUPPORTS) // this one should work, but fail: No Session found for current thread
+	// TODO investigate 
+	@Transactional
+	public Program getProgramById(Integer id) {
+		class QueryProgram implements Work {
+			private Integer id;
+			private Program program;
+			public QueryProgram(Integer id){
+				this.id =  id;
+			}
+
+			public void execute(Connection conn) throws SQLException {
+				program = findById(conn, id);
+			}
+			
+			public Program getProgram(){
+				return program;
+			}
+		};
+		
+		QueryProgram work = new QueryProgram(id);
+		Session session = sessionFactory.getCurrentSession();
+		session.doWork(work);
+		return work.getProgram();
+	}	
 
 	// spring will use this method to inject sessionFactory
 	public void setSessionFactory(SessionFactory sessionFactory) {
