@@ -5,31 +5,28 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.sql.DataSource;
-
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.jdbc.Work;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import ca.justa.transaction.bean.Program;
 
-
 public class ProgramService {
-	
-	private DataSource dataSource;
 
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-	}
-	
+	@Autowired
+	private SessionFactory sessionFactory;
+
 	@Transactional(propagation = Propagation.SUPPORTS)
-	public void insert(Program program) {
+	public void insert(Connection conn, Program program) {
 
 		String sql = "INSERT INTO program (ID, NAME) VALUES (?, ?, ?)";
-		Connection conn = null;
 
+		PreparedStatement ps = null;
 		try {
-			conn = dataSource.getConnection();
-			PreparedStatement ps = conn.prepareStatement(sql);
+			ps = conn.prepareStatement(sql);
 			ps.setInt(1, program.getId());
 			ps.setString(2, program.getName());
 			ps.executeUpdate();
@@ -39,32 +36,31 @@ public class ProgramService {
 			throw new RuntimeException(e);
 
 		} finally {
-			if (conn != null) {
+			if (ps != null) {
 				try {
-					conn.close();
+					ps.close();
 				} catch (SQLException e) {
 				}
 			}
 		}
 	}
 
-	public Program findById(int id) {
+	public Program findById(Connection conn, int id) {
 
 		String sql = "SELECT * FROM EMPLOYEE WHERE ID = ?";
 
-		Connection conn = null;
-
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 		try {
-			conn = dataSource.getConnection();
-			PreparedStatement ps = conn.prepareStatement(sql);
+			ps = conn.prepareStatement(sql);
 			ps.setInt(1, id);
 			Program program = null;
-			ResultSet rs = ps.executeQuery();
+			rs = ps.executeQuery();
 			if (rs.next()) {
 				program = new Program();
 				program.setId(rs.getInt("ID"));
-				program.setName(rs.getString("NAME"));				
-				
+				program.setName(rs.getString("NAME"));
+
 			}
 			rs.close();
 			ps.close();
@@ -72,13 +68,39 @@ public class ProgramService {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
-			if (conn != null) {
+			if (rs != null) {
 				try {
-					conn.close();
+					rs.close();
 				} catch (SQLException e) {
 				}
 			}
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+				}
+			}
+
 		}
+	}
+
+	@Transactional
+	public void testInsert() {
+		Work work = new Work() {
+
+			public void execute(Connection conn) throws SQLException {
+				String sql = "INSERT INTO program (ID, NAME) VALUES (?, ?, ?)";
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setInt(1, 1234);
+				ps.setString(2, "from work");
+
+				ps.executeUpdate();
+
+			}
+		};
+
+		Session session = sessionFactory.getCurrentSession();
+		session.doWork(work);
 	}
 
 }
