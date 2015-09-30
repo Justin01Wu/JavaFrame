@@ -56,6 +56,21 @@
 			<version>${spring.version}</version>
 		</dependency>		
 		
+		<!-- org.springframework.orm.hibernate4.LocalSessionFactoryBean is here -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+			<scope>runtime</scope>
+		</dependency>		
+		
+		<!--  @Repository is in here -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		
 		<!--  DriverManagerDataSource is here -->
         <dependency>
 	    	<groupId>org.springframework</groupId>

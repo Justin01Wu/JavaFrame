@@ -36,11 +36,12 @@
 		</property>
 
 	</bean>
-
-	<bean id="programService" class="ca.justa.transaction.service.ProgramService">
-		<property name="dataSource" ref="dataSource" />
+ 
+	<bean id="programService" class="ca.justa.transaction.service.ProgramServiceImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>	
 
+ 
 <!--  
 	DriverManagerDataSource is not an actual connection pool; it does not actually pool Connections. 
 	It just serves as simple replacement for a full-blown connection pool, implementing the same standard interface, but creating new Connections on every call.
@@ -63,4 +64,11 @@
     	<property name="username" value="${jdbc.username}" />
     	<property name="password" value="${jdbc.password}" />
 	</bean>
+	
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager"/>	
 </beans>

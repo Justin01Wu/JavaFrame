@@ -16,7 +16,9 @@ public class JdbcTest {
         Class.forName("org.h2.Driver");
         
         // connect to a in memory database, because of H2 feature, you don't need to install db sever or create db before do this 
-        Connection con = DriverManager.getConnection("jdbc:h2:mem:mytest", "sa", "");
+        Connection con = DriverManager.getConnection("jdbc:h2:mem:unittest", "sa", "");
+        
+        // TODO load jdbc config from common.properties
        
         // here you create the table
         String s = "CREATE TABLE test (id INTEGER, name char(50), last_name char(50), age INTEGER)";
