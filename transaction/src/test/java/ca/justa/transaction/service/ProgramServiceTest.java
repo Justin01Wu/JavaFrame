@@ -5,17 +5,23 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import ca.justa.transaction.bean.Program;
 
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ProgramServiceTest {
 	
 	private static Connection con;   
 	// connect must keep as static because it is in memory database, 
     // if connection is closed, then all tables will disappear
+	
+	 private static ConfigurableApplicationContext context;
+	 private static ProgramService programService ;
 	
 	@BeforeClass
 	public static void globalSetUp() throws Exception {
@@ -37,19 +43,38 @@ public class ProgramServiceTest {
         sst.executeUpdate(s); 
         
      // this one is set on global to avoid multiple tables initialization 
+        
+        
+        context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        programService = (ProgramService) context.getBean("programService");
 	}
 
 	@Test
-	public void testAddProgram() {
+	public void testAddProgram() {		
 		
-		ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-		ProgramService programService = (ProgramService) context.getBean("programService");
+		System.out.println( "  ==>> testAddProgram... ");
 
 		Program program = new Program();
 		
-		program.setId(1234);
+		program.setId(99999);
 		program.setName("from work");
 		programService.addProgram(program);
 	}
+	
+	@Test
+	public void testAddManyPrograms() {		
+		
+		System.out.println( "  ==>> testAddManyPrograms... ");
+		
+		ProgramService programService = (ProgramService) context.getBean("programService");
+
+		for(int i = 1; i <= 10000; i++){
+			Program program = new Program();
+			
+			program.setId(i);
+			program.setName("from work "+ i);
+			programService.addProgram(program);			
+		}
+	}	
 
 }
