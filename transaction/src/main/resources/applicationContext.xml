@@ -22,6 +22,7 @@
 		<property name="packagesToScan">
 			<list>
 				<value>ca.justa.transaction.service</value>
+				<value>ca.justa.transaction.bean</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

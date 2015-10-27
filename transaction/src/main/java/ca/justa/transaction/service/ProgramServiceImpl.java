@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import ca.justa.transaction.bean.Contract;
 import ca.justa.transaction.bean.Program;
 
 @Repository
@@ -104,6 +105,26 @@ public class ProgramServiceImpl implements ProgramService{
 		Session session = sessionFactory.getCurrentSession();
 		session.doWork(work);
 	}
+	
+	@Transactional
+	public void addProgramAndContract(Program program, Contract contract) {
+		class InsertProgram implements Work {
+			private Program program;
+			public InsertProgram(Program program){
+				this.program =  program;
+			}
+
+			public void execute(Connection conn) throws SQLException {
+				insert(conn, program);
+			}
+		};
+		
+		InsertProgram work = new InsertProgram(program);
+		Session session = sessionFactory.getCurrentSession();
+		contract.setProgramId(program.getId());
+		session.saveOrUpdate(contract);
+		session.doWork(work);
+	}	
 	
 	//@Transactional(propagation = Propagation.SUPPORTS) // this one should work, but fail: No Session found for current thread
 	// TODO investigate 

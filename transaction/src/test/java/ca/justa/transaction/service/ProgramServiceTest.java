@@ -1,5 +1,7 @@
 package ca.justa.transaction.service;
 
+import static org.junit.Assert.assertEquals;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -10,8 +12,8 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import static org.junit.Assert.assertEquals;
 
+import ca.justa.transaction.bean.Contract;
 import ca.justa.transaction.bean.Program;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -61,6 +63,28 @@ public class ProgramServiceTest {
 		program.setName("from work gghjas");
 		programService.addProgram(program);
 	}
+	
+	@Test
+	public void testAddProgramAndContract() {		
+		
+		System.out.println( "  ==>> testAddProgramAndContract... ");
+
+		Program program = new Program();
+		
+		program.setId(88888);
+		program.setName("program88888");
+		
+		Contract contract = new Contract();
+		contract.setName("contract888888");
+		programService.addProgramAndContract(program, contract);
+		
+		Program program2 = programService.getProgramById(88888);
+		
+		assertEquals(program2.getName(), "program88888");
+		
+	}	
+	
+	
 	
 	@Test
 	public void testAddManyPrograms() {		
