@@ -1,8 +1,6 @@
 package ca.justa.transaction.service;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -24,66 +22,6 @@ public class ProgramServiceImpl implements ProgramService{
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public void insert(Connection conn, Program program) throws SQLException {
-
-		String sql = "INSERT INTO program (ID, NAME) VALUES (?, ?)";
-
-		PreparedStatement ps = null;
-		try {
-			ps = conn.prepareStatement(sql);
-			ps.setInt(1, program.getId());
-			ps.setString(2, program.getName());
-			ps.executeUpdate();
-			ps.close();
-
-		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-				}
-			}
-		}
-	}
-
-	public Program findById(Connection conn, int id) throws SQLException {
-
-		String sql = "SELECT * FROM program WHERE ID = ?";
-
-		PreparedStatement ps = null;
-		ResultSet rs = null;
-		try {
-			ps = conn.prepareStatement(sql);
-			ps.setInt(1, id);
-			Program program = null;
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				program = new Program();
-				program.setId(rs.getInt("ID"));
-				program.setName(rs.getString("NAME"));
-
-			}
-			rs.close();
-			ps.close();
-			return program;
-
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-				}
-			}
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-				}
-			}
-
-		}
-	}
-
 	@Transactional
 	public void addProgram(Program program) {
 		class InsertProgram implements Work {
@@ -93,7 +31,7 @@ public class ProgramServiceImpl implements ProgramService{
 			}
 
 			public void execute(Connection conn) throws SQLException {
-				insert(conn, program);
+				ProgramJDBCImpl.insert(conn, program);
 			}
 		};
 		
@@ -111,7 +49,7 @@ public class ProgramServiceImpl implements ProgramService{
 			}
 
 			public void execute(Connection conn) throws SQLException {
-				insert(conn, program);
+				ProgramJDBCImpl.insert(conn, program);
 			}
 		};
 		
@@ -133,7 +71,7 @@ public class ProgramServiceImpl implements ProgramService{
 			}
 
 			public void execute(Connection conn) throws SQLException {
-				program = findById(conn, id);
+				program = ProgramJDBCImpl.findById(conn, id);
 			}
 			
 			public Program getProgram(){
