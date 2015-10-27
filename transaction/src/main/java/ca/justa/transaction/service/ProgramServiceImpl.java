@@ -122,10 +122,11 @@ public class ProgramServiceImpl implements ProgramService{
 		};
 		
 		InsertProgram work = new InsertProgram(program);
-		Session session = sessionFactory.getCurrentSession();
+		Session session = sessionFactory.getCurrentSession();		
+		session.doWork(work);
+		
 		contract.setProgramId(program.getId());
 		session.saveOrUpdate(contract);
-		session.doWork(work);
 	}	
 	
 	//@Transactional(propagation = Propagation.SUPPORTS) // this one should work, but fail: No Session found for current thread

@@ -1,12 +1,15 @@
 package ca.justa.transaction.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.List;
 
+import org.hibernate.exception.DataException;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -72,23 +75,52 @@ public class ProgramServiceTest {
 
 		Program program = new Program();
 		
-		program.setId(88888);
+		Integer programId = 88888;
+		program.setId(programId);
 		program.setName("program88888");
 		
 		Contract contract = new Contract();
 		contract.setName("contract888888");
 		programService.addProgramAndContract(program, contract);
 		
-		Program program2 = programService.getProgramById(88888);		
+		Program program2 = programService.getProgramById(programId);		
 		assertEquals(program2.getName(), program.getName());
 		
-		List<Contract> contracts = programService.getContractsByProgramId(88888);
+		List<Contract> contracts = programService.getContractsByProgramId(programId);
 		assertEquals(contracts.size(), 1);
 		assertEquals(contracts.get(0).getName(), contract.getName());		
 		
 		
 		
 	}	
+	
+	@Test
+	public void testAddProgramAndContractFailAndRollBack() {		
+		
+		System.out.println( "  ==>> testAddProgramAndContract... ");
+
+		Program program = new Program();
+		
+		Integer programId = 777777;
+		program.setId(programId);
+		program.setName("program77777");
+		
+		Contract contract = new Contract();
+		contract.setName("contract name is too long , more than 24 bytes");  // contract name is too long , will cause a SQLException
+		try{
+			programService.addProgramAndContract(program, contract);
+			fail("addProgramAndContract should throw DataException ");
+		}catch(DataException e){
+			System.out.println(e.getMessage());
+		}
+		
+		Program program2 = programService.getProgramById(programId);		
+		assertNull(program2);
+		
+		List<Contract> contracts = programService.getContractsByProgramId(programId);  // roll back both  JDBC and JPA jobs
+		assertEquals(contracts.size(), 0);
+		
+	}		
 	
 	
 	

@@ -1,5 +1,6 @@
 package ca.justa.transaction.bean;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -11,7 +12,9 @@ public class Contract {
 	@GeneratedValue
 	private int id;
 	
+	@Column(nullable = false, length = 24)
 	private String name;
+	
 	private int programId;
 	
 	public int getId() {
