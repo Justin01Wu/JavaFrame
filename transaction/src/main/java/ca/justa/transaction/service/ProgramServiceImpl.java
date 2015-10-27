@@ -24,7 +24,7 @@ public class ProgramServiceImpl implements ProgramService{
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public void insert(Connection conn, Program program) {
+	public void insert(Connection conn, Program program) throws SQLException {
 
 		String sql = "INSERT INTO program (ID, NAME) VALUES (?, ?)";
 
@@ -36,9 +36,6 @@ public class ProgramServiceImpl implements ProgramService{
 			ps.executeUpdate();
 			ps.close();
 
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-
 		} finally {
 			if (ps != null) {
 				try {
@@ -49,7 +46,7 @@ public class ProgramServiceImpl implements ProgramService{
 		}
 	}
 
-	public Program findById(Connection conn, int id) {
+	public Program findById(Connection conn, int id) throws SQLException {
 
 		String sql = "SELECT * FROM program WHERE ID = ?";
 
@@ -69,8 +66,7 @@ public class ProgramServiceImpl implements ProgramService{
 			rs.close();
 			ps.close();
 			return program;
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
+
 		} finally {
 			if (rs != null) {
 				try {
