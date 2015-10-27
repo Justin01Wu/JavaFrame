@@ -129,9 +129,7 @@ public class ProgramServiceImpl implements ProgramService{
 		session.saveOrUpdate(contract);
 	}	
 	
-	//@Transactional(propagation = Propagation.SUPPORTS) // this one should work, but fail: No Session found for current thread
-	// TODO investigate 
-	@Transactional
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public Program getProgramById(Integer id) {
 		class QueryProgram implements Work {
 			private Integer id;
@@ -155,9 +153,7 @@ public class ProgramServiceImpl implements ProgramService{
 		return work.getProgram();
 	}	
 	
-	//@Transactional(propagation = Propagation.SUPPORTS) // this one should work, but fail: No Session found for current thread
-	// TODO investigate 
-	@Transactional
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<Contract> getContractsByProgramId(Integer id) {
 		
 		
