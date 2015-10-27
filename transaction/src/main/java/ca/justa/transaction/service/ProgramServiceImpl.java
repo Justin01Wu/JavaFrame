@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.jdbc.Work;
@@ -151,6 +153,22 @@ public class ProgramServiceImpl implements ProgramService{
 		session.doWork(work);
 		return work.getProgram();
 	}	
+	
+	//@Transactional(propagation = Propagation.SUPPORTS) // this one should work, but fail: No Session found for current thread
+	// TODO investigate 
+	@Transactional
+	public List<Contract> getContractsByProgramId(Integer id) {
+		
+		
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery("from Contract where programId = :programId ");
+		query.setParameter("programId", id);
+		
+		@SuppressWarnings("unchecked")
+		List<Contract> list = query.list();
+
+		return list;
+	}		
 
 	// spring will use this method to inject sessionFactory
 	public void setSessionFactory(SessionFactory sessionFactory) {

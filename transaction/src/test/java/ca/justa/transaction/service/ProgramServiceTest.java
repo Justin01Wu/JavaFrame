@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.util.List;
 
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -78,9 +79,14 @@ public class ProgramServiceTest {
 		contract.setName("contract888888");
 		programService.addProgramAndContract(program, contract);
 		
-		Program program2 = programService.getProgramById(88888);
+		Program program2 = programService.getProgramById(88888);		
+		assertEquals(program2.getName(), program.getName());
 		
-		assertEquals(program2.getName(), "program88888");
+		List<Contract> contracts = programService.getContractsByProgramId(88888);
+		assertEquals(contracts.size(), 1);
+		assertEquals(contracts.get(0).getName(), contract.getName());		
+		
+		
 		
 	}	
 	
