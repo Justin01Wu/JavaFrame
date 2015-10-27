@@ -24,7 +24,6 @@ public class ProgramServiceImpl implements ProgramService{
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	@Transactional(propagation = Propagation.SUPPORTS)
 	public void insert(Connection conn, Program program) {
 
 		String sql = "INSERT INTO program (ID, NAME) VALUES (?, ?)";
@@ -50,7 +49,6 @@ public class ProgramServiceImpl implements ProgramService{
 		}
 	}
 
-	@Transactional(propagation = Propagation.SUPPORTS)
 	public Program findById(Connection conn, int id) {
 
 		String sql = "SELECT * FROM program WHERE ID = ?";
