@@ -12,12 +12,11 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<!-- <spring.version>4.1.7.RELEASE</spring.version> -->
 		<spring.version>4.1.8.RELEASE</spring.version>
 		
 		<!-- Hibernate / JPA -->
 		<hibernate.version>4.3.5.Final</hibernate.version>
-		<!-- hibernate.version>3.6.10.Final</hibernate.version -->		
+	
 		
 	</properties>
 
