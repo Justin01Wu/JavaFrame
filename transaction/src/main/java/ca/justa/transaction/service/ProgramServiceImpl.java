@@ -96,13 +96,11 @@ public class ProgramServiceImpl implements ProgramService{
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<Contract> getContractsByProgramId(Integer id) {
 		
-		Session session = entityManager.unwrap(Session.class);
-//		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery("from Contract where programId = :programId ");
+		javax.persistence.Query query = entityManager.createQuery( "SELECT c FROM Contract c WHERE c.programId =  :programId");
 		query.setParameter("programId", id);
 		
 		@SuppressWarnings("unchecked")
-		List<Contract> list = query.list();
+		List<Contract> list = query.getResultList();
 
 		return list;
 	}		
