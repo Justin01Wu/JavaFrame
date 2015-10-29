@@ -4,11 +4,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.jdbc.Work;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +20,11 @@ import ca.justa.transaction.bean.Program;
 @Repository
 public class ProgramServiceImpl implements ProgramService{
 	
-	@Autowired
-	private SessionFactory sessionFactory;
+//	@Autowired
+//	private SessionFactory sessionFactory;
+	
+	@PersistenceContext
+	private EntityManager entityManager;
 
 	@Transactional
 	public void addProgram(Program program) {
@@ -36,7 +40,9 @@ public class ProgramServiceImpl implements ProgramService{
 		};
 		
 		InsertProgram work = new InsertProgram(program);
-		Session session = sessionFactory.getCurrentSession();
+		Session session = entityManager.unwrap(Session.class);
+//		Session session = sessionFactory.getCurrentSession();
+		
 		session.doWork(work);
 	}
 	
@@ -54,7 +60,8 @@ public class ProgramServiceImpl implements ProgramService{
 		};
 		
 		InsertProgram work = new InsertProgram(program);
-		Session session = sessionFactory.getCurrentSession();		
+		Session session = entityManager.unwrap(Session.class);
+//		Session session = sessionFactory.getCurrentSession();		
 		session.doWork(work);
 		
 		contract.setProgramId(program.getId());
@@ -80,7 +87,8 @@ public class ProgramServiceImpl implements ProgramService{
 		};
 		
 		QueryProgram work = new QueryProgram(id);
-		Session session = sessionFactory.getCurrentSession();
+		Session session = entityManager.unwrap(Session.class);
+//		Session session = sessionFactory.getCurrentSession();
 		session.doWork(work);
 		return work.getProgram();
 	}	
@@ -88,8 +96,8 @@ public class ProgramServiceImpl implements ProgramService{
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public List<Contract> getContractsByProgramId(Integer id) {
 		
-		
-		Session session = sessionFactory.getCurrentSession();
+		Session session = entityManager.unwrap(Session.class);
+//		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery("from Contract where programId = :programId ");
 		query.setParameter("programId", id);
 		
@@ -99,8 +107,9 @@ public class ProgramServiceImpl implements ProgramService{
 		return list;
 	}		
 
-	// spring will use this method to inject sessionFactory
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
+//	// spring will use this method to inject sessionFactory
+//	public void setSessionFactory(SessionFactory sessionFactory) {
+//		this.sessionFactory = sessionFactory;
+//	}
+	
 }

@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import ca.justa.transaction.bean.Contract;
 import ca.justa.transaction.bean.Program;
@@ -110,7 +111,7 @@ public class ProgramServiceTest {
 		try{
 			programService.addProgramAndContract(program, contract);
 			fail("addProgramAndContract should throw DataException ");
-		}catch(DataException e){
+		}catch(DataException|DataIntegrityViolationException e){
 			System.out.println(e.getMessage());
 		}
 		
