@@ -15,8 +15,10 @@
 
 	<context:property-placeholder location="classpath:common.properties" />   
 	
+	<!-- scanning of @Repository and @Service, without this, entityManager won't be injected-->
 	<context:component-scan base-package="ca.justa.transaction" />
-	
+	 
+	 
 	<!-- bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean" -->
 	<!-- 
 	<bean id="sessionFactory"
@@ -45,16 +47,21 @@
 	 <!-- This produces a container-managed EntityManagerFactory;
          rather than application-managed EntityManagerFactory as in case of LocalEntityManagerFactoryBean-->
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+      
       <property name="dataSource" ref="dataSource" />
-      <!-- This makes /META-INF/persistence.xml is no longer necessary -->
       
       
+      <!-- Set whether to use Spring-based scanning for entity classes in the classpath instead of listing annotated classes explicitly.
+		Default is none. Specify packages to search for autodetection of your entity classes in the classpath. This is analogous to Spring's component-scan feature
+		
+		This makes /META-INF/persistence.xml is no longer necessary 
+		-->
 		<property name="packagesToScan">
 			<list>
-				<value>ca.justa.transaction.service</value>
 				<value>ca.justa.transaction.bean</value>
 			</list>
 		</property>
+		
 		
       <!-- JpaVendorAdapter implementation for Hibernate EntityManager.
            Exposes Hibernate's persistence provider and EntityManager extension interface -->
