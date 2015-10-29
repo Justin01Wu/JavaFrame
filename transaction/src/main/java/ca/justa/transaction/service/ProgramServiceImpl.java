@@ -71,7 +71,8 @@ public class ProgramServiceImpl implements ProgramService{
 		}
 		
 		contract.setProgramId(program.getId());
-		session.saveOrUpdate(contract);
+		//session.saveOrUpdate(contract);
+		entityManager.merge(contract);
 
 	}	
 	

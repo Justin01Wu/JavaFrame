@@ -1,8 +1,8 @@
 package ca.justa.transaction.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.util.List;
+
+import javax.persistence.PersistenceException;
 
 import org.hibernate.exception.DataException;
 import org.junit.BeforeClass;
@@ -113,7 +115,7 @@ public class ProgramServiceTest {
 		try{
 			programService.addProgramAndContract(program, contract);
 			fail("addProgramAndContract should throw DataException ");
-		}catch(DataException|DataIntegrityViolationException e){
+		}catch(DataException|DataIntegrityViolationException|PersistenceException e){
 			System.out.println(e.getMessage());
 		}
 		
