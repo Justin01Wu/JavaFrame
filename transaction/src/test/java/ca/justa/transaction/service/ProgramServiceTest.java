@@ -2,8 +2,10 @@ package ca.justa.transaction.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -70,7 +72,7 @@ public class ProgramServiceTest {
 	}
 	
 	@Test
-	public void testAddProgramAndContract() {		
+	public void testAddProgramAndContract() throws IOException {		
 		
 		System.out.println( "  ==>> testAddProgramAndContract... ");
 
@@ -96,9 +98,9 @@ public class ProgramServiceTest {
 	}	
 	
 	@Test
-	public void testAddProgramAndContractFailAndRollBack() {		
+	public void testAddProgramAndContractFailAndRollBack() throws IOException {		
 		
-		System.out.println( "  ==>> testAddProgramAndContract... ");
+		System.out.println( "  ==>> testAddProgramAndContractFailAndRollBack... ");
 
 		Program program = new Program();
 		
@@ -122,6 +124,62 @@ public class ProgramServiceTest {
 		assertEquals(contracts.size(), 0);
 		
 	}		
+	
+	@Test
+	public void testAddProgramAndContractRunTimeExceptionFailAndRollBack() throws IOException {		
+		
+		System.out.println( "  ==>> testAddProgramAndContractRunTimeExceptionFailAndRollBack... ");
+
+		Program program = new Program();
+		
+		Integer programId = 5555555; // I will throw an runtime exception when programId is 5555555
+		program.setId(programId);
+		program.setName("program555555");
+		
+		Contract contract = new Contract();
+		contract.setName("contract name is too long , more than 24 bytes");  
+		try{
+			programService.addProgramAndContract(program, contract);
+			fail("testAddProgramAndContractRunTimeExceptionFailAndRollBack should throw DataException ");
+		}catch(RuntimeException e){
+			System.out.println(e.getMessage());
+		}
+		
+		Program program2 = programService.getProgramById(programId);		
+		assertNull(program2);
+		
+		List<Contract> contracts = programService.getContractsByProgramId(programId);  // roll back both  JDBC and JPA jobs
+		assertEquals(contracts.size(), 0);
+		
+	}	
+	
+	@Test
+	public void testAddProgramAndContractApplicationExceptionFailAndHalfCommit() throws IOException {		
+		
+		System.out.println( "  ==>> testAddProgramAndContractApplicationExceptionFailAndHalfCommit... ");
+
+		Program program = new Program();
+		
+		Integer programId = 4444444; // I will throw an Application Exception when programId is 4444444
+		program.setId(programId);
+		program.setName("program4444");
+		
+		Contract contract = new Contract();
+		contract.setName("contract 444");  
+		try{
+			programService.addProgramAndContract(program, contract);
+			fail("testAddProgramAndContractRunTimeExceptionFailAndRollBack should throw DataException ");
+		}catch(IOException e){
+			System.out.println(e.getMessage());
+		}
+		
+		Program program2 = programService.getProgramById(programId);		
+		assertNotNull(program2);
+		
+		List<Contract> contracts = programService.getContractsByProgramId(programId);  // roll back both  JDBC and JPA jobs
+		assertEquals(contracts.size(), 0);
+		
+	}	
 	
 	
 	

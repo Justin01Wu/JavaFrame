@@ -1,5 +1,6 @@
 package ca.justa.transaction.service;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -7,7 +8,6 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.jdbc.Work;
 import org.springframework.stereotype.Repository;
@@ -47,7 +47,7 @@ public class ProgramServiceImpl implements ProgramService{
 	}
 	
 	@Transactional
-	public void addProgramAndContract(Program program, Contract contract) {
+	public void addProgramAndContract(Program program, Contract contract) throws IOException {
 		class InsertProgram implements Work {
 			private Program program;
 			public InsertProgram(Program program){
@@ -64,8 +64,15 @@ public class ProgramServiceImpl implements ProgramService{
 //		Session session = sessionFactory.getCurrentSession();		
 		session.doWork(work);
 		
+		if(program.getId()==5555555){
+			throw new RuntimeException("test roll back");
+		}else if(program.getId()==4444444){
+			throw new IOException("test hald commit");
+		}
+		
 		contract.setProgramId(program.getId());
 		session.saveOrUpdate(contract);
+
 	}	
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
