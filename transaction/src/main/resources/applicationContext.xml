@@ -66,10 +66,16 @@
     	<property name="password" value="${jdbc.password}" />
 	</bean>
 	
+	<!-- JPA  
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+  		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+	 -->
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
+	<!-- To make the @Transactional annotation work, you should declare the <tx:annotation-driven> tag -->
 	<tx:annotation-driven transaction-manager="transactionManager"/>	
 </beans>
