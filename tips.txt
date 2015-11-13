@@ -25,4 +25,15 @@
 	    String newBudgetClass = cs.getString(2);
 	    MessageLogger.log(MessageLogger.kLOGDEBUG, String.format("new BudgetClass of Contact %s is %s", contract.getContractId(), newBudgetClass));
 		
+data type 
+	SQL SERVER database can’t use MONEY with JAVA. It will totally lose precision, I guess it is a bug in somewhere.
+    So better use float or Decimal(19,4) (or Decimal(19,3).
+	From my view, float is good enough for most of case. Because it already has 15 digits, 
+	More accuracy ,don’t be fooled by its name,   float of SQL SERVER is double-precision 64-bit IEEE 754 floating point.  
+	By the way, in JAVA side Double is double-precision 64-bit IEEE 754 floating point.  
+	And in JavaScript  side, it has only type of number , ie number type, it also is double-precision 64-bit IEEE 754 floating point.  
+	So please use float if we don’t care too much about precision.
+
+		
+		
 		
