@@ -75,6 +75,12 @@ public class ProgramServiceImpl implements ProgramService{
 		entityManager.persist(contract);
 
 	}	
+
+	@Transactional(rollbackFor={IOException.class,IllegalAccessException.class})
+	public void addProgramAndContract2(Program program, Contract contract) throws IOException {
+		addProgramAndContract(program, contract);
+	}
+	
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public Program getProgramById(Integer id) {

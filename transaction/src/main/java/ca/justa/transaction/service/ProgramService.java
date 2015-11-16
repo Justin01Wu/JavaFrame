@@ -12,6 +12,7 @@ public interface ProgramService {
 
 	public void addProgram(Program program) ;
 	public void addProgramAndContract(Program program, Contract contract) throws IOException ;
+	public void addProgramAndContract2(Program program, Contract contract) throws IOException ;	
 	public Program getProgramById(Integer id) ;
 	public List<Contract> getContractsByProgramId(Integer id) ;
 	

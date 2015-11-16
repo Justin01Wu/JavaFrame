@@ -134,7 +134,7 @@ public class ProgramServiceTest {
 
 		Program program = new Program();
 		
-		Integer programId = 5555555; // I will throw an runtime exception when programId is 5555555
+		Integer programId = 5555555; // I will throw a runtime exception when programId is 5555555
 		program.setId(programId);
 		program.setName("program555555");
 		
@@ -162,7 +162,7 @@ public class ProgramServiceTest {
 
 		Program program = new Program();
 		
-		Integer programId = 4444444; // I will throw an Application Exception when programId is 4444444
+		Integer programId = 4444444; // I will throw a checked Exception when programId is 4444444
 		program.setId(programId);
 		program.setName("program4444");
 		
@@ -183,6 +183,33 @@ public class ProgramServiceTest {
 		
 	}	
 	
+	@Test
+	public void testAddProgramAndContractCheckExceptionFailAndRollBack() throws IOException {		
+		
+		System.out.println( "  ==>> testAddProgramAndContractRunTimeExceptionFailAndRollBack... ");
+
+		Program program = new Program();
+		
+		Integer programId = 5555555; // I will throw an runtime exception when programId is 5555555
+		program.setId(programId);
+		program.setName("program555555");
+		
+		Contract contract = new Contract();
+		contract.setName("contract name is too long , more than 24 bytes");  
+		try{
+			programService.addProgramAndContract2(program, contract);
+			fail("testAddProgramAndContractRunTimeExceptionFailAndRollBack should throw DataException ");
+		}catch(RuntimeException e){
+			System.out.println(e.getMessage());
+		}
+		
+		Program program2 = programService.getProgramById(programId);		
+		assertNull(program2);
+		
+		List<Contract> contracts = programService.getContractsByProgramId(programId);  // roll back both  JDBC and JPA jobs
+		assertEquals(contracts.size(), 0);
+		
+	}		
 	
 	
 	@Test
