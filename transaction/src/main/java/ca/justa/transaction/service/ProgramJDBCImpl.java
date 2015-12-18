@@ -12,22 +12,11 @@ public class ProgramJDBCImpl {
 	public static void insert(Connection conn, Program program) throws SQLException {
 
 		String sql = "INSERT INTO program (ID, NAME) VALUES (?, ?)";
-
-		PreparedStatement ps = null;
-		try {
-			ps = conn.prepareStatement(sql);
+	
+		try (PreparedStatement ps = conn.prepareStatement(sql)) {  // new style of try, will automatically close ps 
 			ps.setInt(1, program.getId());
 			ps.setString(2, program.getName());
 			ps.executeUpdate();
-			ps.close();
-
-		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-				}
-			}
 		}
 	}
 	
