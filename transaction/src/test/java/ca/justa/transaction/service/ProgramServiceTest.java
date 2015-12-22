@@ -28,9 +28,9 @@ import ca.justa.transaction.bean.Program;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ProgramServiceTest {
 	
-	private static Connection con;   
+	//private static Connection con;   
 	// connect must keep as static because it is in memory database, 
-    // if connection is closed, then all tables will disappear
+    // if connection is closed, then all tables will disappear or use  DB_CLOSE_DELAY=-1
 	
 	 private static ConfigurableApplicationContext context;
 	 private static ProgramService programService ;
@@ -44,7 +44,12 @@ public class ProgramServiceTest {
         Class.forName("org.h2.Driver");
         
         // connect to a in memory database, because of H2 feature, you don't need to install db sever or create db before do this 
-        con = DriverManager.getConnection("jdbc:h2:mem:unittest", "sa", "");
+        Connection con = DriverManager.getConnection("jdbc:h2:mem:unittest;MODE=MSSQLServer;DB_CLOSE_DELAY=-1", "sa", "");
+        
+        //  By default, closing the last connection to a database closes the database. 
+        // For an in-memory database, this means the content is lost. 
+        // To keep the database open, add ;DB_CLOSE_DELAY=-1 to the database URL. 
+        // To keep the content of an in-memory database as long as the virtual machine is alive, use jdbc:h2:mem:test;DB_CLOSE_DELAY=-1.
         
         // TODO load jdbc config from common.properties
         
