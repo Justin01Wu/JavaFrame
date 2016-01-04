@@ -20,9 +20,6 @@ import ca.justa.transaction.bean.Program;
 @Repository
 public class ProgramServiceImpl implements ProgramService{
 	
-//	@Autowired
-//	private SessionFactory sessionFactory;
-	
 	@PersistenceContext
 	private EntityManager entityManager;
 
@@ -48,6 +45,7 @@ public class ProgramServiceImpl implements ProgramService{
 	
 	@Transactional
 	public void addProgramAndContract(Program program, Contract contract) throws IOException {
+		
 		class InsertProgram implements Work {
 			private Program program;
 			public InsertProgram(Program program){
@@ -67,7 +65,7 @@ public class ProgramServiceImpl implements ProgramService{
 		if(program.getId()==5555555){
 			throw new RuntimeException("test roll back");
 		}else if(program.getId()==4444444){
-			throw new IOException("test hald commit");
+			throw new IOException("test half commit");
 		}
 		
 		contract.setProgramId(program.getId());
@@ -84,6 +82,7 @@ public class ProgramServiceImpl implements ProgramService{
 	
 	@Transactional(propagation = Propagation.SUPPORTS)
 	public Program getProgramById(Integer id) {
+		
 		class QueryProgram implements Work {
 			private Integer id;
 			private Program program;
@@ -117,10 +116,5 @@ public class ProgramServiceImpl implements ProgramService{
 
 		return list;
 	}		
-
-//	// spring will use this method to inject sessionFactory
-//	public void setSessionFactory(SessionFactory sessionFactory) {
-//		this.sessionFactory = sessionFactory;
-//	}
 	
 }

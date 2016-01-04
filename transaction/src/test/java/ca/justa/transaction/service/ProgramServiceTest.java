@@ -93,6 +93,8 @@ public class ProgramServiceTest {
 		contract.setName("contract888888");
 		programService.addProgramAndContract(program, contract);
 		
+		
+		// now verify them
 		Program program2 = programService.getProgramById(programId);		
 		assertEquals(program2.getName(), program.getName());
 		
@@ -124,6 +126,7 @@ public class ProgramServiceTest {
 			System.out.println(e.getMessage());
 		}
 		
+		// now verify them
 		Program program2 = programService.getProgramById(programId);		
 		assertNull(program2);
 		
@@ -152,6 +155,7 @@ public class ProgramServiceTest {
 			System.out.println(e.getMessage());
 		}
 		
+		// now verify them		
 		Program program2 = programService.getProgramById(programId);		
 		assertNull(program2);
 		
@@ -180,6 +184,7 @@ public class ProgramServiceTest {
 			System.out.println(e.getMessage());
 		}
 		
+		// now verify them
 		Program program2 = programService.getProgramById(programId);		
 		assertNotNull(program2);
 		
@@ -208,6 +213,7 @@ public class ProgramServiceTest {
 			System.out.println(e.getMessage());
 		}
 		
+		// now verify them
 		Program program2 = programService.getProgramById(programId);		
 		assertNull(program2);
 		
