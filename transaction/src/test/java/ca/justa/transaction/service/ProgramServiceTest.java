@@ -43,7 +43,7 @@ public class ProgramServiceTest {
 		// load the driver class
         Class.forName("org.h2.Driver");
         
-        // connect to a in memory database, because of H2 feature, you don't need to install db sever or create db before do this 
+        // connect to an in-memory database, because of H2 feature, you don't need to install db sever or create db before do this 
         Connection con = DriverManager.getConnection("jdbc:h2:mem:unittest;MODE=MSSQLServer;DB_CLOSE_DELAY=-1", "sa", "");
         
         //  By default, closing the last connection to a database closes the database. 
@@ -147,7 +147,7 @@ public class ProgramServiceTest {
 		program.setName("program555555");
 		
 		Contract contract = new Contract();
-		contract.setName("contract name is too long , more than 24 bytes");  
+		contract.setName("contract 555555");  
 		try{
 			programService.addProgramAndContract(program, contract);
 			fail("testAddProgramAndContractRunTimeExceptionFailAndRollBack should throw DataException ");
@@ -200,12 +200,12 @@ public class ProgramServiceTest {
 
 		Program program = new Program();
 		
-		Integer programId = 5555555; // I will throw an runtime exception when programId is 5555555
+		Integer programId = 5555555; // I will throw a runtime exception when programId is 5555555
 		program.setId(programId);
 		program.setName("program555555");
 		
 		Contract contract = new Contract();
-		contract.setName("contract name is too long , more than 24 bytes");  
+		contract.setName("contract 5555");  
 		try{
 			programService.addProgramAndContract2(program, contract);
 			fail("testAddProgramAndContractRunTimeExceptionFailAndRollBack should throw DataException ");

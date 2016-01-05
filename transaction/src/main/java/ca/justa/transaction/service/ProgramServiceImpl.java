@@ -74,6 +74,9 @@ public class ProgramServiceImpl implements ProgramService{
 
 	}	
 
+	/**
+	 * this method warp addProgramAndContract to different transaction behavior
+	 */
 	@Transactional(rollbackFor={IOException.class,IllegalAccessException.class})
 	public void addProgramAndContract2(Program program, Contract contract) throws IOException {
 		addProgramAndContract(program, contract);
