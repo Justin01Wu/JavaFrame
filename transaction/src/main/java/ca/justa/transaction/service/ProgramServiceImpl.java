@@ -66,6 +66,8 @@ public class ProgramServiceImpl implements ProgramService{
 			throw new RuntimeException("test roll back");
 		}else if(program.getId()==4444444){
 			throw new IOException("test half commit");
+		}else if(program.getId()==6666666){
+			return ;
 		}
 		
 		contract.setProgramId(program.getId());

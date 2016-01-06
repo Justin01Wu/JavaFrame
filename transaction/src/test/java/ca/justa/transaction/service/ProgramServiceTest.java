@@ -194,6 +194,30 @@ public class ProgramServiceTest {
 	}	
 	
 	@Test
+	public void testAddProgramAndContractShortReturn() throws IOException {		
+		
+		System.out.println( "  ==>> testAddProgramAndContractShortReturn... ");
+
+		Program program = new Program();
+		
+		Integer programId = 6666666; // it will skip contract
+		program.setId(programId);
+		program.setName("program66666");
+		
+		Contract contract = new Contract();
+		contract.setName("contract 666");  
+		programService.addProgramAndContract(program, contract);			
+		
+		// now verify them
+		Program program2 = programService.getProgramById(programId);		
+		assertNotNull(program2);
+		
+		List<Contract> contracts = programService.getContractsByProgramId(programId);  // roll back both  JDBC and JPA jobs
+		assertEquals(contracts.size(), 0);
+		
+	}		
+	
+	@Test
 	public void testAddProgramAndContractCheckExceptionFailAndRollBack() throws IOException {		
 		
 		System.out.println( "  ==>> testAddProgramAndContractRunTimeExceptionFailAndRollBack... ");
