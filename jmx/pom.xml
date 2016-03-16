@@ -20,6 +20,29 @@
 			<url>http://localhost:8081/nexus/content/repositories/thirdparty</url>
 		</repository>
 	</distributionManagement>
+	
+	<!-- 
+	in your maven setting.xml (default position is in your .m2 folder), you need to define proj-release for credential
+	the default password for nexus is deployment123
+	
+	the command is: mvn deploy
+	for the release policy, you can't re-deploy unless you change version
+	
+	<settings xmlns="http://maven.apache.org/SETTINGS/1.1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd">
+
+	  <servers>
+	  <server>
+		  <id>proj-release</id>
+		  <username>deployment</username>
+		  <password>deployment123</password>
+		</server>
+	  </servers>
+
+	</settings>
+	
+	-->
+	
 
 	<dependencies>
 		<dependency>
