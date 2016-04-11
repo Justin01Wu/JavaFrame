@@ -19,9 +19,6 @@ public class JmxApp {
 	
 	private static Logger log = Logger.getLogger(JmxApp.class);
 	
-    private static final int DEFAULT_THREAD_AMOUNT = 10;
-    private static final String DEFAULT_SCHEMA = "default";
- 
     public static void main(String[] args) throws Exception {
         
     	//Get the MBean server
@@ -30,7 +27,7 @@ public class JmxApp {
         log.info("please use jconsole to connect this app and watch the registered mbean");
         
         //register the SystemConfig MBean
-        SystemConfig mBean = new SystemConfig(DEFAULT_THREAD_AMOUNT, DEFAULT_SCHEMA);        
+        SystemConfig mBean = SystemConfig.getInstance();        
         String domain = "com.justa.jmx";  
         String key = "type";
         String value = "SystemConfig";
@@ -50,17 +47,10 @@ public class JmxApp {
 			server.unregisterMBean(objectName);
 		}
 		server.registerMBean(log4jmBean, objectName);
+		
         
-        // in case jconsole have time to connect this mbean, we design an infinite loop 
-    	boolean stop = false;
-        do{
-            Thread.sleep(3000);
-            log.debug("I am JmxApp, I am alive...");
-            log.trace("   Thread Count = " + mBean.getThreadCount() + " ::: Schema Name = " + mBean.getSchemaName());
-            stop = (mBean.getThreadCount() ==0);
-        }while(!stop);
-        
-        log.info("  ==>> JmxApp quit because Thread Count= 0");
+		mBean.startThreads();
+
         
          
     }
