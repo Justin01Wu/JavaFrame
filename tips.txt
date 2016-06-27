@@ -33,6 +33,28 @@ data type
 	By the way, in JAVA side Double is double-precision 64-bit IEEE 754 floating point.  
 	And in JavaScript  side, it has only type of number , ie number type, it also is double-precision 64-bit IEEE 754 floating point.  
 	So please use float if we don’t care too much about precision.
+	
+Eclipse tips(1) JDK version:
+
+	You can add this two lines on the top of eclipse.ini to use old JDK version:
+		-vm 
+		C:\Program Files\Java\jdk1.7.0_67\bin\javaw.exe
+
+	More details you can see here:
+	http://stackoverflow.com/questions/905611/how-do-i-set-the-eclipse-ini-vm-option
+
+Eclipse tips(2) show path on title:
+	to show up eclipse workspace folder name on the title:
+	https://dzone.com/articles/show-workspace-location-title
+
+	basically it adds this line into eclipse.ini
+		-showlocation
+
+
+
+
+
+	
 
 		
 		
