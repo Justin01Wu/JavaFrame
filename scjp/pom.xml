@@ -30,8 +30,8 @@
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.5</version>
 				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
+					<source>1.7</source>
+					<target>1.7</target>
 					<archive>
 						<manifest>
 							<mainClass>com.scjp.test.App</mainClass>
