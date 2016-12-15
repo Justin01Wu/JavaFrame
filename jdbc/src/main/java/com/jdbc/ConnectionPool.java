@@ -20,6 +20,8 @@ public class ConnectionPool  {
         
         // connect to a in memory database, because of H2 feature, you don't need to install db sever or create db before do this 
         Connection con = DriverManager.getConnection("jdbc:h2:mem:unittest", "sa", "");
+        
+        // TODO implement ConnectionPool
 		
 		ClassLoader loader = con.getClass().getClassLoader();
 		
@@ -33,13 +35,17 @@ public class ConnectionPool  {
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {	
 
         
-		Connection con = (Connection)ConnectionPool.getConnection();
-		
+		Connection con = ConnectionPool.getConnection();		
         String s = "CREATE TABLE test (id INTEGER, name char(50), last_name char(50), age INTEGER)";
         Statement sst = con.createStatement();
-        sst.executeUpdate(s); 
-        
+        sst.executeUpdate(s);         
 		con.close();
+		
+		try (Connection me = ConnectionPool.getConnection()) { // this grammar start
+	        String s2 = "CREATE TABLE test2 (id INTEGER, name char(50), last_name char(50), age INTEGER)";
+	        Statement sst2 = con.createStatement();
+	        sst2.executeUpdate(s2); 
+		}
 	}
 
 }
