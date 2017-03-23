@@ -11,6 +11,23 @@ public class IntegerIntEqualsTest extends TestCase {
 
 		assertTrue(i1.equals(i2));
 	}
+	
+	public void testIntegerEqualsInt2() {
+		Integer x = 1234;
+		int y = 1234;
+		Integer z = new Integer(1234);
+		
+		assertTrue (x ==y);
+		assertTrue (z ==y);
+		assertTrue (y == z);
+		assertTrue (y == x);
+		// when compare Integer with int, Java always down grade to int for both side
+		
+		assertFalse (z == x);
+		// when compare Integer with int, Java use Object to compare, so it is different
+ 
+	}
+
 
 	public void testIntegerIntSamePointer() {
 		Integer i1 = new Integer(100);
@@ -39,4 +56,5 @@ public class IntegerIntEqualsTest extends TestCase {
 		// numbers between -128 and 127
 
 	}
+	
 }
