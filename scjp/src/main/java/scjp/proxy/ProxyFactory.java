@@ -3,8 +3,12 @@ package scjp.proxy;
 import java.lang.reflect.Proxy;
 
 /** 
- * <p>it comes from http://www.concretepage.com/java/dynamic-proxy-with-proxy-and-invocationhandler-in-java</p>
- * <p>it is usually used as AOP programming, like spring transaction framework </p>
+ * it comes from http://www.concretepage.com/java/dynamic-proxy-with-proxy-and-invocationhandler-in-java <br/>
+ * it is usually used as   <ul>
+ * 		<li> AOP programming</li>
+ * 		<li> Spring transaction framework</li> 
+ * 		<li> or Dynamic Mock Objects for Unit Testing </li>
+ * </ul>
  * the target class must have some interfaces,  <br/>
  * then proxy can warp its method and do some magic before and after its original method is executed <br/>
  * proxy can even bypass the original method  if it is necessary 
@@ -24,7 +28,7 @@ public class ProxyFactory {
 		ClassLoader classLoader = ob.getClass().getClassLoader();
 		Object object =  Proxy.newProxyInstance(
 				classLoader,
-				new Class<?>[] { ThirdPartyInterface.class }, 
+				new Class<?>[] { ThirdPartyInterface.class },   // must be an interface
 				new MyInvocationHandler(ob));
 		return (ThirdPartyInterface)object;
 	}
@@ -33,5 +37,12 @@ public class ProxyFactory {
 		ThirdPartyInterface task = ProxyFactory.newInstance(new ThirdPartyClass());
 		task.doA(453);
 		task.doB();
+		if(task instanceof ThirdPartyClass){
+			ThirdPartyClass task3  = (ThirdPartyClass)task;
+			task3.doC();
+		}else{
+			// will go to here
+			System.out.println("no way to execute doC method becuase it is not on interface");
+		}
 	}
 }

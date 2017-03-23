@@ -17,6 +17,8 @@ public class MyInvocationHandler implements InvocationHandler {
 	public Object invoke(Object proxy, Method method, Object[] args)
 			throws Throwable {
 		Object result;
+		
+		System.out.println(" current method: "+ method.getName());
 		try {
 			
 			// before start target method
@@ -26,9 +28,9 @@ public class MyInvocationHandler implements InvocationHandler {
 			result = method.invoke(obj, args);
 
 			// after target method is finished
-			if (method.getName().indexOf("doA") > -1) {
-				System.out.println("...doA Method Executed...");
-			}
+			System.out.println("...doA Method Executed...");
+			System.out.println();
+			
 		} catch (InvocationTargetException e) {
 			throw e;
 		} catch (Exception e) {
