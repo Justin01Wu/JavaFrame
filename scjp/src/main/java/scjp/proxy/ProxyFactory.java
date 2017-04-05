@@ -26,6 +26,8 @@ public class ProxyFactory {
 	public static ThirdPartyInterface newInstance(ThirdPartyInterface ob) {
 		
 		ClassLoader classLoader = ob.getClass().getClassLoader();
+		//ClassLoader classLoader = MyInvocationHandler.class.getClassLoader();
+		
 		Object object =  Proxy.newProxyInstance(
 				classLoader,
 				new Class<?>[] { ThirdPartyInterface.class },   // must be an interface
@@ -47,6 +49,15 @@ public class ProxyFactory {
 		if(proxy instanceof ThirdPartyClass){
 			System.out.println("proxy is the instanceof ThirdPartyClass " );
 		}
+		
+		if(	Proxy.isProxyClass(proxy.getClass())){
+			System.out.println( proxy.getClass().getCanonicalName() + "  is a proxy");
+		}
+		
+		if(	Proxy.isProxyClass(realObject.getClass())){
+			System.out.println( realObject.getClass().getCanonicalName() + "  is a proxy");
+		}
+
 		
 		if(proxy instanceof ThirdPartyInterface){
 			System.out.println("proxy is the instanceof ThirdPartyInterface " );
