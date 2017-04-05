@@ -34,11 +34,19 @@ public class ProxyFactory {
 	}
 	
 	public static void main(String[] args) {
-		ThirdPartyInterface task = ProxyFactory.newInstance(new ThirdPartyClass());
-		task.doA(453);
-		task.doB();
-		if(task instanceof ThirdPartyClass){
-			ThirdPartyClass task3  = (ThirdPartyClass)task;
+		
+		ThirdPartyClass realObject = new ThirdPartyClass();
+		ThirdPartyInterface proxy = ProxyFactory.newInstance(realObject);
+		
+		System.out.println("realObject hashCode = " + realObject.hashCode());
+		
+		System.out.println("proxy hashCode = " + proxy.hashCode());
+		
+		
+		proxy.doA(453);
+		proxy.doB();
+		if(proxy instanceof ThirdPartyClass){
+			ThirdPartyClass task3  = (ThirdPartyClass)proxy;
 			task3.doC();
 		}else{
 			// will go to here

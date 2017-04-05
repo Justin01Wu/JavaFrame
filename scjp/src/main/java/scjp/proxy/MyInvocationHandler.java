@@ -28,7 +28,7 @@ public class MyInvocationHandler implements InvocationHandler {
 			result = method.invoke(obj, args);
 
 			// after target method is finished
-			System.out.println("...doA Method Executed...");
+			System.out.println("... Method Executed: " + method.getName());
 			System.out.println();
 			
 		} catch (InvocationTargetException e) {
