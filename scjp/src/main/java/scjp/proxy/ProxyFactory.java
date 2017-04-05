@@ -1,6 +1,7 @@
 package scjp.proxy;
 
 import java.lang.reflect.Proxy;
+import java.util.Vector;
 
 /** 
  * it comes from http://www.concretepage.com/java/dynamic-proxy-with-proxy-and-invocationhandler-in-java <br/>
@@ -37,8 +38,17 @@ public class ProxyFactory {
 	
 	public static void main(String[] args) {
 		
+		Vector<ThirdPartyInterface>  all = new Vector<ThirdPartyInterface>();
+		
 		ThirdPartyClass realObject = new ThirdPartyClass();
 		ThirdPartyInterface proxy = ProxyFactory.newInstance(realObject);
+		
+		all.addElement(proxy);
+		
+		if (!all.remove(proxy)) {
+			System.out.println("     ===>  proxy can't be found");
+		}
+
 		
 		System.out.println("realObject hashCode = " + realObject.hashCode());
 		
