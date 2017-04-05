@@ -42,6 +42,15 @@ public class ProxyFactory {
 		
 		System.out.println("proxy hashCode = " + proxy.hashCode());
 		
+		System.out.println("proxy class name ="  + proxy.getClass().getCanonicalName());
+		
+		if(proxy instanceof ThirdPartyClass){
+			System.out.println("proxy is the instanceof ThirdPartyClass " );
+		}
+		
+		if(proxy instanceof ThirdPartyInterface){
+			System.out.println("proxy is the instanceof ThirdPartyInterface " );
+		}
 		
 		proxy.doA(453);
 		proxy.doB();
