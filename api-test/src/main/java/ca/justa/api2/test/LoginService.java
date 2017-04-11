@@ -42,8 +42,8 @@ public class LoginService {
 
 	}
 	
-	public static void logout(CookieStore httpCookieStore) throws HttpException, IOException{
-		String url = URL_ROOT+ "/logout" ;
+	public static void logout(String baseUrl , CookieStore httpCookieStore) throws HttpException, IOException{
+		String url = baseUrl + "/logout" ;
 		
 		System.out.println("url = " + url);
 		

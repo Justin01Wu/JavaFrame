@@ -105,7 +105,7 @@ public class TestUserApi {
 	public void tearDown() throws Exception {
 		
 		// logout
-		LoginService.logout(httpCookieStore);
+		LoginService.logout(URL_ROOT, httpCookieStore);
 		
 
 	}

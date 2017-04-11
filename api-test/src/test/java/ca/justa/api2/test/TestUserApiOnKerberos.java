@@ -1,6 +1,7 @@
 package ca.justa.api2.test;
 
 import static org.junit.Assert.assertEquals;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -14,6 +15,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -30,17 +32,8 @@ public class TestUserApiOnKerberos {
 	
 	@Before
 	public void setup()  {
-		httpCookieStore = new BasicCookieStore();
-	}	
-	
-	@Test
-	public void testUserApi() throws HttpException, IOException, LoginException{
+
 		
-        String user = "justin.wu";
-        String password = "mypassword";
-        String loginUrl = URL_ROOT + "/SecurityServlet";
-        String url = URL_ROOT +"/api/v2/users/all.json";
-        
 		URL location = LoginKerberosService.class.getProtectionDomain().getCodeSource().getLocation();
         System.out.println(location.getFile());
 		
@@ -51,6 +44,17 @@ public class TestUserApiOnKerberos {
         System.setProperty("java.security.auth.login.config", loginConfPath);
         System.setProperty("java.security.krb5.conf", "C:/_program3/apache-tomcat-7.0.75/conf/krb5.conf");
         System.setProperty("javax.security.auth.useSubjectCredsOnly", "false");
+
+		httpCookieStore = new BasicCookieStore();
+	}	
+	
+	@Test
+	public void testUserApi() throws HttpException, IOException, LoginException{
+		
+        String user = "justin.wu";
+        String password = "myDomainPassword";
+        String loginUrl = URL_ROOT + "/SecurityServlet";
+        String url = URL_ROOT +"/api/v2/users/all.json";        
 
 		LoginKerberosService.login(user, password, loginUrl, httpCookieStore);
 		
@@ -77,5 +81,14 @@ public class TestUserApiOnKerberos {
 		System.out.println("userName= " + userName);
 	}
 
+	
+	@After
+	public void tearDown() throws Exception {
+		
+		// logout
+		LoginService.logout(URL_ROOT, httpCookieStore);
+		
+
+	}
 
 }
