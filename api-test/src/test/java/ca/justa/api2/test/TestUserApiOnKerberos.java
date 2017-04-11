@@ -37,7 +37,7 @@ public class TestUserApiOnKerberos {
 	public void testUserApi() throws HttpException, IOException, LoginException{
 		
         String user = "justin.wu";
-        String password = "tuN31gle";
+        String password = "mypassword";
         String loginUrl = URL_ROOT + "/SecurityServlet";
         String url = URL_ROOT +"/api/v2/users/all.json";
         
