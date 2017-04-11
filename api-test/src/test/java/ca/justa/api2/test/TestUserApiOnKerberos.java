@@ -1,4 +1,4 @@
-package TestUserApi;
+package ca.justa.api2.test;
 
 import static org.junit.Assert.assertEquals;
 import java.io.IOException;
