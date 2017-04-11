@@ -30,6 +30,7 @@ public class ProxyFactoryTest extends TestCase {
 		}
 		
 		all3.add(proxy);
+		System.out.println("  all3.size= " + all3.size());
 		if (!all3.remove(proxy)) {
 			System.out.println("     ===>  proxy can't be found in LinkedList");
 		}
