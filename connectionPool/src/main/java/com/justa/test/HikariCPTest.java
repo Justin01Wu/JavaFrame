@@ -39,6 +39,7 @@ public class HikariCPTest {
 			
 			config.setUsername("vcapstest");
 			config.setPassword("vcapstest");
+			config.setMinimumIdle(5);
 			config.setMaximumPoolSize(10);
 			//config.setConnectionTimeout(0);			
 
@@ -71,6 +72,20 @@ public class HikariCPTest {
 		return datasource;
 
 	}
+	
+	private static void printStatus(DataSource dataSource){
+		if(dataSource instanceof HikariDataSource){
+			String msgTemplate = "numActive= %d, idleNum = %d";
+			HikariPoolMXBean hikariPoolMXBean = ((HikariDataSource)dataSource).getHikariPoolMXBean();
+			
+			// has a bug, will get wrong number, TODO fix it
+			String msg = String.format(msgTemplate, hikariPoolMXBean.getActiveConnections(), hikariPoolMXBean.getIdleConnections()); 
+			System.out.println(msg);
+
+			
+		}
+
+	}
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException, MBeanRegistrationException, InstanceNotFoundException, MalformedObjectNameException, InstanceAlreadyExistsException, NotCompliantMBeanException	{
 		
@@ -79,10 +94,17 @@ public class HikariCPTest {
 
 		
 		DataSource dataSource = HikariCPTest.getDataSource();
+		
+		printStatus(dataSource);
+		
 		Connection connection = dataSource.getConnection();
-			
 		JtdsJdbcTest.execQuery(connection);
+		
+		printStatus(dataSource);
+		
 		connection.close();
+		
+		printStatus(dataSource);
 		
 		System.out.println();
 

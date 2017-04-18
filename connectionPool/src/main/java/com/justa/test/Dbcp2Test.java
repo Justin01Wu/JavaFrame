@@ -39,12 +39,29 @@ public class Dbcp2Test {
 		
 		DataSource dataSource = getDataSource();
 		
+		printStatus(dataSource);
+		
 		Connection con = dataSource.getConnection();
+		printStatus(dataSource);
 		
 		JtdsJdbcTest.execQuery(con);
 		con.close();
 		
+		printStatus(dataSource);
+		
 
+	}
+	
+	private static void printStatus(DataSource dataSource){
+		
+		BasicDataSource basicDataSource;
+		String msgTemplate = "numActive= %d, idleNum = %d";
+		
+		if(dataSource instanceof BasicDataSource){
+			basicDataSource = (BasicDataSource)dataSource;					
+			String msg = String.format(msgTemplate, basicDataSource.getNumActive(), basicDataSource.getNumIdle()); 
+			System.out.println(msg);
+		}
 	}
 
 
