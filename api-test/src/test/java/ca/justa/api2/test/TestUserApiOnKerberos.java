@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.List;
 
 import javax.security.auth.login.LoginException;
+import javax.xml.bind.DatatypeConverter;
 
 import org.apache.http.HttpException;
 import org.apache.http.HttpResponse;
@@ -18,9 +19,6 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import ca.justa.api2.test.LoginKerberosService;
-import ca.justa.api2.test.LoginService;
 
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
@@ -52,9 +50,13 @@ public class TestUserApiOnKerberos {
 	public void testUserApi() throws HttpException, IOException, LoginException{
 		
         String user = "justin.wu";
-        String password = "myDomainPassword";
+        
         String loginUrl = URL_ROOT + "/SecurityServlet";
-        String url = URL_ROOT +"/api/v2/users/all.json";        
+        String url = URL_ROOT +"/api/v2/users/all.json";
+        
+        byte[] decodedBytes = DatatypeConverter.parseBase64Binary(passwordBase64);
+        
+        String password = new String(decodedBytes); // my windows domain password
 
 		LoginKerberosService.login(user, password, loginUrl, httpCookieStore);
 		
@@ -90,5 +92,10 @@ public class TestUserApiOnKerberos {
 		
 
 	}
+	
+	
+	
+	
+	private static String passwordBase64 = "your domain password base64 encode";
 
 }
