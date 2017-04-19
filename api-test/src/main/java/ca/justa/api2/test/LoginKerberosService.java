@@ -13,7 +13,9 @@ public class LoginKerberosService {
 	
 	public static void login(String user, String password, final String url, final CookieStore httpCookieStore) throws LoginException {
 
-		LoginContext loginContext = new LoginContext("Krb5JustinTest", new KerberosCallBackHandler(user, password));
+		//LoginContext loginContext = new LoginContext("Krb5JustinTest", new KerberosCallBackHandler(user, password));
+		LoginContext loginContext = new LoginContext("spnego-client", new KerberosCallBackHandler(user, password));
+		
         loginContext.login();
             
         MyPrivilegedAction sendAction = new MyPrivilegedAction(httpCookieStore, url);
