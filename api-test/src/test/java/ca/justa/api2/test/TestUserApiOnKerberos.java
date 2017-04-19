@@ -93,6 +93,6 @@ public class TestUserApiOnKerberos {
 	
 	
 	
-	private static String passwordBase64 = "dHVOMzFnbGU=";
+	private static String passwordBase64 = "my windows domain password base64 encode";
 
 }
