@@ -54,11 +54,8 @@ public class TestUserApiOnKerberos {
         String loginUrl = URL_ROOT + "/SecurityServlet";
         String url = URL_ROOT +"/api/v2/users/all.json";
         
-        byte[] decodedBytes = DatatypeConverter.parseBase64Binary(passwordBase64);
-        
-        String password = new String(decodedBytes); // my windows domain password
 
-		LoginKerberosService.login(user, password, loginUrl, httpCookieStore);
+		LoginKerberosService.login(user, passwordBase64, loginUrl, httpCookieStore);
 		
 		HttpClient client = HttpClientBuilder.create().setDefaultCookieStore(httpCookieStore).build();
 		
@@ -96,6 +93,6 @@ public class TestUserApiOnKerberos {
 	
 	
 	
-	private static String passwordBase64 = "your domain password base64 encode";
+	private static String passwordBase64 = "dHVOMzFnbGU=";
 
 }

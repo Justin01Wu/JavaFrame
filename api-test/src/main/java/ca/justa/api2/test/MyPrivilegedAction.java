@@ -31,7 +31,7 @@ import org.apache.http.util.EntityUtils;
 
 //it comes from 
 //http://stackoverflow.com/questions/21629132/httpclient-set-credentials-for-kerberos-authentication
-public class MyPrivilegedAction implements PrivilegedAction {
+public class MyPrivilegedAction implements PrivilegedAction<Boolean> {
 
 	private CookieStore httpCookieStore;
 	private String url;
@@ -42,7 +42,7 @@ public class MyPrivilegedAction implements PrivilegedAction {
 	}
 	
     @Override
-    public Object run() {
+    public Boolean run() {
         try {
 
             Subject current = Subject.getSubject(AccessController.getContext());
@@ -56,6 +56,7 @@ public class MyPrivilegedAction implements PrivilegedAction {
             call(url, httpCookieStore);
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
         return true;
     }
