@@ -15,7 +15,6 @@ import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.Credentials;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.CredentialsProvider;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.AuthSchemes;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -62,9 +61,9 @@ public class MyPrivilegedAction implements PrivilegedAction<Boolean> {
     }
     
     private static void call(String url, CookieStore httpCookieStore) throws IOException {
-        HttpClient httpclient = getHttpClient(httpCookieStore);
+    	
 
-        try {
+        try (CloseableHttpClient httpclient = getHttpClient(httpCookieStore)){
 
             HttpUriRequest request = new HttpGet(url);
             HttpResponse response = httpclient.execute(request);
@@ -81,13 +80,10 @@ public class MyPrivilegedAction implements PrivilegedAction<Boolean> {
             System.out.println("----------------------------------------");
 
             EntityUtils.consume(entity);
-
-        } finally {
-            httpclient.getConnectionManager().shutdown();
-        }
+        } 
     }
     
-    private static HttpClient getHttpClient(CookieStore httpCookieStore) {
+    private static CloseableHttpClient getHttpClient(CookieStore httpCookieStore) {
 
         Credentials use_jaas_creds = new Credentials() {
             public String getPassword() {

@@ -67,7 +67,7 @@ public class TestUserApiOnKerberos {
 		
 		String body = LoginService.getReturn(response);
 		
-		System.out.println(body);
+		//System.out.println(body);
 		
 		Object document = Configuration.defaultConfiguration().jsonProvider().parse(body);
 		
