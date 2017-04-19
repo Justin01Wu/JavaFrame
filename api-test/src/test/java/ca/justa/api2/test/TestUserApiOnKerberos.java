@@ -7,7 +7,6 @@ import java.net.URL;
 import java.util.List;
 
 import javax.security.auth.login.LoginException;
-import javax.xml.bind.DatatypeConverter;
 
 import org.apache.http.HttpException;
 import org.apache.http.HttpResponse;
