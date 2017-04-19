@@ -18,6 +18,7 @@ public class LoginKerberosService {
         byte[] decodedBytes = DatatypeConverter.parseBase64Binary(passwordBase64);
         
         String password = new String(decodedBytes); // my windows domain password
+        //password="wrong password";
 
 		CallbackHandler callbackHandler = new KerberosCallBackHandler(user, password);
 
