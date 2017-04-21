@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.apache.tomcat.jdbc.pool.PoolProperties;
 
+// it comes from 
+// https://tomcat.apache.org/tomcat-7.0-doc/jdbc-pool.html
 public class TomcatPoolTest {
 	
 	//public static final String DRIVER_CLASS_NAME = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
