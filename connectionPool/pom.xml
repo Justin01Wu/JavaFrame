@@ -64,6 +64,11 @@
     		<version>1.4</version>
 		</dependency>
 		
+		<dependency>
+    		<groupId>org.apache.tomcat</groupId>
+    		<artifactId>tomcat-jdbc</artifactId>
+    		<version>7.0.77</version>
+		</dependency>		
     	
     	
     	<!--  4.0 and 4.1 is for JDK 7, 4.2 is for JDK 8 -->
