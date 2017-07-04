@@ -4,7 +4,7 @@
 package scjp.annotation;
 
 @Description("Justin, will be a best developer")  
- public class ApplyAnnotation {  
+ public class ApplyAnnotation implements ApplyAnnotationInterface{  
      @Name(originate="creator:Justin",community="xyz")  
      public String getName()  
      {  
@@ -16,4 +16,9 @@ package scjp.annotation;
      {  
          return "A1234567";  
      }  
+     
+     public String getName3()  
+     {  
+         return "Name3434";  
+     } 
  } 
