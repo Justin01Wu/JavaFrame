@@ -33,6 +33,8 @@ public class Generic {
 		
 		//List<RuntimeException> ee  = getList3(IllegalArgumentException.class);  // compile error: RuntimeException didn't match IllegalArgumentException
 		
+		//List<InstantiationException> ff  = getList3(InstantiationException.class);  // compile error: InstantiationException is not the child class of RuntimeException
+		
 	}
 	
 	public static <T extends RuntimeException> List<T> getList(){
@@ -47,6 +49,7 @@ public class Generic {
 		return aa;
 	}
 
+	//  this is better way comparing with getList2 and getList
 	public static <T extends RuntimeException> List<T> getList3(Class<T> type) throws InstantiationException, IllegalAccessException{
 		List<T> aa = new ArrayList<>();
 		T a = type.newInstance();   
