@@ -44,6 +44,15 @@ public class Wildcards {
 		// OK. List<? extends Integer> is a subtype of List<? extends Number>
 	}
 
+	// http://docs.oracle.com/javase/tutorial/java/generics/wildcardGuidelines.html
+	public static void priciple() {
+		
+		List<MyStudent> le = new ArrayList<>();
+		List<? extends MyStudent> ln = le;
+		le.add(new MyStudent());
+		//ln.add(new MyStudent());  // compile-time error
+		// return type should not use Wildcard, otherwise it will get this compile error
+	}
 	
 	
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException {
