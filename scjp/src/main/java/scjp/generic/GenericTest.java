@@ -49,23 +49,54 @@ class MyDao {
 
 class MyStudent2  extends MyStudent {
 	
+	@Override
+	public String getName() {
+		return "MyStudent2: " + super.getName();
+	}
+
 }
 
 public class GenericTest {
 	
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException{
+
 		MyDao myDao = new MyDao();
 		
-		// List<MyStudent> students = myDao.findAllStudentsBySchoolId(12, MyStudent2.class); // this line will get compile error
-
+		
+		
+		System.out.println("  ===1===  ");
+		
 		List<MyStudent> students = myDao.findAllStudentsBySchoolId(12, MyStudent.class); 
 		for(MyStudent student: students){
 			System.out.println(student.toString());
+			System.out.println(student.getName());
 		}
 		
-		List<MyStudent2> student2s = myDao.findAllStudentsBySchoolId(12, MyStudent2.class);
+		
+		
+		System.out.println("  ===2===  ");
+		
+		List<MyStudent2> student2s;
+		// student2s = myDao.findAllStudentsBySchoolId(12, MyStudent2.class); // this line will get compile error
+		student2s = myDao.findAllStudentsBySchoolId(12, MyStudent2.class);		
+		
 		for(MyStudent2 student: student2s){
 			System.out.println(student.toString());
+			System.out.println(student.getName());
+		}
+		
+		
+		
+		System.out.println("  ===3===  ");
+		
+		//List<Object> student4s = myDao.findAllStudentsBySchoolId(12, MyStudent2.class);  // this line will get compile error
+		List<?> student3s = myDao.findAllStudentsBySchoolId(12, MyStudent2.class);
+		for(Object student: student3s){
+			
+			System.out.println(student.toString());
+			
+			MyStudent2 student2 = (MyStudent2)student;
+			System.out.println(student2.getName());
 		}
 		
 		
