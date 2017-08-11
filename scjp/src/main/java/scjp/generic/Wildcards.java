@@ -47,10 +47,10 @@ public class Wildcards {
 	// http://docs.oracle.com/javase/tutorial/java/generics/wildcardGuidelines.html
 	public static void priciple() {
 		
-		List<MyStudent> le = new ArrayList<>();
-		List<? extends MyStudent> ln = le;
-		le.add(new MyStudent());
-		//ln.add(new MyStudent());  // compile-time error
+		List<BaseClass<Integer>> le = new ArrayList<>();
+		List<? extends BaseClass<Integer>> ln = le;
+		le.add(new BaseClass<Integer>());
+		//ln.add(new BaseClass());  // compile-time error
 		// return type should not use Wildcard, otherwise it will get this compile error
 	}
 	
@@ -60,6 +60,9 @@ public class Wildcards {
 		
 		List<MyStudent> student2s = myDao.findAllStudentsBySchoolId(12, MyStudent.class);	
 		print2(student2s);  	//Lower Bounded Wildcards , rare case
+		
+		subtyping();
+		priciple();
 
 	}
 }
