@@ -13,20 +13,11 @@ public enum ContractTypeEnum implements LookupById {
 		this.contractTypeName = contractTypeName;
 	}
 	
-	public int getContractTypeId() {
-		return contractTypeId;
-	}
-	
 	@Override
 	public int getId() {
 		return contractTypeId;
 	}
 	
-	/**
-	 * Gets the contract type name.
-	 * 
-	 * @return the contract type name
-	 */
 	public String getContractTypeName(){
 		return contractTypeName;
 	}
