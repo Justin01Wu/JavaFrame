@@ -10,6 +10,7 @@
     <name>Java Frame work testing</name>
 	
     <modules>
+		<module>scjp</module>
         <module>hibernate_h2</module>
         <module>mock</module>
     </modules>	
