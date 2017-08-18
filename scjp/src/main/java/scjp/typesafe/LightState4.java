@@ -14,9 +14,13 @@ package scjp.typesafe;
  * @author justinwu
  */
 public enum LightState4 {
-    RED("red"), YELLOW("yellow"), GREEN("green");
-    private final String description;
-    LightState4(String description){
+    RED("red"), 
+    YELLOW("yellow"), 
+    GREEN("green");
+    
+	private final String description;
+    
+	LightState4(String description){
         this.description=description;
         
     }
