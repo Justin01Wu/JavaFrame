@@ -11,7 +11,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 /**
- * this is an advanced JMX sample to show you how to add field description on StandardMBean
+ * this is an advanced JMX sample to show you how to add class, method and parameter description on StandardMBean
  * @author justin.wu
  *
  */
@@ -28,7 +28,7 @@ public class Log4JConsole extends StandardMBean implements Log4JConsoleMBean{
 	 */
     @Override
     protected String getDescription(MBeanInfo mbeanInfo) {
-        return "    Tool for view and djust log level on class  ---Justin Wu";
+        return "    Tool for view and adjust log level on class  ---Justin Wu";
     }
 
 	/** 
