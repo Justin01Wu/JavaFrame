@@ -50,6 +50,7 @@ public class Log4JConsole extends StandardMBean implements Log4JConsoleMBean{
 
 	/** 
 	 * Override StandardMBean method to add customized name for some parameter
+	 * this method is very important, because by default, JMX only display p0, p2 as parameter, which is hard to understand
 	 */
     @Override
     protected String getParameterName(MBeanOperationInfo mbeanOperationInfo, MBeanParameterInfo mBeanParameterInfo, int sequence) {
