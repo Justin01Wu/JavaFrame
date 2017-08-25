@@ -64,15 +64,18 @@
 	
 	<build>
 		<plugins>
-			<plugin>
+
+		    <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.5</version>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.6.1</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<debug>true</debug>
+					<compilerVersion>1.8</compilerVersion>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
-			</plugin>
+			</plugin>			
 
 			<!--  attach source jar to it -->
 			<plugin>
