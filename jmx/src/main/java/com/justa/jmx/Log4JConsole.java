@@ -1,13 +1,77 @@
 package com.justa.jmx;
 
+import javax.management.MBeanInfo;
+import javax.management.MBeanOperationInfo;
+import javax.management.MBeanParameterInfo;
+import javax.management.NotCompliantMBeanException;
+import javax.management.StandardMBean;
+
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-public class Log4JConsole implements Log4JConsoleMBean{
+/**
+ * this is an advanced JMX sample to show you how to add field description on StandardMBean
+ * @author justin.wu
+ *
+ */
+public class Log4JConsole extends StandardMBean implements Log4JConsoleMBean{
 	
 	private static Logger log = Logger.getLogger(Log4JConsole.class);
 	
+	public Log4JConsole() throws NotCompliantMBeanException{
+		super(Log4JConsoleMBean.class);
+	}
+	
+	/** 
+	 * Override StandardMBean method to add customized description for this class 
+	 */
+    @Override
+    protected String getDescription(MBeanInfo mbeanInfo) {
+        return "Tool for view and djust log level on class -Justin Wu";
+    }
+
+	/** 
+	 * Override StandardMBean method to add customized description for some methods
+	 */
+    @Override
+    protected String getDescription(MBeanOperationInfo mbeanOperationInfo) {
+
+    	if (mbeanOperationInfo.getName().equals("getClassOrPackageLevel")) {
+            return "get class or package log level";
+        }
+        if (mbeanOperationInfo.getName().equals("setClassOrPackageLevel")) {
+            return "set class or package log level";
+        }
+
+
+        return super.getDescription(mbeanOperationInfo);
+    }
+
+	/** 
+	 * Override StandardMBean method to add customized description for some parameter
+	 */
+    @Override
+    protected String getParameterName(MBeanOperationInfo mbeanOperationInfo, MBeanParameterInfo mBeanParameterInfo, int sequence) {
+    	
+        if (mbeanOperationInfo.getName().equals("getClassOrPackageLevel")) {
+        	if(sequence==0){
+        		return "loggerPath";	
+        	}
+            
+        }
+        
+        if (mbeanOperationInfo.getName().equals("setClassOrPackageLevel")) {
+        	if(sequence==0){
+        		return "loggerPath";	
+        	}
+        	if(sequence==1){
+        		return "levelStr";	
+        	}        	
+        }
+        return super.getParameterName(mbeanOperationInfo, mBeanParameterInfo, sequence);
+    }
+    
 	/**
 	 * loggerPath can be package name or class full path, for example:
 	 *   com.justa.jmx.JmxApp
