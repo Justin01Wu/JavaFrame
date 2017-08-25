@@ -5,7 +5,7 @@ import java.util.concurrent.Executors;
 
 /**
  * 
- * this is a demo how to use ExecutorService to run multiple threads and let jmx to shutdown it
+ * this is a simple JMX demo: how to use ExecutorService to run multiple threads and let jmx to shutdown it
  *
  */
 public class SystemConfig implements SystemConfigMBean {

@@ -28,7 +28,7 @@ public class Log4JConsole extends StandardMBean implements Log4JConsoleMBean{
 	 */
     @Override
     protected String getDescription(MBeanInfo mbeanInfo) {
-        return "Tool for view and djust log level on class -Justin Wu";
+        return "    Tool for view and djust log level on class  ---Justin Wu";
     }
 
 	/** 
@@ -49,7 +49,7 @@ public class Log4JConsole extends StandardMBean implements Log4JConsoleMBean{
     }
 
 	/** 
-	 * Override StandardMBean method to add customized description for some parameter
+	 * Override StandardMBean method to add customized name for some parameter
 	 */
     @Override
     protected String getParameterName(MBeanOperationInfo mbeanOperationInfo, MBeanParameterInfo mBeanParameterInfo, int sequence) {
@@ -70,6 +70,39 @@ public class Log4JConsole extends StandardMBean implements Log4JConsoleMBean{
         	}        	
         }
         return super.getParameterName(mbeanOperationInfo, mBeanParameterInfo, sequence);
+    }
+    
+	/** 
+	 * Override StandardMBean method to add customized description for some parameter
+	 */
+    @Override
+    protected String getDescription(MBeanOperationInfo mbeanOperationInfo, MBeanParameterInfo mbeanParameterInfo, int sequence) {
+    	
+        if (mbeanOperationInfo.getName().equals("getClassOrPackageLevel")) {
+        	if(sequence==0){
+        		// first parameter of getClassOrPackageLevel method
+                return "loggerPath can be package name or class full path, for example: " +
+                      	 " com.justa.jmx.JmxApp " +
+                   	 "or com.justa.jmx";
+        	}
+            
+        }
+        
+        if (mbeanOperationInfo.getName().equals("setClassOrPackageLevel")) {
+        	if(sequence==0){
+        		// first parameter of setClassOrPackageLevel method
+                return "loggerPath can be package name or class full path, for example: " +
+                      	 "   com.justa.jmx.JmxApp " +
+                   	 "   or com.justa.jmx";
+        	}
+        	if(sequence==1){
+        		// second parameter of setClassOrPackageLevel method 
+                return "must be one of those strings: " +
+                      	 "TRACE, DEBUG, INFO, WARN, ERROR, FATAL";
+        	}        	
+        }
+
+        return super.getDescription(mbeanOperationInfo, mbeanParameterInfo, sequence);
     }
     
 	/**
