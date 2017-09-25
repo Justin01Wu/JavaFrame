@@ -18,6 +18,8 @@ public class TestClassLoading {
 		 // details: https://stackoverflow.com/questions/8100376/class-forname-vs-classloader-loadclass-which-to-use-for-dynamic-loading
 		 Object c = test3.newInstance();  // will run static block and constructor
 		 System.out.println(c);
+		 
+		 // in JMX, the third way sometimes throw ClassNotFoundException, but first two won't
 
 	 }
 }
