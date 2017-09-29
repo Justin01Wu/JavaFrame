@@ -15,6 +15,11 @@ class Richmond{
     System.out.print("Richmond");
  }
 }
+/**
+ * test doclet 2223
+ * @author justin.wu
+ *
+ */
 public class HughJampton extends Richmond{
     private int i;
     public static void main(String argv[]){
