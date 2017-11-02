@@ -1,6 +1,6 @@
 package scjp.enums;
 
-public enum ContractTypeEnum implements LookupById {
+public enum ContractTypeEnum implements LookupById<ContractTypeEnum> {
 	UNKNOWN(0, "unknown"),
 	TypeA(1, "Type A"),
 	TypeB(2, "Type B");
