@@ -2,7 +2,6 @@ package com.justa.test;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class MsJdbcTest {	
@@ -20,7 +19,8 @@ public class MsJdbcTest {
 			//Connection con = DriverManager.getConnection(jdbcUrl,"vcapstest", "vcapstest");
 			Connection con = DriverManager.getConnection(jdbcUrl);
 			
-			//setContext(con);
+			JdbcUtil.setContext(con);
+			//JdbcUtil.readSession(con);   //will fail
 
 			JtdsJdbcTest.execQuery(con);
 
@@ -28,15 +28,5 @@ public class MsJdbcTest {
 			con.close();
 		}
 		
-		private static void setContext(Connection con) throws SQLException{
-			
-			// since sql server 2012, it has sp_set_session_context, which can be used in RLS(Row level security) function 
-			PreparedStatement ps = con.prepareStatement("exec sp_set_session_context @key=N'VCAPSUserId', @value=?");  
-			// call sp_set_session_context to set current user info which will be used by RLS function
-			int userId =  13;
-			ps.setInt(1, userId);
-			boolean success  = ps.execute();
-			
-		}
 
 }

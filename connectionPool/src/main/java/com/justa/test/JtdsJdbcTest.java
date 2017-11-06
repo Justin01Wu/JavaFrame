@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class JtdsJdbcTest {
 
-	private static String jdbcUrl = "jdbc:jtds:sqlserver://CAVCEXPDB01:1433/Vcaps_qa01_9088_20170316";
+	private static String jdbcUrl = "jdbc:jtds:sqlserver://CAVCDBTST03:1433/vcaps_QA_20170430";
 	
 	public static void main(String[] args) throws ClassNotFoundException,
 			SQLException {
@@ -19,7 +19,9 @@ public class JtdsJdbcTest {
 
 		// connect to DB
 		Connection con = DriverManager.getConnection(jdbcUrl,"vcapstest", "vcapstest");
-
+		JdbcUtil.setContext(con);
+		JdbcUtil.readSession(con);
+		
 		execQuery(con);		
 		
 		con.close();
@@ -41,5 +43,7 @@ public class JtdsJdbcTest {
 		con.close();
 		
 	}
+	
+
 
 }
