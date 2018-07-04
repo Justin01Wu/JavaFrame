@@ -28,13 +28,16 @@ public class TestJCE {
 
 		SecureRandom random = SecureRandom.getInstanceStrong();
 		KeyGenerator keyGen = KeyGenerator.getInstance("AES");
-		keyGen.init(128, random);
+
+		//keyGen.init(128, random);
+		keyGen.init(256, random);  //  if you don't have advanced JCE, then it will fail with "Illegal key size"
+		
 		SecretKey key = keyGen.generateKey();
 	
 		Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding", "SunJCE");
 		byte[] iv = new byte[12];
 		random.nextBytes(iv);
-		GCMParameterSpec spec = new GCMParameterSpec(256, iv);
+		GCMParameterSpec spec = new GCMParameterSpec(128, iv);
 		cipher.init(Cipher.ENCRYPT_MODE, key, spec);
 		byte[] cipherText = cipher.doFinal(input);
 	
