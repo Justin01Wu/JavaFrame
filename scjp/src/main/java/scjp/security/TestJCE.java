@@ -23,7 +23,7 @@ public class TestJCE {
 			throws NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException, 
 			InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException {
 		
-		Security.setProperty("crypto.policy", "unlimited");
+		//Security.setProperty("crypto.policy", "unlimited");
 		byte[] input = "My super secret text".getBytes();
 
 		SecureRandom random = SecureRandom.getInstanceStrong();
