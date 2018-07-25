@@ -18,6 +18,12 @@ public class TestMapMerge {
         a.put(key,2);
         a.merge(key,3, (oldValue, newValue) -> newValue * oldValue );
         System.out.println(a.get(key));  // will output "6"
+        
+        // test merge
+        a.clear();;
+        a.merge(key,3, (oldValue, newValue) -> newValue + oldValue );
+        System.out.println(a.get(key));  // will output "3"
+        
 
     }
 }
