@@ -10,7 +10,7 @@ public class TestMapMerge {
         // test merge
         String key = "Test1"; 
         a.put(key,1);
-        a.merge(key,3, (oldValue, newValue) -> oldValue + newValue);
+        a.merge(key,3, (oldValue, newValue) -> oldValue + newValue);  // since JDK 1.8
         System.out.println(a.get(key));  // will output "4"
 
         
