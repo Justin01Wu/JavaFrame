@@ -13,6 +13,8 @@
 		<module>scjp</module>
         <module>hibernate_h2</module>
         <module>mock</module>
+		<module>library-test</module>
+		
     </modules>	
 	
 </project>
