@@ -15,7 +15,6 @@ import microsoft.exchange.webservices.data.core.enumeration.availability.Availab
 import microsoft.exchange.webservices.data.core.enumeration.availability.FreeBusyViewType;
 import microsoft.exchange.webservices.data.core.enumeration.availability.MeetingAttendeeType;
 import microsoft.exchange.webservices.data.core.enumeration.availability.SuggestionQuality;
-import microsoft.exchange.webservices.data.core.enumeration.misc.ConnectingIdType;
 import microsoft.exchange.webservices.data.core.enumeration.misc.ExchangeVersion;
 import microsoft.exchange.webservices.data.core.enumeration.property.WellKnownFolderName;
 import microsoft.exchange.webservices.data.core.exception.service.local.ServiceLocalException;
@@ -28,12 +27,13 @@ import microsoft.exchange.webservices.data.core.service.item.Item;
 import microsoft.exchange.webservices.data.core.service.schema.AppointmentSchema;
 import microsoft.exchange.webservices.data.credential.ExchangeCredentials;
 import microsoft.exchange.webservices.data.credential.WebCredentials;
-import microsoft.exchange.webservices.data.misc.ImpersonatedUserId;
 import microsoft.exchange.webservices.data.misc.availability.AttendeeInfo;
 import microsoft.exchange.webservices.data.misc.availability.AvailabilityOptions;
 import microsoft.exchange.webservices.data.misc.availability.GetUserAvailabilityResults;
 import microsoft.exchange.webservices.data.misc.availability.TimeWindow;
+import microsoft.exchange.webservices.data.property.complex.FolderId;
 import microsoft.exchange.webservices.data.property.complex.ItemId;
+import microsoft.exchange.webservices.data.property.complex.Mailbox;
 import microsoft.exchange.webservices.data.property.complex.MessageBody;
 import microsoft.exchange.webservices.data.property.complex.availability.CalendarEvent;
 import microsoft.exchange.webservices.data.property.complex.availability.OofSettings;
@@ -130,6 +130,9 @@ public class MSExchangeEmailService {
         appointmentData.put("appointmentSubject", appointment.getSubject());
         appointmentData.put("appointmentStartTime", appointment.getStart() + "");
         appointmentData.put("appointmentEndTime", appointment.getEnd() + "");
+        
+        appointmentData.put("appointmentOrganizer", appointment.getOrganizer().getName());
+        appointmentData.put("appointmentOrganizerAddress", appointment.getOrganizer().getAddress());
         //appointmentData.put("appointmentBody", appointment.getBody().toString());
         return appointmentData;
     }
@@ -148,7 +151,7 @@ public class MSExchangeEmailService {
 
         CalendarFolder calendarFolder = CalendarFolder.bind(service, WellKnownFolderName.Calendar, new PropertySet());
         CalendarView cView = new CalendarView(startDate, endDate, 5);
-        cView.setPropertySet(new PropertySet(AppointmentSchema.Subject, AppointmentSchema.Start, AppointmentSchema.End));// we can set other properties 
+        cView.setPropertySet(new PropertySet(AppointmentSchema.Subject, AppointmentSchema.Start, AppointmentSchema.End, AppointmentSchema.Organizer));// we can set other properties 
         // as well depending upon our need.
         FindItemsResults<Appointment> appointments = calendarFolder.findAppointments(cView);
         int i = 1;
@@ -158,11 +161,48 @@ public class MSExchangeEmailService {
             Map<String, String> appointmentData = readAppointment(appointment);
             System.out.println("subject : " + appointmentData.get("appointmentSubject").toString());
             System.out.println("On : " + appointmentData.get("appointmentStartTime").toString());
+            System.out.println("end : " + appointmentData.get("appointmentEndTime").toString());
+            System.out.println("organizer : " + appointmentData.get("appointmentOrganizer").toString());
+            System.out.println("organizerAdd : " + appointmentData.get("appointmentOrganizerAddress").toString());
+            
+            
             apntmtDataList.add(appointmentData);
         }
             
         return apntmtDataList;
     }
+    
+    public List<Map<String, String>> readAppointmentsFromSharedResource() throws Exception {
+        List <Map<String, String>> apntmtDataList = new ArrayList <> ();
+        Calendar now = Calendar.getInstance();
+        Date startDate = Calendar.getInstance().getTime();
+        now.add(Calendar.DATE, 30);
+        Date endDate = now.getTime();
+
+        Mailbox target = new Mailbox("resource.waterloo@validusre.bm");
+        FolderId folderToAccess = new FolderId(WellKnownFolderName.Calendar, target);
+        CalendarFolder calendarFolder = CalendarFolder.bind(service, folderToAccess);
+        
+        CalendarView cView = new CalendarView(startDate, endDate, 5);
+        cView.setPropertySet(new PropertySet(AppointmentSchema.Subject, AppointmentSchema.Start, AppointmentSchema.End, AppointmentSchema.Organizer));// we can set other properties 
+        // as well depending upon our need.
+        FindItemsResults<Appointment> appointments = calendarFolder.findAppointments(cView);
+        int i = 1;
+        List<Appointment> appList = appointments.getItems();
+        for (Appointment appointment : appList) {
+            System.out.println("\nAPPOINTMENT #" + (i++) + ":");
+            Map<String, String> appointmentData = readAppointment(appointment);
+            System.out.println("subject : " + appointmentData.get("appointmentSubject").toString());
+            System.out.println("On : " + appointmentData.get("appointmentStartTime").toString());
+            System.out.println("end : " + appointmentData.get("appointmentEndTime").toString());
+            System.out.println("organizer : " + appointmentData.get("appointmentOrganizer").toString());
+            System.out.println("organizerAdd : " + appointmentData.get("appointmentOrganizerAddress").toString());
+            apntmtDataList.add(appointmentData);
+        }
+            
+        return apntmtDataList;
+    }
+    
     public void sendEmails() throws Exception {
         List<String> recipientsList = new ArrayList<>();
         recipientsList.add("email.id1@domain1.com");
@@ -190,17 +230,18 @@ public class MSExchangeEmailService {
         // Create a collection of attendees. 
         List<AttendeeInfo> attendees = new ArrayList<>(); 
      
-        attendees.add(new AttendeeInfo("Arpit.Jain@validusresearch.com>", MeetingAttendeeType.Organizer, true)); 
-        attendees.add(new AttendeeInfo("justin.wu@validusresearch.com>", MeetingAttendeeType.Required, true));
+        attendees.add(new AttendeeInfo("justin.wu@validusresearch.com", MeetingAttendeeType.Organizer, true)); 
+        attendees.add(new AttendeeInfo("Arpit.Jain@validusresearch.com", MeetingAttendeeType.Required, true));
      
         // Specify options to request free/busy information and suggested meeting times.
         AvailabilityOptions availabilityOptions = new AvailabilityOptions(); 
-        availabilityOptions.setGoodSuggestionThreshold(5); 
+        availabilityOptions.setGoodSuggestionThreshold(49); 
         availabilityOptions.setMaximumNonWorkHoursSuggestionsPerDay(0);
         availabilityOptions.setMaximumSuggestionsPerDay(2);
+        
         // Note that 60 minutes is the default value for MeetingDuration, but setting it explicitly for demonstration purposes.
         availabilityOptions.setMeetingDuration(30); 
-        availabilityOptions.setMinimumSuggestionQuality(SuggestionQuality.Good); 
+        availabilityOptions.setMinimumSuggestionQuality(SuggestionQuality.Excellent); 
         
     	Date startDate = new Date();
     	Calendar endDate =  Calendar.getInstance();
@@ -241,10 +282,10 @@ public class MSExchangeEmailService {
     
     public void getOutOfOfficeStatus() throws Exception {
     	//service.setImpersonatedUserId(new ImpersonatedUserId(ConnectingIdType.SmtpAddress, "Arpit.Jain@validusresearch.com"));
-    	//OofSettings userOOFSettings = service.getUserOofSettings("Arpit.Jain@validusresearch.com");	
+    	OofSettings userOOFSettings = service.getUserOofSettings("Arpit.Jain@validusresearch.com");	
     	// need some permission setting for other people on exchange server
     	
-    	OofSettings userOOFSettings = service.getUserOofSettings("justin.wu@validusresearch.com");
+    	//OofSettings userOOFSettings = service.getUserOofSettings("justin.wu@validusresearch.com");
     	
     	System.out.println(userOOFSettings.getState());
     }
@@ -254,11 +295,16 @@ public class MSExchangeEmailService {
         
     	MSExchangeEmailService msees = new MSExchangeEmailService();
         //msees.readEmails();
-        //msees.readAppointments();
+        
+    	msees.readAppointments();
+    	
+    	//msees.readAppointmentsFromSharedResource();
         
     	//msees.getSuggestedMeetingTimesAndFreeBusyInfo();
     	
-    	msees.getOutOfOfficeStatus();
+    	
+    	
+    	//msees.getOutOfOfficeStatus();
 
         //msees.sendEmails();
     }
