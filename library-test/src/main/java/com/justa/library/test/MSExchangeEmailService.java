@@ -282,6 +282,7 @@ public class MSExchangeEmailService {
     
     public void getOutOfOfficeStatus() throws Exception {
     	//service.setImpersonatedUserId(new ImpersonatedUserId(ConnectingIdType.SmtpAddress, "Arpit.Jain@validusresearch.com"));
+    	
     	OofSettings userOOFSettings = service.getUserOofSettings("Arpit.Jain@validusresearch.com");	
     	// need some permission setting for other people on exchange server
     	
@@ -296,11 +297,11 @@ public class MSExchangeEmailService {
     	MSExchangeEmailService msees = new MSExchangeEmailService();
         //msees.readEmails();
         
-    	msees.readAppointments();
+    	//msees.readAppointments();
     	
     	//msees.readAppointmentsFromSharedResource();
         
-    	//msees.getSuggestedMeetingTimesAndFreeBusyInfo();
+    	msees.getSuggestedMeetingTimesAndFreeBusyInfo();
     	
     	
     	
