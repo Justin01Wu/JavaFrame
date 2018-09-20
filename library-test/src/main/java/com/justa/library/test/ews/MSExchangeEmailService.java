@@ -1,4 +1,4 @@
-package com.justa.library.test;
+package com.justa.library.test.ews;
 
 import java.net.URI;
 import java.util.ArrayList;
