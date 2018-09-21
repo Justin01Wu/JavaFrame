@@ -45,7 +45,9 @@ public class ExchangeEventFinder {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		now.setTime(df.parse("2018-09-21T14:00:00"));
 
-        Date startDate = Calendar.getInstance().getTime();
+		Calendar start = Calendar.getInstance();
+		start.setTime(now.getTime());
+        Date startDate = start.getTime();
         now.add(Calendar.MINUTE, 30);
         Date endDate = now.getTime();
         
