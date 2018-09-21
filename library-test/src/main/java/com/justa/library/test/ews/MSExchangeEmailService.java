@@ -16,6 +16,7 @@ import microsoft.exchange.webservices.data.core.enumeration.availability.FreeBus
 import microsoft.exchange.webservices.data.core.enumeration.availability.MeetingAttendeeType;
 import microsoft.exchange.webservices.data.core.enumeration.availability.SuggestionQuality;
 import microsoft.exchange.webservices.data.core.enumeration.misc.ExchangeVersion;
+import microsoft.exchange.webservices.data.core.enumeration.property.LegacyFreeBusyStatus;
 import microsoft.exchange.webservices.data.core.enumeration.property.WellKnownFolderName;
 import microsoft.exchange.webservices.data.core.exception.service.local.ServiceLocalException;
 import microsoft.exchange.webservices.data.core.response.AttendeeAvailability;
@@ -126,14 +127,19 @@ public class MSExchangeEmailService {
      */
     public Map<String, String> readAppointment(Appointment appointment) throws ServiceLocalException {
         Map<String, String> appointmentData = new HashMap<>();
-        appointmentData.put("appointmentItemId", appointment.getId().toString());
-        appointmentData.put("appointmentSubject", appointment.getSubject());
-        appointmentData.put("appointmentStartTime", appointment.getStart() + "");
-        appointmentData.put("appointmentEndTime", appointment.getEnd() + "");
+        appointmentData.put("ItemId", appointment.getId().toString());
+        appointmentData.put("Subject", appointment.getSubject());
+        appointmentData.put("StartTime", appointment.getStart() + "");
+        appointmentData.put("EndTime", appointment.getEnd() + "");
         
-        appointmentData.put("appointmentOrganizer", appointment.getOrganizer().getName());
-        appointmentData.put("appointmentOrganizerAddress", appointment.getOrganizer().getAddress());
+        appointmentData.put("Organizer", appointment.getOrganizer().getName());
+        appointmentData.put("OrganizerAddress", appointment.getOrganizer().getAddress());
         //appointmentData.put("appointmentBody", appointment.getBody().toString());
+        appointmentData.put("IsAllDay", appointment.getIsAllDayEvent().toString());
+        appointmentData.put("Type", appointment.getAppointmentType().toString());
+        appointmentData.put("LastModifiedName", appointment.getLastModifiedName().toString());
+        appointmentData.put("IsMeeting", appointment.getIsMeeting().toString());
+        
         return appointmentData;
     }
     /**
@@ -151,40 +157,56 @@ public class MSExchangeEmailService {
 
         CalendarFolder calendarFolder = CalendarFolder.bind(service, WellKnownFolderName.Calendar, new PropertySet());
         CalendarView cView = new CalendarView(startDate, endDate, 5);
-        cView.setPropertySet(new PropertySet(AppointmentSchema.Subject, AppointmentSchema.Start, AppointmentSchema.End, AppointmentSchema.Organizer));// we can set other properties 
-        // as well depending upon our need.
+        
+        PropertySet propertySet = getPropertySet();
+        cView.setPropertySet(propertySet); 
+
+        
         FindItemsResults<Appointment> appointments = calendarFolder.findAppointments(cView);
         int i = 1;
         List<Appointment> appList = appointments.getItems();
         for (Appointment appointment : appList) {
             System.out.println("\nAPPOINTMENT #" + (i++) + ":");
             Map<String, String> appointmentData = readAppointment(appointment);
-            System.out.println("subject : " + appointmentData.get("appointmentSubject").toString());
-            System.out.println("On : " + appointmentData.get("appointmentStartTime").toString());
-            System.out.println("end : " + appointmentData.get("appointmentEndTime").toString());
-            System.out.println("organizer : " + appointmentData.get("appointmentOrganizer").toString());
-            System.out.println("organizerAdd : " + appointmentData.get("appointmentOrganizerAddress").toString());
             
-            
+            for(String key: appointmentData.keySet()) {
+            	String item  = appointmentData.get(key);
+            	System.out.println(key + " : " + item);
+            }            
             apntmtDataList.add(appointmentData);
         }
             
         return apntmtDataList;
     }
     
+    private PropertySet getPropertySet() {
+    	// we can set other properties,  as well depending upon our need.
+    	return new PropertySet(
+    			AppointmentSchema.Subject, 
+    			AppointmentSchema.Start, 
+    			AppointmentSchema.End, 
+    			AppointmentSchema.Organizer, 
+    			AppointmentSchema.IsAllDayEvent,
+    			AppointmentSchema.LastModifiedName,
+    			AppointmentSchema.IsMeeting,
+    			AppointmentSchema.AppointmentType
+    			);
+    }
+    
     public List<Map<String, String>> readAppointmentsFromSharedResource() throws Exception {
         List <Map<String, String>> apntmtDataList = new ArrayList <> ();
         Calendar now = Calendar.getInstance();
         Date startDate = Calendar.getInstance().getTime();
-        now.add(Calendar.DATE, 30);
+        now.add(Calendar.DATE, 2);
         Date endDate = now.getTime();
 
         Mailbox target = new Mailbox("resource.waterloo@validusre.bm");
         FolderId folderToAccess = new FolderId(WellKnownFolderName.Calendar, target);
         CalendarFolder calendarFolder = CalendarFolder.bind(service, folderToAccess);
         
-        CalendarView cView = new CalendarView(startDate, endDate, 5);
-        cView.setPropertySet(new PropertySet(AppointmentSchema.Subject, AppointmentSchema.Start, AppointmentSchema.End, AppointmentSchema.Organizer));// we can set other properties 
+        CalendarView cView = new CalendarView(startDate, endDate, 20);
+        PropertySet propertySet = getPropertySet();
+        cView.setPropertySet(propertySet); 
         // as well depending upon our need.
         FindItemsResults<Appointment> appointments = calendarFolder.findAppointments(cView);
         int i = 1;
@@ -192,11 +214,11 @@ public class MSExchangeEmailService {
         for (Appointment appointment : appList) {
             System.out.println("\nAPPOINTMENT #" + (i++) + ":");
             Map<String, String> appointmentData = readAppointment(appointment);
-            System.out.println("subject : " + appointmentData.get("appointmentSubject").toString());
-            System.out.println("On : " + appointmentData.get("appointmentStartTime").toString());
-            System.out.println("end : " + appointmentData.get("appointmentEndTime").toString());
-            System.out.println("organizer : " + appointmentData.get("appointmentOrganizer").toString());
-            System.out.println("organizerAdd : " + appointmentData.get("appointmentOrganizerAddress").toString());
+            
+            for(String key: appointmentData.keySet()) {
+            	String item  = appointmentData.get(key);
+            	System.out.println(key + " : " + item);
+            }    
             apntmtDataList.add(appointmentData);
         }
             
@@ -247,7 +269,7 @@ public class MSExchangeEmailService {
     	Calendar endDate =  Calendar.getInstance();
     	endDate.add(Calendar.DAY_OF_MONTH, 3);
         availabilityOptions.setDetailedSuggestionsWindow( new TimeWindow(startDate, endDate.getTime()));
-        availabilityOptions.setRequestedFreeBusyView(FreeBusyViewType.FreeBusy);
+        availabilityOptions.setRequestedFreeBusyView(FreeBusyViewType.Detailed);
      
         // Return free/busy information and a set of suggested meeting times. 
         // This method results in a GetUserAvailabilityRequest call to EWS.
@@ -273,7 +295,17 @@ public class MSExchangeEmailService {
         for (AttendeeAvailability availability : results.getAttendeesAvailability()) {
         	System.out.println(String.format("Availability information for %s:\n", attendees.get(i).getSmtpAddress()));
             for (CalendarEvent calEvent : availability.getCalendarEvents()){
-            	System.out.println(String.format("\tBusy from %s to %s \n", calEvent.getStartTime().toString(), calEvent.getEndTime().toString()));
+            	if(calEvent.getFreeBusyStatus().equals(LegacyFreeBusyStatus.Busy)) {
+            		System.out.println(String.format("\tBusy from %s to %s \n", calEvent.getStartTime().toString(), calEvent.getEndTime().toString()));	
+            	}else if(calEvent.getFreeBusyStatus().equals(LegacyFreeBusyStatus.Busy)) {
+            		System.out.println(String.format("\tFree from %s to %s \n", calEvent.getStartTime().toString(), calEvent.getEndTime().toString()));
+            	}
+            	if(calEvent.getDetails() != null) {
+            		// no permission to read others subject
+            		System.out.println(calEvent.getDetails().getSubject());  	
+            	}
+            	
+            	
             }
             i++;
         }
@@ -299,9 +331,9 @@ public class MSExchangeEmailService {
         
     	//msees.readAppointments();
     	
-    	//msees.readAppointmentsFromSharedResource();
+    	msees.readAppointmentsFromSharedResource();
         
-    	msees.getSuggestedMeetingTimesAndFreeBusyInfo();
+    	//msees.getSuggestedMeetingTimesAndFreeBusyInfo();
     	
     	
     	
