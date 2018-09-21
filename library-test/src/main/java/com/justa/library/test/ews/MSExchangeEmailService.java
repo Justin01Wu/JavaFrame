@@ -125,7 +125,7 @@ public class MSExchangeEmailService {
      * Creating a message data map as a return value.
      * @throws ServiceLocalException 
      */
-    public Map<String, String> readAppointment(Appointment appointment) throws ServiceLocalException {
+    public static Map<String, String> readAppointment(Appointment appointment) throws ServiceLocalException {
         Map<String, String> appointmentData = new HashMap<>();
         appointmentData.put("ItemId", appointment.getId().toString());
         appointmentData.put("Subject", appointment.getSubject());
@@ -179,7 +179,7 @@ public class MSExchangeEmailService {
         return apntmtDataList;
     }
     
-    private PropertySet getPropertySet() {
+    public static PropertySet getPropertySet() {
     	// we can set other properties,  as well depending upon our need.
     	return new PropertySet(
     			AppointmentSchema.Subject, 
