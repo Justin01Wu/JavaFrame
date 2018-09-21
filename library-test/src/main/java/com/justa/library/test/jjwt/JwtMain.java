@@ -26,9 +26,9 @@ public class JwtMain {
         
         Map<String,Object> claims = new HashMap<String,Object>();
         //创建payload的私有声明（根据特定的业务需要添加，如果要拿这个做验证，一般是需要和jwt的接收方提前沟通好验证方式的）
-        claims.put("uid", "DSSFAWDWADAS...");
-        claims.put("user_name", "admin");
-        claims.put("nick_name","DASDA121");
+        //claims.put("uid", "DSSFAWDWADAS...");
+        //claims.put("user_name", "admin");
+        //claims.put("nick_name","DASDA121");
         claims.put("justin","I can add any fields into JWT");
         SecretKey key = generalKey();//生成签名的时候使用的秘钥secret,这个方法本地封装了的，一般可以从本地配置文件中读取，切记这个秘钥不能外露哦。它就是你服务端的私钥，在任何场景都不应该流露出去。一旦客户端得知这个secret, 那就意味着客户端是可以自我签发jwt了。
         
@@ -71,23 +71,25 @@ public class JwtMain {
 	public void printJwt(Claims c){
         System.out.println("  id: " + c.getId()); //jwt Id
         System.out.println("  IssuedAt: " + c.getIssuedAt());  //Mon Feb 05 20:50:49 CST 2018
+        System.out.println("  expiredAt: " + c.getExpiration());  //Mon Feb 05 20:50:49 CST 2018
         System.out.println("  subject: "+ c.getSubject());  //{id:100,name:justin.wu}
         System.out.println("  issuer: " + c.getIssuer());//null
-        System.out.println("  uid: " + c.get("uid", String.class));//DSSFAWDWADAS...
-        System.out.println("  justin: " + c.get("justin", String.class));
-        
+        //System.out.println("  uid: " + c.get("uid", String.class));//DSSFAWDWADAS...
+        System.out.println("  justin: " + c.get("justin", String.class));        
 		
 	}
 	
 	public static void main(String[] args) throws Exception {
 		JwtMain util=   new JwtMain();
-        String ab=util.createJWT("2409347239042", "{id:100,name:justin wu}", 60000000);
+        String ab=util.createJWT("2409347239042", "{id:100,name:justin wu}", 60000000000l);
         System.out.println(ab);
         
         Claims c=util.parseJWT(ab); 
         util.printJwt(c);
         
-        String jwt="eyJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiJEU1NGQVdEV0FEQVMuLi4iLCJzdWIiOiJ7aWQ6MTAwLG5hbWU6anVzdGluIHd1fSIsInVzZXJfbmFtZSI6ImFkbWluIiwibmlja19uYW1lIjoiREFTREExMjEiLCJleHAiOjE1Mzc1MTYzOTIsImlhdCI6MTUzNzQ1NjM5MiwianRpIjoiMjQwOTM0NzIzOTA0MiJ9.7xied4UllNhiEjsjGqcOy4P51Zogl7IS4S6Co7jZf1w";
+        System.out.println();
+        
+        String jwt="eyJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiJEU1NGQVdEV0FEQVMuLi4iLCJzdWIiOiJ7aWQ6MTAwLG5hbWU6anVzdGluIHd1fSIsInVzZXJfbmFtZSI6ImFkbWluIiwibmlja19uYW1lIjoiREFTREExMjEiLCJqdXN0aW4iOiJJIGNhbiBhZGQgYW55IGZpZWxkcyBpbnRvIEpXVCIsImV4cCI6MTU5NzU1ODEwOCwiaWF0IjoxNTM3NTU4MTA4LCJqdGkiOiIyNDA5MzQ3MjM5MDQyIn0.pzM9RECxJbhzMN7tEsRpJCKy2HP7KX2S6wbVYs8d40Q";
         c=util.parseJWT(jwt);//注意：如果jwt已经过期了，这里会抛出jwt过期异常。
         util.printJwt(c);
     }
