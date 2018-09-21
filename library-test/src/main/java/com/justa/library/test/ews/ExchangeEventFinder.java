@@ -45,12 +45,9 @@ public class ExchangeEventFinder {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		now.setTime(df.parse("2018-09-21T14:00:00"));
 
-		Calendar start = Calendar.getInstance();
-		start.setTime(now.getTime());
-        Date startDate = start.getTime();
+        Date startDate = now.getTime();
         now.add(Calendar.MINUTE, 30);
-        Date endDate = now.getTime();
-        
+        Date endDate = now.getTime();        
 			
         Mailbox target = new Mailbox("resource.waterloo@validusre.bm");
         FolderId folderToAccess = new FolderId(WellKnownFolderName.Calendar, target);
@@ -63,7 +60,7 @@ public class ExchangeEventFinder {
         FindItemsResults<Appointment> appointments = calendarFolder.findAppointments(cView);
         List<Appointment> appList = appointments.getItems();
         
-        //System.out.println("all foudn events:" + appList.size());
+        //System.out.println("all found events:" + appList.size());
         
         for (Appointment appointment : appList) {
 
