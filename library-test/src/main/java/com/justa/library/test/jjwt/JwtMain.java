@@ -3,15 +3,14 @@ package com.justa.library.test.jjwt;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.impl.crypto.MacProvider;
 
 
 // comes from https://blog.csdn.net/qq_37636695/article/details/79265711
@@ -30,17 +29,17 @@ public class JwtMain {
         //claims.put("user_name", "admin");
         //claims.put("nick_name","DASDA121");
         claims.put("justin","I can add any fields into JWT");
-        SecretKey key = generalKey();//生成签名的时候使用的秘钥secret,这个方法本地封装了的，一般可以从本地配置文件中读取，切记这个秘钥不能外露哦。它就是你服务端的私钥，在任何场景都不应该流露出去。一旦客户端得知这个secret, 那就意味着客户端是可以自我签发jwt了。
+        SecretKey key = JWTSetting.SecretKey;
+        //生成签名的时候使用的秘钥secret,这个方法本地封装了的，一般可以从本地配置文件中读取，切记这个秘钥不能外露哦。它就是你服务端的私钥，在任何场景都不应该流露出去。
+        //一旦客户端得知这个secret, 那就意味着客户端是可以自我签发jwt了。
         
-        SecretKey key2 = MacProvider.generateKey(); //这里是加密解密的key。
-
-
-        
+        String tokenId = UUID.randomUUID().toString();
         //下面就是在为payload添加各种标准声明和私有声明了
         JwtBuilder builder = Jwts.builder() //这里其实就是new一个JwtBuilder，设置jwt的body
                 .setClaims(claims)          //如果有私有声明，一定要先设置这个自己创建的私有的声明，这个是给builder的claim赋值，一旦写在标准的声明赋值之后，就是覆盖了那些标准的声明的
-                .setId(id)                  //设置jti(JWT ID)：是JWT的唯一标识，根据业务需要，这个可以设置为一个不重复的值，主要用来作为一次性token,从而回避重放攻击。
+                .setId(tokenId)             //设置jti(JWT ID)：是JWT的唯一标识，根据业务需要，这个可以设置为一个不重复的值，主要用来作为一次性token,从而回避重放攻击。
                 .setIssuedAt(now)           //iat: jwt的签发时间
+                .setIssuer("Jersey2")           //iss: who issue this token
                 .setSubject(subject)        //sub(Subject)：代表这个JWT的主体，即它的所有人，这个是一个json格式的字符串，可以存放什么userid，roldid之类的，作为什么用户的唯一标志。
                 .signWith(signatureAlgorithm, key);//设置签名使用的签名算法和签名使用的秘钥
         if (ttlMillis >= 0) {
@@ -54,18 +53,11 @@ public class JwtMain {
     }
 	
 	public Claims parseJWT(String jwt) throws Exception{
-        SecretKey key = generalKey();  //签名秘钥，和生成的签名的秘钥一模一样
+        SecretKey key = JWTSetting.SecretKey;  //签名秘钥，和生成的签名的秘钥一模一样
         Claims claims = Jwts.parser()  //得到DefaultJwtParser
            .setSigningKey(key)         //设置签名的秘钥
            .parseClaimsJws(jwt).getBody();//设置需要解析的jwt
         return claims;
-    }
-	
-	public SecretKey generalKey(){
-        byte[] stringKey = JWTSetting.JWT_SECRET.getBytes();  
-        // JWT_SECRET will be on server setting on prod, better to add salt to avoid both developer and admin to easily get real key         
-        SecretKey key = new SecretKeySpec(stringKey, 0, stringKey.length, "AES");// 根据给定的字节数组使用AES加密算法构造一个密钥，使用 encodedKey中的始于且包含 0 到前 leng 个字节这是当然是所有。（后面的文章中马上回推出讲解Java加密和解密的一些算法）
-        return key;
     }
 	
 	public void printJwt(Claims c){
@@ -89,7 +81,7 @@ public class JwtMain {
         
         System.out.println();
         
-        String jwt="eyJhbGciOiJIUzI1NiJ9.eyJ1aWQiOiJEU1NGQVdEV0FEQVMuLi4iLCJzdWIiOiJ7aWQ6MTAwLG5hbWU6anVzdGluIHd1fSIsInVzZXJfbmFtZSI6ImFkbWluIiwibmlja19uYW1lIjoiREFTREExMjEiLCJqdXN0aW4iOiJJIGNhbiBhZGQgYW55IGZpZWxkcyBpbnRvIEpXVCIsImV4cCI6MTU5NzU1ODEwOCwiaWF0IjoxNTM3NTU4MTA4LCJqdGkiOiIyNDA5MzQ3MjM5MDQyIn0.pzM9RECxJbhzMN7tEsRpJCKy2HP7KX2S6wbVYs8d40Q";
+        String jwt="eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ7aWQ6MTAwLG5hbWU6anVzdGluIHd1fSIsImlzcyI6IkplcnNleTIiLCJqdXN0aW4iOiJJIGNhbiBhZGQgYW55IGZpZWxkcyBpbnRvIEpXVCIsImV4cCI6MTU5Nzk4Mzk2NywiaWF0IjoxNTM3OTgzOTY3LCJqdGkiOiJmMTA2MGMwZC01YjU4LTRhZTYtODg4Yy1hZjI4NmJkNjBhOGUifQ.hI--i6x1817S9kui3Fh8IBNzZ3FlI6t0uAPX9meX0C0";
         c=util.parseJWT(jwt);//注意：如果jwt已经过期了，这里会抛出jwt过期异常。
         util.printJwt(c);
     }
