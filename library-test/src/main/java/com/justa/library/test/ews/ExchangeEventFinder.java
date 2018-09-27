@@ -37,17 +37,30 @@ public class ExchangeEventFinder {
 
 	}
 	
-    public boolean findTargetEventWithUserNameAndSpecialSubject(String targetUsername, String containedString) throws Exception {
+    public boolean findTargetEventWithUserNameAndSpecialSubject(String targetUsername, String containedString, Date targetDate) throws Exception {
 
-        Calendar now = Calendar.getInstance();
+		
+		Date startDate;
+		Calendar cal;
+		if(targetDate == null) {
+			// use now as start date
+			
+	        cal = Calendar.getInstance();
+	        // those two line just for unit testing
+	        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+			cal.setTime(df.parse("2018-09-21T14:00:00"));
 
-        // those two line just for unit testing
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-		now.setTime(df.parse("2018-09-21T14:00:00"));
-
-        Date startDate = now.getTime();
-        now.add(Calendar.MINUTE, 30);
-        Date endDate = now.getTime();        
+			startDate = cal.getTime();
+			
+		}else {
+			cal = Calendar.getInstance();
+			cal.setTime(targetDate);
+			startDate = targetDate;
+			
+		}
+        
+		cal.add(Calendar.MINUTE, 30);
+        Date endDate = cal.getTime();        
 			
         Mailbox target = new Mailbox("resource.waterloo@validusre.bm");
         FolderId folderToAccess = new FolderId(WellKnownFolderName.Calendar, target);
@@ -71,6 +84,10 @@ public class ExchangeEventFinder {
         	if(!appointment.getLastModifiedName().equals(targetUsername)) {
         		continue;
         	};
+        	
+        	System.out.println(appointment.getCategories().toString());
+        	
+
         	return true;
             
         }
@@ -82,23 +99,40 @@ public class ExchangeEventFinder {
         
     	ExchangeEventFinder finder = new ExchangeEventFinder();
     	
+    	
+    	// find Mike's event
     	String targetUserName = "Resource Waterloo";  // for some reason, the shared calendar will update the orignalModifyName to itself sometimes
     	String subjectSubStr = "Mike - WFH";
-    	boolean result = finder.findTargetEventWithUserNameAndSpecialSubject(targetUserName, subjectSubStr);
+    	boolean result = finder.findTargetEventWithUserNameAndSpecialSubject(targetUserName, subjectSubStr, null);
     	if(result) {
-    		System.out.println("Find Mike is WFH");
+    		System.out.println("Find "+ subjectSubStr);
     	}else {
-    		System.out.println("Didn't find Mike is WFH");
+    		System.out.println("Didn't find "+ subjectSubStr);
     	}
     	
+    	// find Justin's event
     	targetUserName = "Justin Wu";
     	subjectSubStr = "Justin test event 2234";
-    	result = finder.findTargetEventWithUserNameAndSpecialSubject(targetUserName, subjectSubStr);
+    	result = finder.findTargetEventWithUserNameAndSpecialSubject(targetUserName, subjectSubStr, null);
     	if(result) {
-    		System.out.println("Find Justin test event 2234");
+    		System.out.println("Find "+ subjectSubStr);
     	}else {
-    		System.out.println("Didn't find Justin test event 2234");
+    		System.out.println("Didn't find "+ subjectSubStr);
     	}
+    	
+    	// find event on target date
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        Calendar now = Calendar.getInstance();
+		now.setTime(df.parse("2018-09-23T14:00:00"));
+    	targetUserName = "Huaning Nie";
+    	subjectSubStr = "Mike test event mac";
+    	result = finder.findTargetEventWithUserNameAndSpecialSubject(targetUserName, subjectSubStr, now.getTime());
+    	if(result) {
+    		System.out.println("Find "+ subjectSubStr);
+    	}else {
+    		System.out.println("Didn't find "+ subjectSubStr);
+    	}
+
     }
 
 	

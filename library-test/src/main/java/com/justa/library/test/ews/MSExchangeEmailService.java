@@ -189,6 +189,7 @@ public class MSExchangeEmailService {
     			AppointmentSchema.IsAllDayEvent,
     			AppointmentSchema.LastModifiedName,
     			AppointmentSchema.IsMeeting,
+    			AppointmentSchema.Categories,
     			AppointmentSchema.AppointmentType
     			);
     }
