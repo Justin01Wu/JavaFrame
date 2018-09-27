@@ -36,6 +36,13 @@ public class JwtUtil {
 	        .withIssuer("Jersey2")
 	        .build(); //Reusable verifier instance
 	    DecodedJWT jwt = verifier.verify(token);
+		
+		return jwt;
+		
+		
+	}
+	
+	public static void printToken(DecodedJWT jwt) {
 		System.out.println("subject=" + jwt.getSubject());
 		System.out.println("keyId=" + jwt.getKeyId());
 		System.out.println("Id=" + jwt.getId());
@@ -44,9 +51,6 @@ public class JwtUtil {
 		// customized field
 		System.out.println("userName=" + jwt.getClaim("userName").asString());
 		System.out.println("justin=" + jwt.getClaim("justin").asString());
-		
-		return jwt;
-		
 		
 	}
 	
@@ -57,8 +61,8 @@ public class JwtUtil {
 		
 		System.out.println(token);
 		
-		JwtUtil.verifyToken(token);
-
+		DecodedJWT jwt = JwtUtil.verifyToken(token);
+		printToken(jwt);
 	}
 	
 	
