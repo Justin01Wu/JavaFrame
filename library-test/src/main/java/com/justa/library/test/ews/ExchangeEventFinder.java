@@ -104,7 +104,7 @@ public class ExchangeEventFinder {
     
     public static void main(String[] args) throws Exception {
         
-    	boolean testMode = false;
+    	boolean testMode = false;  // test mode make  event scope big, it helps to testing
     	ExchangeEventFinder finder = new ExchangeEventFinder(testMode);            	
     	
     	String email="justin.wu@validusresearch.com";
