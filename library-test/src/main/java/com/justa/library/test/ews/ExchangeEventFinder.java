@@ -1,140 +1,120 @@
 package com.justa.library.test.ews;
 
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import microsoft.exchange.webservices.data.core.ExchangeService;
-import microsoft.exchange.webservices.data.core.PropertySet;
+import microsoft.exchange.webservices.data.core.enumeration.availability.AvailabilityData;
+import microsoft.exchange.webservices.data.core.enumeration.availability.FreeBusyViewType;
+import microsoft.exchange.webservices.data.core.enumeration.availability.MeetingAttendeeType;
+import microsoft.exchange.webservices.data.core.enumeration.availability.SuggestionQuality;
 import microsoft.exchange.webservices.data.core.enumeration.misc.ExchangeVersion;
-import microsoft.exchange.webservices.data.core.enumeration.property.WellKnownFolderName;
-import microsoft.exchange.webservices.data.core.service.folder.CalendarFolder;
-import microsoft.exchange.webservices.data.core.service.item.Appointment;
+import microsoft.exchange.webservices.data.core.response.AttendeeAvailability;
 import microsoft.exchange.webservices.data.credential.ExchangeCredentials;
 import microsoft.exchange.webservices.data.credential.WebCredentials;
-import microsoft.exchange.webservices.data.property.complex.FolderId;
-import microsoft.exchange.webservices.data.property.complex.Mailbox;
-import microsoft.exchange.webservices.data.search.CalendarView;
-import microsoft.exchange.webservices.data.search.FindItemsResults;
+import microsoft.exchange.webservices.data.misc.availability.AttendeeInfo;
+import microsoft.exchange.webservices.data.misc.availability.AvailabilityOptions;
+import microsoft.exchange.webservices.data.misc.availability.GetUserAvailabilityResults;
+import microsoft.exchange.webservices.data.misc.availability.TimeWindow;
+import microsoft.exchange.webservices.data.property.complex.availability.CalendarEvent;
 
 public class ExchangeEventFinder {
 	
-	private ExchangeService service;
-	
-	public ExchangeEventFinder() throws URISyntaxException {
-		service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
-		//service = new ExchangeService(ExchangeVersion.Exchange2007_SP1); //depending on the version of your Exchange. 
-        service.setUrl(new URI(EWSSetting.ServerUrl));		
-        
+	private static ExchangeService service;	 
+	private boolean testMode= false;
+
+    static {
+        try {
+            service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);            
+            service.setUrl(new URI(EWSSetting.ServerUrl));
+            
+        } catch (Exception e) {
+        	service =  null;
+            e.printStackTrace();
+        }
+    }
+    
+    public ExchangeEventFinder(boolean testMode) {
+    	this.testMode = testMode;
+    	if(service == null) {
+    		throw new RuntimeException("exchange server EWS is not available: "  + EWSSetting.ServerUrl);
+    	}
 		String pass = new String(Base64.getDecoder().decode(EWSSetting.PasswordEnc));
         ExchangeCredentials credentials = new WebCredentials(EWSSetting.UserName, pass, EWSSetting.DOMAIN_NAME);
         service.setCredentials(credentials);
+    }
 
-	}
 	
-    public boolean findTargetEventWithUserNameAndSpecialSubject(String targetUsername, String containedString, Date targetDate) throws Exception {
-
-		
-		Date startDate;
-		Calendar cal;
-		if(targetDate == null) {
-			// use now as start date
-			
-	        cal = Calendar.getInstance();
-	        // those two line just for unit testing
-	        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-			cal.setTime(df.parse("2018-09-21T14:00:00"));
-
-			startDate = cal.getTime();
-			
-		}else {
-			cal = Calendar.getInstance();
-			cal.setTime(targetDate);
-			startDate = targetDate;
-			
-		}
+    public boolean getWorkingElsewhereStatus(String email) throws Exception {
+    	
+        List<AttendeeInfo> attendees = new ArrayList<>();
+        attendees.add(new AttendeeInfo(email, MeetingAttendeeType.Required, true));
+     
+        AvailabilityOptions availabilityOptions = new AvailabilityOptions(); 
+        availabilityOptions.setGoodSuggestionThreshold(49); 
+        availabilityOptions.setMaximumNonWorkHoursSuggestionsPerDay(0);
+        availabilityOptions.setMaximumSuggestionsPerDay(1);
         
-		cal.add(Calendar.MINUTE, 30);
-        Date endDate = cal.getTime();        
-			
-        Mailbox target = new Mailbox("resource.waterloo@validusre.bm");
-        FolderId folderToAccess = new FolderId(WellKnownFolderName.Calendar, target);
-        CalendarFolder calendarFolder = CalendarFolder.bind(service, folderToAccess);
+        availabilityOptions.setMinimumSuggestionQuality(SuggestionQuality.Excellent); 
+        availabilityOptions.setMeetingDuration(30);
         
-        CalendarView cView = new CalendarView(startDate, endDate, 20);
-        PropertySet propertySet = MSExchangeEmailService.getPropertySet();
-        cView.setPropertySet(propertySet); 
-        // as well depending upon our need.
-        FindItemsResults<Appointment> appointments = calendarFolder.findAppointments(cView);
-        List<Appointment> appList = appointments.getItems();
+    	Date startDate = new Date();
+    	Calendar endDate =  Calendar.getInstance();
+    	if(testMode) {
+    		endDate.add(Calendar.DAY_OF_MONTH, 5);    		
+    	}else {
+    		endDate.add(Calendar.HOUR_OF_DAY, 8);	
+    	}  
+    	
+        availabilityOptions.setDetailedSuggestionsWindow( new TimeWindow(startDate, endDate.getTime()));
+        availabilityOptions.setRequestedFreeBusyView(FreeBusyViewType.Detailed);
+     
+        GetUserAvailabilityResults results = service.getUserAvailability(attendees, 
+                                                                         availabilityOptions.getDetailedSuggestionsWindow(), 
+                                                                         AvailabilityData.FreeBusyAndSuggestions, 
+                                                                         availabilityOptions); 
+                
         
-        //System.out.println("all found events:" + appList.size());
+        boolean found  = findWorkingElsewhereEvent(results, attendees, startDate);
+        return found;
         
-        for (Appointment appointment : appList) {
 
-        	if(!appointment.getSubject().contains(containedString)) {
-        		continue;
-        	};
-
-        	if(!appointment.getLastModifiedName().equals(targetUsername)) {
-        		continue;
-        	};
+    }
+    private boolean findWorkingElsewhereEvent(GetUserAvailabilityResults results, List<AttendeeInfo> attendees, Date startDate){
+        
+    	long allowedTimeGap = testMode? 72l*3600000l:3600000l;  // 72 hour  in test mode, one hour in real mode
+        for (AttendeeAvailability availability : results.getAttendeesAvailability()) {
         	
-        	System.out.println(appointment.getCategories().toString());
-        	
-
-        	return true;
-            
+            for (CalendarEvent calEvent : availability.getCalendarEvents()){
+            	if(calEvent.getFreeBusyStatus() == null) {
+            		System.out.println(String.format("\t %s to %s \n", calEvent.getStartTime().toString(), calEvent.getEndTime().toString()));
+            		if(calEvent.getStartTime().getTime() - startDate.getTime() < allowedTimeGap) {
+            			return true;	
+            		}           		            		
+            	}
+            }
         }
-            
         return false;
+
     }
     
     public static void main(String[] args) throws Exception {
         
-    	ExchangeEventFinder finder = new ExchangeEventFinder();
+    	boolean testMode = false;
+    	ExchangeEventFinder finder = new ExchangeEventFinder(testMode);            	
     	
-    	
-    	// find Mike's event
-    	String targetUserName = "Resource Waterloo";  // for some reason, the shared calendar will update the orignalModifyName to itself sometimes
-    	String subjectSubStr = "Mike - WFH";
-    	boolean result = finder.findTargetEventWithUserNameAndSpecialSubject(targetUserName, subjectSubStr, null);
-    	if(result) {
-    		System.out.println("Find "+ subjectSubStr);
-    	}else {
-    		System.out.println("Didn't find "+ subjectSubStr);
+    	String email="justin.wu@validusresearch.com";
+    	boolean isWorkingElsewhere = finder.getWorkingElsewhereStatus(email);
+    	if(isWorkingElsewhere) {
+    		System.out.println(email + " is working elsewhere");	
     	}
-    	
-    	// find Justin's event
-    	targetUserName = "Justin Wu";
-    	subjectSubStr = "Justin test event 2234";
-    	result = finder.findTargetEventWithUserNameAndSpecialSubject(targetUserName, subjectSubStr, null);
-    	if(result) {
-    		System.out.println("Find "+ subjectSubStr);
-    	}else {
-    		System.out.println("Didn't find "+ subjectSubStr);
-    	}
-    	
-    	// find event on target date
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        Calendar now = Calendar.getInstance();
-		now.setTime(df.parse("2018-09-23T14:00:00"));
-    	targetUserName = "Huaning Nie";
-    	subjectSubStr = "Mike test event mac";
-    	result = finder.findTargetEventWithUserNameAndSpecialSubject(targetUserName, subjectSubStr, now.getTime());
-    	if(result) {
-    		System.out.println("Find "+ subjectSubStr);
-    	}else {
-    		System.out.println("Didn't find "+ subjectSubStr);
-    	}
-
-    }
-
 	
+
+    	
+    }
 
 }

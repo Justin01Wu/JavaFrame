@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ import microsoft.exchange.webservices.data.core.enumeration.availability.FreeBus
 import microsoft.exchange.webservices.data.core.enumeration.availability.MeetingAttendeeType;
 import microsoft.exchange.webservices.data.core.enumeration.availability.SuggestionQuality;
 import microsoft.exchange.webservices.data.core.enumeration.misc.ExchangeVersion;
-import microsoft.exchange.webservices.data.core.enumeration.property.LegacyFreeBusyStatus;
+import microsoft.exchange.webservices.data.core.enumeration.misc.TraceFlags;
 import microsoft.exchange.webservices.data.core.enumeration.property.WellKnownFolderName;
 import microsoft.exchange.webservices.data.core.exception.service.local.ServiceLocalException;
 import microsoft.exchange.webservices.data.core.response.AttendeeAvailability;
@@ -38,8 +39,6 @@ import microsoft.exchange.webservices.data.property.complex.Mailbox;
 import microsoft.exchange.webservices.data.property.complex.MessageBody;
 import microsoft.exchange.webservices.data.property.complex.availability.CalendarEvent;
 import microsoft.exchange.webservices.data.property.complex.availability.OofSettings;
-import microsoft.exchange.webservices.data.property.complex.availability.Suggestion;
-import microsoft.exchange.webservices.data.property.complex.availability.TimeSuggestion;
 import microsoft.exchange.webservices.data.search.CalendarView;
 import microsoft.exchange.webservices.data.search.FindItemsResults;
 import microsoft.exchange.webservices.data.search.ItemView;
@@ -59,7 +58,16 @@ public class MSExchangeEmailService {
         try {
             service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);
 //service = new ExchangeService(ExchangeVersion.Exchange2007_SP1); //depending on the version of your Exchange. 
+            
+            service.setTraceListener(new TraceListener());
+            
+            //EnumSet<TraceFlags> settings = EnumSet.of(TraceFlags.EwsRequest, TraceFlags.EwsResponse, TraceFlags.DebugMessage, TraceFlags.AutodiscoverResponse);            
+            EnumSet<TraceFlags> settings = EnumSet.of(TraceFlags.EwsResponse);
+            service.setTraceFlags( settings);
+            service.setTraceEnabled( true);
+
             service.setUrl(new URI(EWSSetting.ServerUrl));
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -248,13 +256,12 @@ public class MSExchangeEmailService {
     
     // comes from 
     // https://docs.microsoft.com/en-us/exchange/client-developer/exchange-web-services/how-to-get-free-busy-information-by-using-ews-in-exchange
-    public void getSuggestedMeetingTimesAndFreeBusyInfo() throws Exception {
+    public void getSuggestedMeetingTimesAndFreeBusyInfo(String email) throws Exception {
     	
         // Create a collection of attendees. 
         List<AttendeeInfo> attendees = new ArrayList<>(); 
      
-        attendees.add(new AttendeeInfo("justin.wu@validusresearch.com", MeetingAttendeeType.Organizer, true)); 
-        attendees.add(new AttendeeInfo("Arpit.Jain@validusresearch.com", MeetingAttendeeType.Required, true));
+        attendees.add(new AttendeeInfo(email, MeetingAttendeeType.Required, true));
      
         // Specify options to request free/busy information and suggested meeting times.
         AvailabilityOptions availabilityOptions = new AvailabilityOptions(); 
@@ -268,7 +275,7 @@ public class MSExchangeEmailService {
         
     	Date startDate = new Date();
     	Calendar endDate =  Calendar.getInstance();
-    	endDate.add(Calendar.DAY_OF_MONTH, 3);
+    	endDate.add(Calendar.DAY_OF_MONTH, 5);
         availabilityOptions.setDetailedSuggestionsWindow( new TimeWindow(startDate, endDate.getTime()));
         availabilityOptions.setRequestedFreeBusyView(FreeBusyViewType.Detailed);
      
@@ -279,27 +286,36 @@ public class MSExchangeEmailService {
                                                                          AvailabilityData.FreeBusyAndSuggestions, 
                                                                          availabilityOptions); 
         // Display suggested meeting times. 
-        System.out.println(String.format("Availability for %s and %s", attendees.get(0).getSmtpAddress(), attendees.get(1).getSmtpAddress())); 
-         
-     
-        for (Suggestion suggestion : results.getSuggestions()) { 
-        	System.out.println(String.format("Suggested date: %s\n", suggestion.getDate().toString())); 
-        	System.out.println("Suggested meeting times:\n");
-            for (TimeSuggestion timeSuggestion : suggestion.getTimeSuggestions()) { 
-            	System.out.println(String.format("\t %s - %s\n",  timeSuggestion.getMeetingTime().toString(), " not done")); 
-                                          //timeSuggestion.getMeetingTime().Add(TimeSpan.FromMinutes(availabilityOptions.getMeetingDuration()).ToShortTimeString()); 
-            } 
-        }
+        System.out.println(String.format("Availability for %s ", attendees.get(0).getSmtpAddress() )); 
                 
+        
+        if(TraceListener.hasWorkingElsewhereEvent.get()) {
+        	System.out.println(String.format(" user %s has WorkingElsewhere event in target period", attendees.get(0).getSmtpAddress()));
+        }
+        
+        print(results, attendees);
+
+    }
+    
+    
+    
+    private void print(GetUserAvailabilityResults results, List<AttendeeInfo> attendees){
         int i = 0;
         // Display free/busy times.
         for (AttendeeAvailability availability : results.getAttendeesAvailability()) {
         	System.out.println(String.format("Availability information for %s:\n", attendees.get(i).getSmtpAddress()));
             for (CalendarEvent calEvent : availability.getCalendarEvents()){
-            	if(calEvent.getFreeBusyStatus().equals(LegacyFreeBusyStatus.Busy)) {
-            		System.out.println(String.format("\tBusy from %s to %s \n", calEvent.getStartTime().toString(), calEvent.getEndTime().toString()));	
-            	}else if(calEvent.getFreeBusyStatus().equals(LegacyFreeBusyStatus.Busy)) {
-            		System.out.println(String.format("\tFree from %s to %s \n", calEvent.getStartTime().toString(), calEvent.getEndTime().toString()));
+            	if(calEvent.getFreeBusyStatus() == null) {
+            		// it is WorkingElsewhere event, but EWS Java lib is a little old, so can't get this type
+            		System.out.println(String.format("\t     %s to %s \n", 
+            				calEvent.getStartTime().toString(), 
+            				calEvent.getEndTime().toString()));
+            		
+            	}else {
+            		System.out.println(String.format("\t %s from %s to %s \n", 
+            				calEvent.getFreeBusyStatus().name(), 
+            				calEvent.getStartTime().toString(), 
+            				calEvent.getEndTime().toString()));
             	}
             	if(calEvent.getDetails() != null) {
             		// no permission to read others subject
@@ -332,9 +348,12 @@ public class MSExchangeEmailService {
         
     	//msees.readAppointments();
     	
-    	msees.readAppointmentsFromSharedResource();
-        
-    	//msees.getSuggestedMeetingTimesAndFreeBusyInfo();
+    	//msees.readAppointmentsFromSharedResource();
+    	
+    	msees.getSuggestedMeetingTimesAndFreeBusyInfo("Arpit.Jain@validusresearch.com");
+    	msees.getSuggestedMeetingTimesAndFreeBusyInfo("Jeff.Clements@validusre.bm");
+    	msees.getSuggestedMeetingTimesAndFreeBusyInfo("kristi.champ@validusresearch.com");
+    	
     	
     	
     	
