@@ -40,7 +40,7 @@ public class ExchangeEventFinderTest {
 	
 	@Test
 	public void testJustin() throws Exception {
-		ExchangeEventFinder finder = new ExchangeEventFinder(true);
+		ExchangeEventFinder finder = new ExchangeEventFinder(false);
 		String email="justin.wu@validusresearch.com";
 		boolean isWorkingElsewhere = finder.getWorkingElsewhereStatus(email);
 		if(isWorkingElsewhere) {

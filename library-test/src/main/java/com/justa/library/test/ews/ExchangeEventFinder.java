@@ -67,7 +67,7 @@ public class ExchangeEventFinder {
     	if(testMode) {
     		endDate.add(Calendar.DAY_OF_MONTH, 5);    		
     	}else {
-    		endDate.add(Calendar.HOUR_OF_DAY, 8);	
+    		endDate.add(Calendar.HOUR_OF_DAY, 12);	
     	}  
     	
         availabilityOptions.setDetailedSuggestionsWindow( new TimeWindow(startDate, endDate.getTime()));
