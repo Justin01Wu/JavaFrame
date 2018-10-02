@@ -2,7 +2,6 @@ package com.justa.library.test.ews;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Base64;
 import java.util.Calendar;
@@ -98,7 +97,8 @@ public class ExchangeSharedEventFinder {
     public static void main(String[] args) throws Exception {
         
     	ExchangeSharedEventFinder finder = new ExchangeSharedEventFinder();
-    	
+    	Calendar now = Calendar.getInstance();
+    	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
     	
     	// find Mike's event
     	String targetUserName = "Resource Waterloo";  // for some reason, the shared calendar will update the orignalModifyName to itself sometimes
@@ -112,8 +112,9 @@ public class ExchangeSharedEventFinder {
     	
     	// find Justin's event
     	targetUserName = "Justin Wu";
-    	subjectSubStr = "Justin test event 2234";
-    	result = finder.findTargetEventWithUserNameAndSpecialSubject(targetUserName, subjectSubStr, null);
+    	subjectSubStr = "Justin test event 2234";        
+		now.setTime(df.parse("2018-10-02T14:00:00"));    	
+    	result = finder.findTargetEventWithUserNameAndSpecialSubject(targetUserName, subjectSubStr, now.getTime());
     	if(result) {
     		System.out.println("Find "+ subjectSubStr);
     	}else {
@@ -121,8 +122,8 @@ public class ExchangeSharedEventFinder {
     	}
     	
     	// find event on target date
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-        Calendar now = Calendar.getInstance();
+        
+        
 		now.setTime(df.parse("2018-09-23T14:00:00"));
     	targetUserName = "Huaning Nie";
     	subjectSubStr = "Mike test event mac";
