@@ -44,7 +44,10 @@ public class ExchangeEventFinder {
     		throw new RuntimeException("exchange server EWS is not available: "  + EWSSetting.ServerUrl);
     	}
 		String pass = new String(Base64.getDecoder().decode(EWSSetting.PasswordEnc));
-        ExchangeCredentials credentials = new WebCredentials(EWSSetting.UserName, pass, EWSSetting.DOMAIN_NAME);
+		String userName = EWSSetting.UserName;
+		//pass="xx";
+		//userName = "xx";
+        ExchangeCredentials credentials = new WebCredentials(userName, pass, EWSSetting.DOMAIN_NAME);
         service.setCredentials(credentials);
     }
 
