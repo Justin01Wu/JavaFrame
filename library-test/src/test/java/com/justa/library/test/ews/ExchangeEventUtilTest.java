@@ -6,7 +6,7 @@ import org.junit.Test;
 
 import microsoft.exchange.webservices.data.core.ExchangeService;
 
-public class ExchangeEventFinderTest {
+public class ExchangeEventUtilTest {
 
 	@Test
 	public void testArpit() throws Exception {
@@ -14,8 +14,8 @@ public class ExchangeEventFinderTest {
     	String email="Arpit.Jain@validusresearch.com";    	
     	
     	boolean isWorkingElsewhere = false;
-    	try(ExchangeService service = ExchangeEventFinder.getExchangeService()){
-    		isWorkingElsewhere = ExchangeEventFinder.getWorkingElsewhereStatus(service, email);	
+    	try(ExchangeService service = ExchangeEventUtil.getExchangeService()){
+    		isWorkingElsewhere = ExchangeEventUtil.getWorkingElsewhereStatus(service, email);	
     	}
     	if(isWorkingElsewhere) {
     		System.out.println(email + " is working elsewhere");	
@@ -29,8 +29,8 @@ public class ExchangeEventFinderTest {
 		String email="Jeff.Clements@validusre.bm";
 		
     	boolean isWorkingElsewhere = false;
-    	try(ExchangeService service = ExchangeEventFinder.getExchangeService()){
-    		isWorkingElsewhere = ExchangeEventFinder.getWorkingElsewhereStatus(service, email);	
+    	try(ExchangeService service = ExchangeEventUtil.getExchangeService()){
+    		isWorkingElsewhere = ExchangeEventUtil.getWorkingElsewhereStatus(service, email);	
     	}
 		if(isWorkingElsewhere) {
 			System.out.println(email + " is working elsewhere");	
@@ -42,8 +42,8 @@ public class ExchangeEventFinderTest {
 		
 		String email="kristi.champ@validusresearch.com";
     	boolean isWorkingElsewhere = false;
-    	try(ExchangeService service = ExchangeEventFinder.getExchangeService()){
-    		isWorkingElsewhere = ExchangeEventFinder.getWorkingElsewhereStatus(service, email);	
+    	try(ExchangeService service = ExchangeEventUtil.getExchangeService()){
+    		isWorkingElsewhere = ExchangeEventUtil.getWorkingElsewhereStatus(service, email);	
     	}
 		if(isWorkingElsewhere) {
 			System.out.println(email + " is working elsewhere");	
@@ -56,8 +56,8 @@ public class ExchangeEventFinderTest {
 		
 		String email="justin.wu@validusresearch.com";
     	boolean isWorkingElsewhere = false;
-    	try(ExchangeService service = ExchangeEventFinder.getExchangeService()){
-    		isWorkingElsewhere = ExchangeEventFinder.getWorkingElsewhereStatus(service, email);	
+    	try(ExchangeService service = ExchangeEventUtil.getExchangeService()){
+    		isWorkingElsewhere = ExchangeEventUtil.getWorkingElsewhereStatus(service, email);	
     	}
 		if(isWorkingElsewhere) {
 			System.out.println(email + " is working elsewhere");	

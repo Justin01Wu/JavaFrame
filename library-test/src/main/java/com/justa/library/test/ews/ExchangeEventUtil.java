@@ -23,7 +23,7 @@ import microsoft.exchange.webservices.data.misc.availability.GetUserAvailability
 import microsoft.exchange.webservices.data.misc.availability.TimeWindow;
 import microsoft.exchange.webservices.data.property.complex.availability.CalendarEvent;
 
-public class ExchangeEventFinder {
+public class ExchangeEventUtil {
 	
     
     public static ExchangeService getExchangeService() throws URISyntaxException, IllegalArgumentException {
@@ -137,8 +137,8 @@ public class ExchangeEventFinder {
     	boolean testMode = false;  // test mode make  event scope big, it helps to testing
     	String email="justin.wu@validusresearch.com";
     	boolean isWorkingElsewhere = false;
-    	try(ExchangeService service = ExchangeEventFinder.getExchangeService()){
-    		isWorkingElsewhere = ExchangeEventFinder.getWorkingElsewhereStatus(service, email, testMode);	
+    	try(ExchangeService service = ExchangeEventUtil.getExchangeService()){
+    		isWorkingElsewhere = ExchangeEventUtil.getWorkingElsewhereStatus(service, email, testMode);	
     	}
     	
     	if(isWorkingElsewhere) {
