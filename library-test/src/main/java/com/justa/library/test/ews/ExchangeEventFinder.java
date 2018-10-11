@@ -1,6 +1,7 @@
 package com.justa.library.test.ews;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Calendar;
@@ -24,35 +25,27 @@ import microsoft.exchange.webservices.data.property.complex.availability.Calenda
 
 public class ExchangeEventFinder {
 	
-	private static ExchangeService service;	 
-	private boolean testMode= false;
-
-    static {
-        try {
-            service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);            
-            service.setUrl(new URI(EWSSetting.ServerUrl));
-            
-        } catch (Exception e) {
-        	service =  null;
-            e.printStackTrace();
-        }
-    }
     
-    public ExchangeEventFinder(boolean testMode) {
-    	this.testMode = testMode;
-    	if(service == null) {
-    		throw new RuntimeException("exchange server EWS is not available: "  + EWSSetting.ServerUrl);
-    	}
+    public static ExchangeService getExchangeService() throws URISyntaxException, IllegalArgumentException {
+    	ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);            
+        service.setUrl(new URI(EWSSetting.ServerUrl));
 		String pass = new String(Base64.getDecoder().decode(EWSSetting.PasswordEnc));
 		String userName = EWSSetting.UserName;
 		//pass="xx";
 		//userName = "xx";
         ExchangeCredentials credentials = new WebCredentials(userName, pass, EWSSetting.DOMAIN_NAME);
         service.setCredentials(credentials);
+        return service;
+    	
     }
-
+    
 	
-    public boolean getWorkingElsewhereStatus(String email) throws Exception {
+    public static boolean getWorkingElsewhereStatus(ExchangeService service, String email) throws Exception {
+		boolean testMode = false;
+		return getWorkingElsewhereStatus(service, email, testMode);
+	}
+	
+    protected static boolean getWorkingElsewhereStatus(ExchangeService service, String email, boolean testMode) throws Exception {
     	
         List<AttendeeInfo> attendees = new ArrayList<>();
         attendees.add(new AttendeeInfo(email, MeetingAttendeeType.Required, true));
@@ -82,12 +75,15 @@ public class ExchangeEventFinder {
                                                                          availabilityOptions); 
                 
         
-        boolean found  = findWorkingElsewhereEvent(results, attendees, startDate);
+        boolean found  = findWorkingElsewhereEvent(results, attendees, startDate, testMode);
+        if(testMode) {
+        	printEvents(results, attendees);
+        }     
         return found;
         
 
     }
-    private boolean findWorkingElsewhereEvent(GetUserAvailabilityResults results, List<AttendeeInfo> attendees, Date startDate){
+    private static boolean findWorkingElsewhereEvent(GetUserAvailabilityResults results, List<AttendeeInfo> attendees, Date startDate, boolean testMode){
         
     	long allowedTimeGap = testMode? 72l*3600000l:3600000l;  // 72 hour  in test mode, one hour in real mode
         for (AttendeeAvailability availability : results.getAttendeesAvailability()) {
@@ -105,13 +101,46 @@ public class ExchangeEventFinder {
 
     }
     
+    private static void printEvents(GetUserAvailabilityResults results, List<AttendeeInfo> attendees){
+        int i = 0;
+        // Display free/busy times.
+        for (AttendeeAvailability availability : results.getAttendeesAvailability()) {
+        	System.out.println(String.format("Availability information for %s:\n", attendees.get(i).getSmtpAddress()));
+            for (CalendarEvent calEvent : availability.getCalendarEvents()){
+            	if(calEvent.getFreeBusyStatus() == null) {
+            		// it is WorkingElsewhere event, but EWS Java lib is a little old, so can't get this type
+            		System.out.println(String.format("\t     %s to %s \n", 
+            				calEvent.getStartTime().toString(), 
+            				calEvent.getEndTime().toString()));
+            		
+            	}else {
+            		System.out.println(String.format("\t %s from %s to %s \n", 
+            				calEvent.getFreeBusyStatus().name(), 
+            				calEvent.getStartTime().toString(), 
+            				calEvent.getEndTime().toString()));
+            	}
+            	if(calEvent.getDetails() != null) {
+            		// no permission to read others subject
+            		System.out.println(calEvent.getDetails().getSubject());  	
+            	}
+            	
+            	
+            }
+            i++;
+        }
+
+    }
+
+    
     public static void main(String[] args) throws Exception {
         
     	boolean testMode = false;  // test mode make  event scope big, it helps to testing
-    	ExchangeEventFinder finder = new ExchangeEventFinder(testMode);            	
-    	
     	String email="justin.wu@validusresearch.com";
-    	boolean isWorkingElsewhere = finder.getWorkingElsewhereStatus(email);
+    	boolean isWorkingElsewhere = false;
+    	try(ExchangeService service = ExchangeEventFinder.getExchangeService()){
+    		isWorkingElsewhere = ExchangeEventFinder.getWorkingElsewhereStatus(service, email, testMode);	
+    	}
+    	
     	if(isWorkingElsewhere) {
     		System.out.println(email + " is working elsewhere");	
     	}

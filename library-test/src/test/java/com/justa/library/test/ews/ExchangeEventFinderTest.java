@@ -4,13 +4,19 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import microsoft.exchange.webservices.data.core.ExchangeService;
+
 public class ExchangeEventFinderTest {
 
 	@Test
 	public void testArpit() throws Exception {
-		ExchangeEventFinder finder = new ExchangeEventFinder(true);
-    	String email="Arpit.Jain@validusresearch.com";
-    	boolean isWorkingElsewhere = finder.getWorkingElsewhereStatus(email);
+		
+    	String email="Arpit.Jain@validusresearch.com";    	
+    	
+    	boolean isWorkingElsewhere = false;
+    	try(ExchangeService service = ExchangeEventFinder.getExchangeService()){
+    		isWorkingElsewhere = ExchangeEventFinder.getWorkingElsewhereStatus(service, email);	
+    	}
     	if(isWorkingElsewhere) {
     		System.out.println(email + " is working elsewhere");	
     	}
@@ -19,9 +25,13 @@ public class ExchangeEventFinderTest {
 	
 	@Test
 	public void testJeff() throws Exception {
-		ExchangeEventFinder finder = new ExchangeEventFinder(true);
+		
 		String email="Jeff.Clements@validusre.bm";
-		boolean isWorkingElsewhere = finder.getWorkingElsewhereStatus(email);
+		
+    	boolean isWorkingElsewhere = false;
+    	try(ExchangeService service = ExchangeEventFinder.getExchangeService()){
+    		isWorkingElsewhere = ExchangeEventFinder.getWorkingElsewhereStatus(service, email);	
+    	}
 		if(isWorkingElsewhere) {
 			System.out.println(email + " is working elsewhere");	
 		}
@@ -29,9 +39,12 @@ public class ExchangeEventFinderTest {
 	
 	@Test
 	public void testkristi() throws Exception {
-		ExchangeEventFinder finder = new ExchangeEventFinder(true);
+		
 		String email="kristi.champ@validusresearch.com";
-		boolean isWorkingElsewhere = finder.getWorkingElsewhereStatus(email);
+    	boolean isWorkingElsewhere = false;
+    	try(ExchangeService service = ExchangeEventFinder.getExchangeService()){
+    		isWorkingElsewhere = ExchangeEventFinder.getWorkingElsewhereStatus(service, email);	
+    	}
 		if(isWorkingElsewhere) {
 			System.out.println(email + " is working elsewhere");	
 		}
@@ -40,9 +53,12 @@ public class ExchangeEventFinderTest {
 	
 	@Test
 	public void testJustin() throws Exception {
-		ExchangeEventFinder finder = new ExchangeEventFinder(false);
+		
 		String email="justin.wu@validusresearch.com";
-		boolean isWorkingElsewhere = finder.getWorkingElsewhereStatus(email);
+    	boolean isWorkingElsewhere = false;
+    	try(ExchangeService service = ExchangeEventFinder.getExchangeService()){
+    		isWorkingElsewhere = ExchangeEventFinder.getWorkingElsewhereStatus(service, email);	
+    	}
 		if(isWorkingElsewhere) {
 			System.out.println(email + " is working elsewhere");	
 		}
