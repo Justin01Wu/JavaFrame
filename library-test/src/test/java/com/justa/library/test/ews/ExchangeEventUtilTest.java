@@ -1,11 +1,15 @@
 package com.justa.library.test.ews;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+
+import com.justa.library.ManualTest;
 
 import microsoft.exchange.webservices.data.core.ExchangeService;
 
+@Category(ManualTest.class)
 public class ExchangeEventUtilTest {
 
 	@Test
