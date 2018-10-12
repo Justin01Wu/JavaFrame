@@ -7,6 +7,7 @@ import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 import microsoft.exchange.webservices.data.core.ExchangeService;
 import microsoft.exchange.webservices.data.core.enumeration.availability.AvailabilityData;
@@ -25,6 +26,7 @@ import microsoft.exchange.webservices.data.property.complex.availability.Calenda
 
 public class ExchangeEventUtil {
 	
+	private static Logger LOG = Logger.getLogger(ExchangeEventUtil.class.getName());
     
     public static ExchangeService getExchangeService() throws URISyntaxException, IllegalArgumentException {
     	ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);            
@@ -65,8 +67,9 @@ public class ExchangeEventUtil {
     	}else {
     		endDate.add(Calendar.HOUR_OF_DAY, 12);	
     	}  
-    	
-        availabilityOptions.setDetailedSuggestionsWindow( new TimeWindow(startDate, endDate.getTime()));
+    	LOG.info(  	"query range: " + startDate + " - " +  endDate.getTime());
+    	TimeWindow timeWindow = new TimeWindow(startDate, endDate.getTime());
+        availabilityOptions.setDetailedSuggestionsWindow( timeWindow);
         availabilityOptions.setRequestedFreeBusyView(FreeBusyViewType.Detailed);
      
         GetUserAvailabilityResults results = service.getUserAvailability(attendees, 
@@ -75,7 +78,7 @@ public class ExchangeEventUtil {
                                                                          availabilityOptions); 
                 
         
-        boolean found  = findWorkingElsewhereEvent(results, attendees, startDate, testMode);
+        boolean found  = findWorkingElsewhereEvent(results, attendees, startDate);
         if(testMode) {
         	printEvents(results, attendees);
         }     
@@ -83,17 +86,20 @@ public class ExchangeEventUtil {
         
 
     }
-    private static boolean findWorkingElsewhereEvent(GetUserAvailabilityResults results, List<AttendeeInfo> attendees, Date startDate, boolean testMode){
+    private static boolean findWorkingElsewhereEvent(GetUserAvailabilityResults results, List<AttendeeInfo> attendees, Date startDate){
         
-    	long allowedTimeGap = testMode? 72l*3600000l:3600000l;  // 72 hour  in test mode, one hour in real mode
         for (AttendeeAvailability availability : results.getAttendeesAvailability()) {
         	
             for (CalendarEvent calEvent : availability.getCalendarEvents()){
             	if(calEvent.getFreeBusyStatus() == null) {
-            		System.out.println(String.format("\t %s to %s \n", calEvent.getStartTime().toString(), calEvent.getEndTime().toString()));
-            		if(calEvent.getStartTime().getTime() - startDate.getTime() < allowedTimeGap) {
-            			return true;	
-            		}           		            		
+            		LOG.info(String.format("\t %s to %s \n", calEvent.getStartTime().toString(), calEvent.getEndTime().toString()));
+            		
+            		if(calEvent.getStartTime().getTime() <= startDate.getTime() ) {
+            			if(calEvent.getEndTime().getTime() >= startDate.getTime()) {
+            				return true;	
+            			}
+            				
+            		}              		
             	}
             }
         }
@@ -105,23 +111,23 @@ public class ExchangeEventUtil {
         int i = 0;
         // Display free/busy times.
         for (AttendeeAvailability availability : results.getAttendeesAvailability()) {
-        	System.out.println(String.format("Availability information for %s:\n", attendees.get(i).getSmtpAddress()));
+        	LOG.fine(String.format("Availability information for %s:\n", attendees.get(i).getSmtpAddress()));
             for (CalendarEvent calEvent : availability.getCalendarEvents()){
             	if(calEvent.getFreeBusyStatus() == null) {
             		// it is WorkingElsewhere event, but EWS Java lib is a little old, so can't get this type
-            		System.out.println(String.format("\t     %s to %s \n", 
+            		LOG.info(String.format("\t     %s to %s \n", 
             				calEvent.getStartTime().toString(), 
             				calEvent.getEndTime().toString()));
             		
             	}else {
-            		System.out.println(String.format("\t %s from %s to %s \n", 
+            		LOG.info(String.format("\t %s from %s to %s \n", 
             				calEvent.getFreeBusyStatus().name(), 
             				calEvent.getStartTime().toString(), 
             				calEvent.getEndTime().toString()));
             	}
             	if(calEvent.getDetails() != null) {
             		// no permission to read others subject
-            		System.out.println(calEvent.getDetails().getSubject());  	
+            		LOG.info(calEvent.getDetails().getSubject());  	
             	}
             	
             	
@@ -142,10 +148,10 @@ public class ExchangeEventUtil {
     	}
     	
     	if(isWorkingElsewhere) {
-    		System.out.println(email + " is working elsewhere");	
+    		LOG.info(email + " is working elsewhere");	
+    	}else {
+    		LOG.info(email + " is NOT working elsewhere");
     	}
-	
-
     	
     }
 
