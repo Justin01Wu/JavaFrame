@@ -16,7 +16,7 @@ import org.apache.http.client.CookieStore;
 public class LoginKerberosService {
 	
 	//private static String clientName = "Krb5JustinTest";
-	private static String clientName = "spnego-client";  // the client name in config file
+	private static String clientName = "spnego-client";  // the client name in config file(which is login.conf)
 	
 	public static void login(String user, String passwordBase64, final String url, final CookieStore httpCookieStore) throws LoginException {
 		
