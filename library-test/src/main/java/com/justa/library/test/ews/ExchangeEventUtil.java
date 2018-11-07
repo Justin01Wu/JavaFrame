@@ -29,13 +29,24 @@ public class ExchangeEventUtil {
 	private static Logger LOG = Logger.getLogger(ExchangeEventUtil.class.getName());
     
     public static ExchangeService getExchangeService() throws URISyntaxException, IllegalArgumentException {
-    	ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);            
-        service.setUrl(new URI(EWSSetting.ServerUrl));
-		String pass = new String(Base64.getDecoder().decode(EWSSetting.PasswordEnc));
+    	ExchangeService service = new ExchangeService(ExchangeVersion.Exchange2010_SP2);      
+    	
+    	String url = EWSSetting.ServerUrl;
+    	url = "https://outlook.westernworld.com/ews/Exchange.asmx";
+    	
+        service.setUrl(new URI(url));
+		
+        String passEnc = EWSSetting.PasswordEnc;
+        passEnc = "UDNkbVdrWmY=";
+        String pass = new String(Base64.getDecoder().decode(passEnc));		
+		
 		String userName = EWSSetting.UserName;
-		//pass="xx";
-		//userName = "xx";
-        ExchangeCredentials credentials = new WebCredentials(userName, pass, EWSSetting.DOMAIN_NAME);
+		
+		userName = "svcVCAPS_RO";   // from Robin 62789322 
+		String domain = EWSSetting.DOMAIN_NAME;
+		domain = "Global";
+        
+		ExchangeCredentials credentials = new WebCredentials(userName, pass, domain);
         service.setCredentials(credentials);
         return service;
     	
