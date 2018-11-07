@@ -8,6 +8,8 @@ import javax.security.auth.callback.NameCallback;
 import javax.security.auth.callback.PasswordCallback;
 import javax.security.auth.callback.UnsupportedCallbackException;
 
+// https://blog.csdn.net/PacosonSWJTU/article/details/50709001
+// JAAS callBack to handle user name and password
 public class KerberosCallBackHandler implements CallbackHandler {
 
     private final String user;
