@@ -33,11 +33,11 @@ public class TestUserApiOnKerberos {
 		
 		URL location = LoginKerberosService.class.getProtectionDomain().getCodeSource().getLocation();
         System.out.println(location.getFile());
+        // JAAS config file path, sample: /C:/samples/javaFrame/javaFrame/JavaFrame/api-test/target/classes/
+        String loginConfPath = location.getFile().toString() +"login.conf";
+        
+		System.setProperty("sun.security.krb5.debug", "true");		
 		
-		System.setProperty("sun.security.krb5.debug", "true");
-		///C:/samples/spring3Demo/spring3Demo/restful/target/test-classes/
-		
-		String loginConfPath = location.getFile().toString() +"login.conf";
         System.setProperty("java.security.auth.login.config", loginConfPath);
         System.setProperty("java.security.krb5.conf", location.getFile().toString() +"krb5.conf");
         System.setProperty("javax.security.auth.useSubjectCredsOnly", "false");

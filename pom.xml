@@ -19,6 +19,7 @@
 		<module>transaction</module>
 		<module>jdbc</module>
 		<module>connectionPool</module>
+		<module>api-test</module>
 		
 		
     </modules>	
