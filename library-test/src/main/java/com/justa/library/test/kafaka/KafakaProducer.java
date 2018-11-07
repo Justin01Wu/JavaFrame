@@ -2,6 +2,8 @@ package com.justa.library.test.kafaka;
 
 import java.util.Date;
 import java.util.Properties;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -47,7 +49,7 @@ public class KafakaProducer {
 			for (long index = time; index < time + sendMessageCount; index++) {
 				Date date = new Date(index);
 
-				String msg = "Hello Mom " + index + ":" + date;
+				String msg = "sync msg " + index + ":" + date;
 				// String msg = "{'systemName':'Treaty3.0'}";
 				long key = index;
 
@@ -57,13 +59,55 @@ public class KafakaProducer {
 
 				long elapsedTime = System.currentTimeMillis() - time;
 				System.out.printf("sent record(key=%s value=%s) " + "meta(partition=%d, offset=%d) time=%d\n",
-						record.key(), record.key(), metadata.partition(), metadata.offset(), elapsedTime);
+						record.key(), record.value(), metadata.partition(), metadata.offset(), elapsedTime);
 
 			}
 		} finally {
 			producer.flush();
 			producer.close();
 		}
+	}
+	
+	static void runProducerAsnc(final int sendMessageCount) throws InterruptedException {
+	    final Producer<Long, String> producer = createProducer();
+	    long time = System.currentTimeMillis();
+	    final CountDownLatch countDownLatch = new CountDownLatch(sendMessageCount);
+
+	    
+	    
+	    try {
+	        for (long index = time; index < time + sendMessageCount; index++) {
+	        	
+	        	long key = index;
+	        	Date date = new Date(index);
+	        	String msg = "Asnc msg " + index + ":" + date;
+	            final ProducerRecord<Long, String> record =   new ProducerRecord<>(IKafkaConstants.TOPIC_NAME, key, msg);
+	            
+	            producer.send(record, (metadata, exception) -> {
+	            	/*
+	            	 * What does the Callback lambda do?
+						The callback gets notified when the request is complete.
+	            	 */
+	            	
+	                long elapsedTime = System.currentTimeMillis() - time;
+	                if (metadata != null) {
+	                    System.out.printf("sent record(key=%s value=%s) " +
+	                                    "meta(partition=%d, offset=%d) time=%d\n",
+	                            record.key(), record.value(), metadata.partition(),
+	                            metadata.offset(), elapsedTime);
+	                } else {
+	                    exception.printStackTrace();
+	                }
+	                countDownLatch.countDown();
+	            });
+	            
+	            
+	        }
+	        countDownLatch.await(25, TimeUnit.SECONDS);
+	    }finally {
+	        producer.flush();
+	        producer.close();
+	    }
 	}
 
 	public static String getLargeString() {
@@ -75,7 +119,10 @@ public class KafakaProducer {
 	}
 
 	public static void main(String... args) throws Exception {
-		int messageAmount = 5;
+		int messageAmount = 5;		
+		
+		runProducerAsnc(messageAmount);
+		
 		runProducer(messageAmount);
 	}
 }
