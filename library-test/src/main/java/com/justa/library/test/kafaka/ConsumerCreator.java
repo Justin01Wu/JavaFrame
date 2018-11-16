@@ -25,6 +25,7 @@ public class ConsumerCreator {
 		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
 		
 		props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, IKafkaConstants.MAX_POLL_RECORDS);  // how many messages in one poll
+		//props.put(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, 5*60*1000);  // how long (ms) kafka can hold you without poll operation
 		
 		props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
 		props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, IKafkaConstants.OFFSET_RESET_EARLIER);
@@ -38,10 +39,11 @@ public class ConsumerCreator {
 	static void runConsumer() throws InterruptedException {
 		final Consumer<Long, String> consumer = createConsumer();
 
-		final int giveUp = 100;
+		final int giveUp = 60;
 		int noRecordsCount = 0;
 
-		Duration oneSecond = Duration.ofSeconds(2l);
+		Duration oneSecond = Duration.ofSeconds(1l);
+		//Duration oneSecond = Duration.ofSeconds(0l);  // no wait
 		while (true) {			
 			
 			System.out.println("WAITING: ");
@@ -69,7 +71,8 @@ public class ConsumerCreator {
 				System.out.println("");
 			});
 
-			consumer.commitAsync(); // tell Kafaka server I already received those message, Kafaka won't send you again those message in the next poll
+			consumer.commitAsync();  // tell Kafka my new offset  
+			// tell Kafka server I already received those message, Kafaka won't send you again those message in the next poll
 		}
 		consumer.close();
 		System.out.println("DONE");
