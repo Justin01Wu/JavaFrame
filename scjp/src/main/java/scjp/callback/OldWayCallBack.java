@@ -6,7 +6,7 @@ public class OldWayCallBack {
     	
     	String msg ="call back print this message11";
 
-    	doA(msg, new OnClickListener() {
+    	callThisWithMessage(msg, new OnClickListener() {
   		  @Override
   		  public void onClick(String  msg) {
   		    System.out.println(msg);
@@ -22,11 +22,11 @@ public class OldWayCallBack {
     	
     	msg ="call back print this message22";
     	
-    	doA(msg, callBack);
+    	callThisWithMessage(msg, callBack);
     	
     }
     
-    private static void doA(String msg , OnClickListener callBack) {
+    private static void callThisWithMessage(String msg , OnClickListener callBack) {
     	callBack.onClick(msg);
     }
 }
