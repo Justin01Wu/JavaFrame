@@ -43,6 +43,10 @@ public class Jdk8CallBack {
         Map<Integer, Student> map4 = list.stream().collect(Collectors.toMap(Student::getId, Function.identity()));
         System.out.println(map4.get(34).getName());
         
+        Map<Integer, Student> map5 = list.stream().collect(Collectors.toMap(s -> s.getId(), s -> s));
+        System.out.println(map5.get(34).getName());
+        //Read more: https://javarevisited.blogspot.com/2016/04/10-examples-of-converting-list-to-map.html#ixzz5YBcupU9A
+        
 
         
     }
