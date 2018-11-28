@@ -1,7 +1,9 @@
 package com.justa.library.test.jackson;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -16,6 +18,8 @@ public class TestJackson {
 		testSimpleClientFromString();
 		System.out.println();
 		testmanyClientFromFile();
+		System.out.println();
+		testJavaToJson();
 
 	}
 	
@@ -42,9 +46,31 @@ public class TestJackson {
 		for(Client client:  result) {
 			System.out.println(client);	
 		}
-		
-
-
+	
 	}
+	
+	private static void testJavaToJson() throws JsonParseException, JsonMappingException, IOException {
+		
+		Client client = createDummyClient();
+		ObjectMapper mapper = new ObjectMapper();
+
+		//Convert object to JSON string
+		String jsonInString = mapper.writeValueAsString(client);
+		System.out.println(jsonInString);
+	}
+	
+	private static Client createDummyClient(){
+		
+		Client client = new Client();
+		
+		client.setName("Justin");
+		client.setId(3433);
+
+		client.setDnfReinsurer("dakfja");
+		
+		return client;
+		
+	}
+
 
 }
