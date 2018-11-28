@@ -1,0 +1,482 @@
+[
+  {
+    "name": "Syndicate ACAL 1965",
+    "dnfReinsurer": "Syndicate ACAL 1965",
+    "id": 64
+  },
+  {
+    "name": "Syndicate Acappella 2014",
+    "dnfReinsurer": "Syndicate Acappella 2014",
+    "id": 14139
+  },
+  {
+    "name": "Syndicate Advent 0780",
+    "dnfReinsurer": "Syndicate Advent 0780",
+    "id": 11
+  },
+  {
+    "name": "Syndicate Advent s.2 RITC 3330",
+    "dnfReinsurer": "Syndicate Advent s.2 RITC 3330",
+    "id": 7146
+  },
+  {
+    "name": "Syndicate Aegis 1225",
+    "dnfReinsurer": "Syndicate Aegis 1225",
+    "id": 13
+  },
+  {
+    "name": "Syndicate Alba 4455",
+    "dnfReinsurer": "Syndicate Alba 4455",
+    "id": 948
+  },
+  {
+    "name": "Syndicate Alterra 1400",
+    "dnfReinsurer": "Syndicate Alterra 1400",
+    "id": 6343
+  },
+  {
+    "name": "Syndicate Amtrust",
+    "dnfReinsurer": "Syndicate Amtrust",
+    "id": 12641
+  },
+  {
+    "name": "Syndicate Antares 1274",
+    "dnfReinsurer": "Syndicate Antares 1274",
+    "id": 6049
+  },
+  {
+    "name": "Syndicate ANV 1861",
+    "dnfReinsurer": "Syndicate ANV 1861",
+    "id": 6330
+  },
+  {
+    "name": "Syndicate AON Client Treaty 9000",
+    "dnfReinsurer": "Syndicate AON Client Treaty 9000",
+    "id": 15816
+  },
+  {
+    "name": "Syndicate Apollo 1969",
+    "dnfReinsurer": "Syndicate Apollo 1969",
+    "id": 10817
+  },
+  {
+    "name": "Syndicate Arch 2012",
+    "dnfReinsurer": "Syndicate Arch 2012",
+    "id": 7140
+  },
+  {
+    "name": "Syndicate Arcus 1856",
+    "dnfReinsurer": "Syndicate Arcus 1856",
+    "id": 20355
+  },
+  {
+    "name": "Syndicate Argenta 1110",
+    "dnfReinsurer": "Syndicate Argenta 1110",
+    "id": 7230
+  },
+  {
+    "name": "Syndicate Argenta 2121",
+    "dnfReinsurer": "Syndicate Argenta 2121",
+    "id": 91
+  },
+  {
+    "name": "Syndicate Argo 1200",
+    "dnfReinsurer": "Syndicate Argo 1200",
+    "id": 696
+  },
+  {
+    "name": "Syndicate Ariel 1910",
+    "dnfReinsurer": "Syndicate Ariel 1910",
+    "id": 6177
+  },
+  {
+    "name": "Syndicate Ark 3902",
+    "dnfReinsurer": "Syndicate Ark 3902",
+    "id": 14796
+  },
+  {
+    "name": "Syndicate Ark 4020",
+    "dnfReinsurer": "Syndicate Ark 4020",
+    "id": 952
+  },
+  {
+    "name": "Syndicate Ark 6105",
+    "dnfReinsurer": "Syndicate Ark 6105",
+    "id": 7139
+  },
+  {
+    "name": "Syndicate Ascot 1414",
+    "dnfReinsurer": "Syndicate Ascot 1414",
+    "id": 99
+  },
+  {
+    "name": "Syndicate Aspen 4711",
+    "dnfReinsurer": "Syndicate Aspen 4711",
+    "id": 7135
+  },
+  {
+    "name": "Syndicate Atrium 0609",
+    "dnfReinsurer": "Syndicate Atrium 0609",
+    "id": 107
+  },
+  {
+    "name": "Syndicate Axis 1686",
+    "dnfReinsurer": "Syndicate Axis 1686",
+    "id": 17264
+  },
+  {
+    "name": "Syndicate Barbican 1955",
+    "dnfReinsurer": "Syndicate Barbican 1955",
+    "id": 6062
+  },
+  {
+    "name": "Syndicate Beaufort 0318",
+    "dnfReinsurer": "Syndicate Beaufort 0318",
+    "id": 799
+  },
+  {
+    "name": "Syndicate Beazley 0623",
+    "dnfReinsurer": "Syndicate Beazley 0623",
+    "id": 127
+  },
+  {
+    "name": "Syndicate Beazley 2623",
+    "dnfReinsurer": "Syndicate Beazley 2623",
+    "id": 21054
+  },
+  {
+    "name": "Syndicate Blenheim 5886",
+    "dnfReinsurer": "Syndicate Blenheim 5886",
+    "id": 20356
+  },
+  {
+    "name": "Syndicate Brit 2987",
+    "dnfReinsurer": "Syndicate Brit 2987",
+    "id": 7144
+  },
+  {
+    "name": "Syndicate Broadgate 1301",
+    "dnfReinsurer": "Syndicate Broadgate 1301",
+    "id": 150
+  },
+  {
+    "name": "Syndicate Canopius 4444",
+    "dnfReinsurer": "Syndicate Canopius 4444",
+    "id": 160
+  },
+  {
+    "name": "Syndicate Capita 5500",
+    "dnfReinsurer": "Syndicate Capita 5500",
+    "id": 7137
+  },
+  {
+    "name": "Syndicate Cathedral 2010",
+    "dnfReinsurer": "Syndicate Cathedral 2010",
+    "id": 164
+  },
+  {
+    "name": "Syndicate Cathedral 3010",
+    "dnfReinsurer": "Syndicate Cathedral 3010",
+    "id": 14245
+  },
+  {
+    "name": "Syndicate Catlin 2003",
+    "dnfReinsurer": "Syndicate Catlin 2003",
+    "id": 883
+  },
+  {
+    "name": "Syndicate Channel 2015",
+    "dnfReinsurer": "Syndicate Channel 2015",
+    "id": 10864
+  },
+  {
+    "name": "Syndicate Chaucer 1084",
+    "dnfReinsurer": "Syndicate Chaucer 1084",
+    "id": 169
+  },
+  {
+    "name": "Syndicate Chubb 2488",
+    "dnfReinsurer": "Syndicate Chubb 2488",
+    "id": 7142
+  },
+  {
+    "name": "Syndicate CNA Hardy 0382",
+    "dnfReinsurer": "Syndicate CNA Hardy 0382",
+    "id": 311
+  },
+  {
+    "name": "Syndicate Dale 1729",
+    "dnfReinsurer": "Syndicate Dale 1729",
+    "id": 14995
+  },
+  {
+    "name": "Syndicate Equity 0218",
+    "dnfReinsurer": "Syndicate Equity 0218",
+    "id": 7104
+  },
+  {
+    "name": "Syndicate Everest 2786",
+    "dnfReinsurer": "Syndicate Everest 2786",
+    "id": 22458
+  },
+  {
+    "name": "Syndicate Faraday 0435",
+    "dnfReinsurer": "Syndicate Faraday 0435",
+    "id": 232
+  },
+  {
+    "name": "Syndicate GIC 1947",
+    "dnfReinsurer": "Syndicate GIC 1947",
+    "id": 22223
+  },
+  {
+    "name": "Syndicate Hamilton 3334",
+    "dnfReinsurer": "Syndicate Hamilton 3334",
+    "id": 7147
+  },
+  {
+    "name": "Syndicate HCC 4141",
+    "dnfReinsurer": "Syndicate HCC 4141",
+    "id": 7134
+  },
+  {
+    "name": "Syndicate Hiscox 0033",
+    "dnfReinsurer": "Syndicate Hiscox 0033",
+    "id": 324
+  },
+  {
+    "name": "Syndicate KGM 0260",
+    "dnfReinsurer": "Syndicate KGM 0260",
+    "id": 7105
+  },
+  {
+    "name": "Syndicate Kiln 0510",
+    "dnfReinsurer": "Syndicate Kiln 0510",
+    "id": 1049
+  },
+  {
+    "name": "Syndicate Kiln 1880",
+    "dnfReinsurer": "Syndicate Kiln 1880",
+    "id": 13987
+  },
+  {
+    "name": "Syndicate Kiln 557",
+    "dnfReinsurer": "Syndicate Kiln 557",
+    "id": 16417
+  },
+  {
+    "name": "Syndicate Liberty 4472",
+    "dnfReinsurer": "Syndicate Liberty 4472",
+    "id": 386
+  },
+  {
+    "name": "Syndicate Managing Agency Partners 2791",
+    "dnfReinsurer": "Syndicate Managing Agency Partners 2791",
+    "id": 7143
+  },
+  {
+    "name": "Syndicate Map 6103",
+    "dnfReinsurer": "Syndicate Map 6103",
+    "id": 8498
+  },
+  {
+    "name": "Syndicate Markel 3000",
+    "dnfReinsurer": "Syndicate Markel 3000",
+    "id": 6356
+  },
+  {
+    "name": "Syndicate Marlborough 1861",
+    "dnfReinsurer": "Syndicate Marlborough 1861",
+    "id": 7119
+  },
+  {
+    "name": "Syndicate Mitsui Sumitomo 3210",
+    "dnfReinsurer": "Syndicate Mitsui Sumitomo 3210",
+    "id": 7145
+  },
+  {
+    "name": "Syndicate Montpelier 5151",
+    "dnfReinsurer": "Syndicate Montpelier 5151",
+    "id": 7136
+  },
+  {
+    "name": "Syndicate MS Amlin 2001 & 3210",
+    "dnfReinsurer": "Syndicate MS Amlin 2001 & 3210",
+    "id": 7109
+  },
+  {
+    "name": "Syndicate Munich Re 0457",
+    "dnfReinsurer": "Syndicate Munich Re 0457",
+    "id": 974
+  },
+  {
+    "name": "Syndicate Navigators 1221",
+    "dnfReinsurer": "Syndicate Navigators 1221",
+    "id": 7111
+  },
+  {
+    "name": "Syndicate Neon 2464",
+    "dnfReinsurer": "Syndicate Neon 2464",
+    "id": 17758
+  },
+  {
+    "name": "Syndicate Neon 2468",
+    "dnfReinsurer": "Syndicate Neon 2468",
+    "id": 7141
+  },
+  {
+    "name": "Syndicate Nephila 2357",
+    "dnfReinsurer": "Syndicate Nephila 2357",
+    "id": 13891
+  },
+  {
+    "name": "Syndicate Newline 1218",
+    "dnfReinsurer": "Syndicate Newline 1218",
+    "id": 7110
+  },
+  {
+    "name": "Syndicate NOA 3902",
+    "dnfReinsurer": "Syndicate NOA 3902",
+    "id": 11439
+  },
+  {
+    "name": "Syndicate Nuclear 1176",
+    "dnfReinsurer": "Syndicate Nuclear 1176",
+    "id": 855
+  },
+  {
+    "name": "Syndicate Omega 0958",
+    "dnfReinsurer": "Syndicate Omega 0958",
+    "id": 459
+  },
+  {
+    "name": "Syndicate Paraline 4242",
+    "dnfReinsurer": "Syndicate Paraline 4242",
+    "id": 898
+  },
+  {
+    "name": "Syndicate Paraline 6123",
+    "dnfReinsurer": "Syndicate Paraline 6123",
+    "id": 15128
+  },
+  {
+    "name": "Syndicate Patria 6125",
+    "dnfReinsurer": "Syndicate Patria 6125",
+    "id": 22451
+  },
+  {
+    "name": "Syndicate Pembroke 4000",
+    "dnfReinsurer": "Syndicate Pembroke 4000",
+    "id": 6531
+  },
+  {
+    "name": "Syndicate Pioneer Underwriting 1980",
+    "dnfReinsurer": "Syndicate Pioneer Underwriting 1980",
+    "id": 15342
+  },
+  {
+    "name": "Syndicate Probitas 1492",
+    "dnfReinsurer": "Syndicate Probitas 1492",
+    "id": 15487
+  },
+  {
+    "name": "Syndicate QBE 0566",
+    "dnfReinsurer": "Syndicate QBE 0566",
+    "id": 6298
+  },
+  {
+    "name": "Syndicate QBE 1036",
+    "dnfReinsurer": "Syndicate QBE 1036",
+    "id": 7331
+  },
+  {
+    "name": "Syndicate QBE 2000",
+    "dnfReinsurer": "Syndicate QBE 2000",
+    "id": 7207
+  },
+  {
+    "name": "Syndicate QBE 5555",
+    "dnfReinsurer": "Syndicate QBE 5555",
+    "id": 7293
+  },
+  {
+    "name": "Syndicate R&Q 1991",
+    "dnfReinsurer": "Syndicate R&Q 1991",
+    "id": 13175
+  },
+  {
+    "name": "Syndicate Renaissance Re 1458",
+    "dnfReinsurer": "Syndicate Renaissance Re 1458",
+    "id": 7118
+  },
+  {
+    "name": "Syndicate RITC 5678",
+    "dnfReinsurer": "Syndicate RITC 5678",
+    "id": 7138
+  },
+  {
+    "name": "Syndicate SA Meacock 0727",
+    "dnfReinsurer": "Syndicate SA Meacock 0727",
+    "id": 967
+  },
+  {
+    "name": "Syndicate Sagicor 1206",
+    "dnfReinsurer": "Syndicate Sagicor 1206",
+    "id": 6057
+  },
+  {
+    "name": "Syndicate SD Mathers 0807",
+    "dnfReinsurer": "Syndicate SD Mathers 0807",
+    "id": 10753
+  },
+  {
+    "name": "Syndicate Shelbourne 2008",
+    "dnfReinsurer": "Syndicate Shelbourne 2008",
+    "id": 7121
+  },
+  {
+    "name": "Syndicate Skuld 1897",
+    "dnfReinsurer": "Syndicate Skuld 1897",
+    "id": 10678
+  },
+  {
+    "name": "Syndicate SPS 6126",
+    "dnfReinsurer": "Syndicate SPS 6126",
+    "id": 15975
+  },
+  {
+    "name": "Syndicate Standard",
+    "dnfReinsurer": "Syndicate Standard",
+    "id": 15018
+  },
+  {
+    "name": "Syndicate Starr 1919",
+    "dnfReinsurer": "Syndicate Starr 1919",
+    "id": 6020
+  },
+  {
+    "name": "Syndicate Talbot 1183",
+    "dnfReinsurer": "Syndicate Talbot 1183",
+    "id": 560
+  },
+  {
+    "name": "Syndicate Travelers 5000",
+    "dnfReinsurer": "Syndicate Travelers 5000",
+    "id": 6208
+  },
+  {
+    "name": "Syndicate Vibe 5678",
+    "dnfReinsurer": "Syndicate Vibe 5678",
+    "id": 14771
+  },
+  {
+    "name": "Syndicate W.R. Berkley 1967",
+    "dnfReinsurer": "Syndicate W.R. Berkley 1967",
+    "id": 7201
+  },
+  {
+    "name": "Syndicate XL 1209",
+    "dnfReinsurer": "Syndicate XL 1209",
+    "id": 632
+  }
+]
