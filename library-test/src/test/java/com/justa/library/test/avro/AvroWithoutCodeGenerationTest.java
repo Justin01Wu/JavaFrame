@@ -42,7 +42,7 @@ public class AvroWithoutCodeGenerationTest {
 		
 	}
 	
-	@Test
+	//@Test
 	public void testCreateUserObjAndSerierize() throws IOException, URISyntaxException {
 		Schema schema = getSchema();
 		List<GenericRecord> users= AvroWithoutCodeGeneration.createUsers(schema);
@@ -57,6 +57,21 @@ public class AvroWithoutCodeGenerationTest {
 		
 
 	}
+	
+	@Test 
+	public void testCreateUserObjAndJsonSerierize() throws IOException, URISyntaxException {
+		Schema schema = getSchema();
+		List<GenericRecord> users= AvroWithoutCodeGeneration.createUsers(schema);
+		
+		assertEquals(users.size(), 2);
+		
+		String result = AvroWithoutCodeGeneration.jsonSerierize(users, schema);
+		System.out.println(result);
+		
+		
+
+	}
+
 	
 	
 

@@ -1,9 +1,9 @@
 package com.justa.library.test.avro;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,12 +16,15 @@ import org.apache.avro.generic.GenericDatumWriter;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.io.DatumReader;
 import org.apache.avro.io.DatumWriter;
+import org.apache.avro.io.Encoder;
+import org.apache.avro.io.EncoderFactory;
+import org.apache.avro.specific.SpecificDatumWriter;
 
 // comes from : https://avro.apache.org/docs/1.8.2/gettingstartedjava.html
 public class AvroWithoutCodeGeneration {
 
-	public static Schema getSchema(InputStream define) throws IOException {		
-		
+	public static Schema getSchema(InputStream define) throws IOException {
+
 		Schema schema = new Schema.Parser().parse(define);
 		return schema;
 	}
@@ -36,9 +39,9 @@ public class AvroWithoutCodeGeneration {
 		user1.put("name", "Alyssa");
 		user1.put("favorite_number", 256);
 		// Leave favorite color null because it is optional
-		
-		// user1.put("invalidField", 256);  // this line will throw exception
-		
+
+		// user1.put("invalidField", 256); // this line will throw exception
+
 		users.add(user1);
 
 		GenericRecord user2 = new GenericData.Record(schema);
@@ -48,6 +51,22 @@ public class AvroWithoutCodeGeneration {
 		users.add(user2);
 
 		return users;
+	}
+
+	public static String jsonSerierize(List<GenericRecord> users, Schema schema) throws IOException {
+		
+		ByteArrayOutputStream bout = new ByteArrayOutputStream();
+
+		Encoder jsonEncoder = EncoderFactory.get().jsonEncoder(schema, bout);
+		
+		DatumWriter<GenericRecord> writer = new GenericDatumWriter<GenericRecord>(schema);
+		GenericRecord user  =  users.get(0); 
+		writer.write(user, jsonEncoder);
+		
+		jsonEncoder.flush();
+		String data = bout.toString();
+		return data;
+		
 	}
 
 	public static void serierize(File file, List<GenericRecord> users, Schema schema) throws IOException {
