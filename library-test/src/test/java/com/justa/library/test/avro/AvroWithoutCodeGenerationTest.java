@@ -3,21 +3,30 @@ package com.justa.library.test.avro;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.List;
 
 import org.apache.avro.Schema;
+import org.apache.avro.generic.GenericRecord;
 import org.junit.Test;
 
-import com.justa.library.test.jackson.TestJackson;
-
 public class AvroWithoutCodeGenerationTest {
+	
+	private static Schema getSchema() throws IOException {
+		InputStream define = AvroWithoutCodeGenerationTest.class.getResourceAsStream("/user.avsc");
+		
+		Schema schema = AvroWithoutCodeGeneration.getSchema(define);
+		return schema;
+	}
 
 	@Test
 	public void testGetSchema() throws IOException {
-		InputStream define = TestJackson.class.getResourceAsStream("/user.avsc");
-		
-		Schema schema = AvroWithoutCodeGeneration.getSchema(define);
+		Schema schema = getSchema();
 		
 		System.out.println(schema.getFullName());
 		System.out.println(schema.getName());
@@ -32,5 +41,23 @@ public class AvroWithoutCodeGenerationTest {
 		
 		
 	}
+	
+	@Test
+	public void testCreateUserObjAndSerierize() throws IOException, URISyntaxException {
+		Schema schema = getSchema();
+		List<GenericRecord> users= AvroWithoutCodeGeneration.createUsers(schema);
+		
+		assertEquals(users.size(), 2);
+		
+		// Serialize user1 and user2 to disk
+
+		File file = new File("c:/temp/users.avro");
+		AvroWithoutCodeGeneration.serierize(file, users, schema);
+		
+		
+
+	}
+	
+	
 
 }

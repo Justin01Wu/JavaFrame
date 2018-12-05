@@ -3,6 +3,7 @@ package com.justa.library.test.avro;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,10 @@ public class AvroWithoutCodeGeneration {
 		GenericRecord user1 = new GenericData.Record(schema);
 		user1.put("name", "Alyssa");
 		user1.put("favorite_number", 256);
-		// Leave favorite color null
+		// Leave favorite color null because it is optional
+		
+		// user1.put("invalidField", 256);  // this line will throw exception
+		
 		users.add(user1);
 
 		GenericRecord user2 = new GenericData.Record(schema);
@@ -46,9 +50,7 @@ public class AvroWithoutCodeGeneration {
 		return users;
 	}
 
-	public void serierize(List<GenericRecord> users, Schema schema) throws IOException {
-		// Serialize user1 and user2 to disk
-		File file = new File("users.avro");
+	public static void serierize(File file, List<GenericRecord> users, Schema schema) throws IOException {
 		DatumWriter<GenericRecord> datumWriter = new GenericDatumWriter<GenericRecord>(schema);
 		DataFileWriter<GenericRecord> dataFileWriter = new DataFileWriter<GenericRecord>(datumWriter);
 		dataFileWriter.create(schema, file);
@@ -59,7 +61,7 @@ public class AvroWithoutCodeGeneration {
 		dataFileWriter.close();
 	}
 
-	public void deserialize(Schema schema, File file) throws IOException {
+	public static void deserialize(Schema schema, File file) throws IOException {
 		// Deserialize users from disk
 		DatumReader<GenericRecord> datumReader = new GenericDatumReader<GenericRecord>(schema);
 		DataFileReader<GenericRecord> dataFileReader = new DataFileReader<GenericRecord>(file, datumReader);
