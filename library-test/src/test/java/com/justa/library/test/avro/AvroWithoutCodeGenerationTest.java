@@ -52,7 +52,7 @@ public class AvroWithoutCodeGenerationTest {
 		// Serialize user1 and user2 to disk
 
 		File file = new File("c:/temp/users.avro");
-		AvroWithoutCodeGeneration.serierize(file, users, schema);
+		AvroWithoutCodeGeneration.serialize(file, users, schema);
 		
 		
 
@@ -65,10 +65,8 @@ public class AvroWithoutCodeGenerationTest {
 		
 		assertEquals(users.size(), 2);
 		
-		String result = AvroWithoutCodeGeneration.jsonSerierize(users, schema);
+		String result = AvroWithoutCodeGeneration.jsonSerialize(users, schema);
 		System.out.println(result);
-		
-		
 
 	}
 

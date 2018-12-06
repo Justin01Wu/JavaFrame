@@ -36,16 +36,16 @@ public class AvroWithoutCodeGeneration {
 		// Using this schema, let's create some users.
 
 		GenericRecord user1 = new GenericData.Record(schema);
-		user1.put("name", "Alyssa");
+		user1.put("name", "Justin");
 		user1.put("favorite_number", 256);
 		// Leave favorite color null because it is optional
 
-		// user1.put("invalidField", 256); // this line will throw exception
+		// user1.put("invalidField", 256); // this line will throw exception on runtime
 
 		users.add(user1);
 
 		GenericRecord user2 = new GenericData.Record(schema);
-		user2.put("name", "Ben");
+		user2.put("name", "Rita");
 		user2.put("favorite_number", 7);
 		user2.put("favorite_color", "red");
 		users.add(user2);
@@ -53,11 +53,11 @@ public class AvroWithoutCodeGeneration {
 		return users;
 	}
 
-	public static String jsonSerierize(List<GenericRecord> users, Schema schema) throws IOException {
+	public static String jsonSerialize(List<GenericRecord> users, Schema schema) throws IOException {
 		
 		ByteArrayOutputStream bout = new ByteArrayOutputStream();
 
-		Encoder jsonEncoder = EncoderFactory.get().jsonEncoder(schema, bout);
+		Encoder jsonEncoder = EncoderFactory.get().jsonEncoder(schema, bout);  // use JSON format for output data 
 		
 		DatumWriter<GenericRecord> writer = new GenericDatumWriter<GenericRecord>(schema);
 		GenericRecord user  =  users.get(0); 
@@ -69,19 +69,19 @@ public class AvroWithoutCodeGeneration {
 		
 	}
 
-	public static void serierize(File file, List<GenericRecord> users, Schema schema) throws IOException {
+	public static void serialize(File file, List<GenericRecord> users, Schema schema) throws IOException {
 		DatumWriter<GenericRecord> datumWriter = new GenericDatumWriter<GenericRecord>(schema);
 		DataFileWriter<GenericRecord> dataFileWriter = new DataFileWriter<GenericRecord>(datumWriter);
 		dataFileWriter.create(schema, file);
 
 		for (GenericRecord user : users) {
-			dataFileWriter.append(user);
+			dataFileWriter.append(user);  // by default, it is binary format
 		}
 		dataFileWriter.close();
 	}
 
 	public static void deserialize(Schema schema, File file) throws IOException {
-		// Deserialize users from disk
+		// deserialize users from disk
 		DatumReader<GenericRecord> datumReader = new GenericDatumReader<GenericRecord>(schema);
 		DataFileReader<GenericRecord> dataFileReader = new DataFileReader<GenericRecord>(file, datumReader);
 		GenericRecord user = null;
