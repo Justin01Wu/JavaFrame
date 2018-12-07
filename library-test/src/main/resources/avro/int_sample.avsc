@@ -1,0 +1,9 @@
+{ 
+	"type" : "record", 
+	"namespace" : "from_tutorialspoint", 
+	"name" : "int_sample", 
+   	"fields" :
+   	[ 
+		{ "name" : "experience", "type": "int" } 
+	] 
+}

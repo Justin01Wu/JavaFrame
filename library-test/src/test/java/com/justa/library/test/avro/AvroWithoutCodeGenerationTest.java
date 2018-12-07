@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.apache.avro.AvroTypeException;
 import org.apache.avro.Schema;
+import org.apache.avro.generic.GenericData;
 import org.apache.avro.generic.GenericRecord;
 import org.junit.Test;
 
@@ -19,11 +20,78 @@ import com.justa.library.FileUtil;
 public class AvroWithoutCodeGenerationTest {
 	
 	private static Schema getSchema() throws IOException {
-		InputStream define = AvroWithoutCodeGenerationTest.class.getResourceAsStream("/avro/user.avsc");
+		Schema schema = getSchema("/avro/user.avsc");
+		return schema;
+	}
+	
+	private static Schema getSchema(String schemaUrl) throws IOException {
+		InputStream define = AvroWithoutCodeGenerationTest.class.getResourceAsStream(schemaUrl);
 		
 		Schema schema = AvroWithoutCodeGeneration.getSchema(define);
 		return schema;
 	}
+	
+	
+
+	@Test
+	public void testIntSchema() throws IOException {
+		Schema schema = getSchema("/avro/int_sample.avsc");
+		GenericRecord experience = new GenericData.Record(schema);
+		experience.put("experience", 1223);
+		
+		experience = new GenericData.Record(schema);
+		experience.put("experience", "sss");  // this succeed, why?
+		
+		String jsonString = "{\"experience\":12345}";
+
+		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
+	}
+	
+	@Test(expected =  AvroTypeException.class)
+	// AvroTypeException: Expected start-union. Got VALUE_STRING
+	public void testIntSchemaFailure() throws IOException {
+		Schema schema = getSchema("/avro/int_sample.avsc");
+		
+		String jsonString = "{\"experience\":\"sss\"}";
+
+		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
+	}
+
+
+	
+	@Test
+	public void testUnionSchema() throws IOException {
+		Schema schema = getSchema("/avro/union_sample.avsc");
+		GenericRecord experience = new GenericData.Record(schema);
+		experience.put("experience", 1223);
+		
+		experience = new GenericData.Record(schema);
+		experience.put("experience", null);  
+		
+		String jsonString = "{\"experience\":{\"int\":445}}";
+		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
+		
+		//jsonString = "{\"experience\":null}";
+		//AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
+
+	}
+	
+	@Test(expected =  AvroTypeException.class)
+	// AvroTypeException: Expected start-union. Got VALUE_STRING
+	public void testUnionSchemaFailure() throws IOException {
+		Schema schema = getSchema("/avro/union_sample.avsc");
+		GenericRecord experience = new GenericData.Record(schema);
+		
+		experience.put("experience", "asas"); // this succeed, why?
+
+		String jsonString = "{\"experience\":2345}";
+		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
+
+		//jsonString = "{\"experience\":\"sss\"}";
+		//AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
+		
+	}
+
 
 	@Test
 	public void testGetSchema() throws IOException {
