@@ -30,7 +30,7 @@ public class AvroWithoutCodeGenerationTest {
 	}
 	
 	private static Schema getSchema() throws IOException {
-		InputStream define = AvroWithoutCodeGenerationTest.class.getResourceAsStream("/user.avsc");
+		InputStream define = AvroWithoutCodeGenerationTest.class.getResourceAsStream("/avro/user.avsc");
 		
 		Schema schema = AvroWithoutCodeGeneration.getSchema(define);
 		return schema;
@@ -87,7 +87,7 @@ public class AvroWithoutCodeGenerationTest {
 		
 		Schema schema = getSchema();
 		
-		URL url = AvroWithoutCodeGenerationTest.class.getResource("/users.avro");
+		URL url = AvroWithoutCodeGenerationTest.class.getResource("/avro/users.avro");
 		System.out.println(url.getFile());
 		File file = new File(url.getFile());
 		
