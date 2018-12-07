@@ -37,7 +37,7 @@ public class TestJackson {
 		ObjectMapper mapper = new ObjectMapper();
 
 		// Convert JSON string from file to Object List
-		InputStream jsonFile = TestJackson.class.getResourceAsStream("/clients.json");
+		InputStream jsonFile = TestJackson.class.getResourceAsStream("/jackson/clients.json");
 				
 		JavaType type = mapper.getTypeFactory().constructCollectionType(List.class, Client.class);
 		List <Client> result = mapper.readValue(jsonFile, type);
