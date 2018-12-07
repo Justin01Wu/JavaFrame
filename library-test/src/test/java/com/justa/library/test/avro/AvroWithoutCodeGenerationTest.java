@@ -99,7 +99,7 @@ public class AvroWithoutCodeGenerationTest {
 	public void testJsonDeserialize() throws IOException, URISyntaxException {
 		
 		Schema schema = getSchema();
-		String jsonString = readFileFromClassRoot("/oneUser.json");
+		String jsonString = readFileFromClassRoot("/avro/oneUser.json");
 
 		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
 	}
@@ -109,7 +109,7 @@ public class AvroWithoutCodeGenerationTest {
 	public void testJsonDeserializeFailure() throws IOException, URISyntaxException {
 		
 		Schema schema = getSchema();
-		String jsonString = readFileFromClassRoot("/wrongName.json");
+		String jsonString = readFileFromClassRoot("/avro/wrongName.json");
 		
 		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
 	}	
@@ -119,7 +119,7 @@ public class AvroWithoutCodeGenerationTest {
 	public void testJsonDeserializeFailure2() throws IOException, URISyntaxException {
 		
 		Schema schema = getSchema();
-		String jsonString = readFileFromClassRoot("/wrongNumber.json");
+		String jsonString = readFileFromClassRoot("/avro/wrongNumber.json");
 		
 		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
 	}	
@@ -129,7 +129,7 @@ public class AvroWithoutCodeGenerationTest {
 		
 		Schema schema = getSchema();
 		
-		String jsonString = readFileFromClassRoot("/extraField.json");
+		String jsonString = readFileFromClassRoot("/avro/extraField.json");
 
 		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
 	}	
