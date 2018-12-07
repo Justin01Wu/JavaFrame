@@ -31,7 +31,29 @@ public class AvroWithoutCodeGenerationTest {
 		return schema;
 	}
 	
+	@Test
+	public void testEnumSchema() throws IOException {
+		Schema schema = getSchema("/avro/enum_sample.json");
+		GenericRecord experience = new GenericData.Record(schema);
+		experience.put("color", "RED");
+		
+		experience = new GenericData.Record(schema);
+		experience.put("color", "InvalidColor");  // this succeed, why?
+		
+		String jsonString = "{\"color\": \"BLUE\"}";
+
+		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
+	}
 	
+	@Test(expected =  AvroTypeException.class)
+	// AvroTypeException: Unknown symbol in enum InvalidColor
+	public void testEnumSchemaFailure() throws IOException {
+		Schema schema = getSchema("/avro/enum_sample.json");
+	
+		String jsonString = "{\"color\": \"InvalidColor\"}";
+
+		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
+	}
 
 	@Test
 	public void testIntSchema() throws IOException {
