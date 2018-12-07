@@ -1,0 +1,15 @@
+{
+	"type": "record",
+	"name": "TestLogicalType_V2",
+	"namespace": "http://justa.com/avro/schema/",
+	"fields": [
+		{
+			"name": "postCodeCA",
+			"type": {
+				"type": "string",
+				"logicalType": "CanadaPostCode",
+				"pattern": "^[A-Za-z]\\d[A-Za-z][ -]?\\d[A-Za-z]\\d$"
+			}
+		}
+	]
+}

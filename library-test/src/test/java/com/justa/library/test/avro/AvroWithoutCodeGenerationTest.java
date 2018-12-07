@@ -33,6 +33,27 @@ public class AvroWithoutCodeGenerationTest {
 	}
 
 	
+
+	@Test
+	public void testLogicalType() throws IOException {
+		Schema schema = getSchema("/avro/logical_type.json");
+		
+		String jsonString = "{\"postCodeCA\": \"L6M0V8\"}";
+
+		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
+	}
+	
+	@Test
+	public void testLogicalTypeFailure() throws IOException {
+		Schema schema = getSchema("/avro/logical_type.json");
+		
+		String jsonString = "{\"postCodeCA\": \"LKM0V8\"}";
+		// should fail, TODO : fix it
+		// comes from https://stackoverflow.com/questions/37279096/data-validation-in-avro
+
+		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
+	}
+
 	@Test
 	public void testObjectArray() throws IOException {
 		Schema schema = getSchema("/avro/object_list.json");
