@@ -31,7 +31,27 @@ public class AvroWithoutCodeGenerationTest {
 		Schema schema = AvroWithoutCodeGeneration.getSchema(define);
 		return schema;
 	}
+
 	
+	@Test
+	public void testObjectArray() throws IOException {
+		Schema schema = getSchema("/avro/object_list.json");
+		
+		String jsonString = "{\"children\": [   {\"name\":\"Justin\", \"birthday\":\"adsjkhasd\"}, {\"name\":\"Rita\", \"birthday\":\"addsfsjkhasd\"}   ]}";
+
+		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
+	}
+	
+	@Test(expected =  AvroTypeException.class)
+	//AvroTypeException: Expected field name not found: name
+	public void testObjectArrayFailure() throws IOException {
+		Schema schema = getSchema("/avro/object_list.json");
+		
+		String jsonString = "{\"children\": [   {\"name2\":\"Justin\", \"birthday\":\"adsjkhasd\"}, {\"name\":\"Rita\", \"birthday\":\"addsfsjkhasd\"}   ]}";
+
+		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
+	}
+
 	
 	@Test
 	public void testintArraySchema() throws IOException {
