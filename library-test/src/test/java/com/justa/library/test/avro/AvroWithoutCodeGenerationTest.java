@@ -18,8 +18,6 @@ import com.justa.library.FileUtil;
 
 public class AvroWithoutCodeGenerationTest {
 	
-
-	
 	private static Schema getSchema() throws IOException {
 		InputStream define = AvroWithoutCodeGenerationTest.class.getResourceAsStream("/avro/user.avsc");
 		
@@ -97,7 +95,7 @@ public class AvroWithoutCodeGenerationTest {
 
 	@Test(expected =  AvroTypeException.class)
 	// AvroTypeException: Expected field name not found: name
-	public void testJsonDeserializeFailure() throws IOException, URISyntaxException {
+	public void testJsonWrongName() throws IOException, URISyntaxException {
 		
 		Schema schema = getSchema();
 		String jsonString = FileUtil.readFileFromClassRoot("/avro/wrongName.json");
@@ -107,7 +105,7 @@ public class AvroWithoutCodeGenerationTest {
 
 	@Test (expected =  AvroTypeException.class) 
 	// AvroTypeException :  Expected field name not found: favorite_number
-	public void testJsonDeserializeFailure2() throws IOException, URISyntaxException {
+	public void testJsonWrongNumber() throws IOException, URISyntaxException {
 		
 		Schema schema = getSchema();
 		String jsonString = FileUtil.readFileFromClassRoot("/avro/wrongNumber.json");
@@ -116,7 +114,7 @@ public class AvroWithoutCodeGenerationTest {
 	}	
 	
 	@Test 
-	public void testJsonDeserializeWithExtraField() throws IOException, URISyntaxException {
+	public void testJsonExtraField() throws IOException, URISyntaxException {
 		
 		Schema schema = getSchema();
 		
