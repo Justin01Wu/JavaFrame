@@ -1,7 +1,7 @@
 {
 	"type": "record",
 	"name": "TestLogicalType_V2",
-	"namespace": "http://justa.com/avro/schema/",
+	"namespace": "https://stackoverflow.com/questions/37279096/data-validation-in-avro",
 	"fields": [
 		{
 			"name": "postCodeCA",

@@ -31,7 +31,17 @@ public class AvroWithoutCodeGenerationTest {
 		Schema schema = AvroWithoutCodeGeneration.getSchema(define);
 		return schema;
 	}
+	
+	
 
+	@Test
+	public void testPerson() throws IOException {
+		Schema schema = getSchema("/avro/person.json");
+		
+		String jsonString = "{\"firstName\": \"Justin\", \"lastName\": \"Wu\"}";
+
+		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
+	}
 	
 
 	@Test
@@ -59,7 +69,7 @@ public class AvroWithoutCodeGenerationTest {
 		Schema schema = getSchema("/avro/object_list.json");
 		
 		String jsonString = "{\"children\": [   {\"name\":\"Justin\", \"birthday\":\"adsjkhasd\",\"gender\":\"Female\"} ]}";
-		// gender can't be skip, even it has default value TODO what's wrong?
+		// gender can't be skipped, even it has default value TODO what's wrong?
 		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
 	}
 	
