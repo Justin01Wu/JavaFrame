@@ -7,6 +7,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.apache.avro.AvroTypeException;
@@ -15,6 +19,15 @@ import org.apache.avro.generic.GenericRecord;
 import org.junit.Test;
 
 public class AvroWithoutCodeGenerationTest {
+	
+	static String readFileFromClassRoot(String path ) throws IOException {
+		
+		URL url = AvroWithoutCodeGenerationTest.class.getResource(path);
+		File file = new File(url.getFile());		
+		Charset encoding = StandardCharsets.UTF_8;
+		byte[] encoded = Files.readAllBytes(Paths.get(file.getAbsolutePath()));
+		return new String(encoded, encoding);
+	}
 	
 	private static Schema getSchema() throws IOException {
 		InputStream define = AvroWithoutCodeGenerationTest.class.getResourceAsStream("/user.avsc");
@@ -86,8 +99,7 @@ public class AvroWithoutCodeGenerationTest {
 	public void testJsonDeserialize() throws IOException, URISyntaxException {
 		
 		Schema schema = getSchema();
-		
-		String jsonString = "{\"name\":\"Justin\",\"favorite_number\":{\"int\":256},\"favorite_color\":null}";
+		String jsonString = readFileFromClassRoot("/oneUser.json");
 
 		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
 	}
@@ -97,9 +109,8 @@ public class AvroWithoutCodeGenerationTest {
 	public void testJsonDeserializeFailure() throws IOException, URISyntaxException {
 		
 		Schema schema = getSchema();
+		String jsonString = readFileFromClassRoot("/wrongName.json");
 		
-		String jsonString = "{\"name22\":\"Justin\",\"favorite_number\":{\"int\":256},\"favorite_color\":null}";
-
 		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
 	}	
 
@@ -108,9 +119,8 @@ public class AvroWithoutCodeGenerationTest {
 	public void testJsonDeserializeFailure2() throws IOException, URISyntaxException {
 		
 		Schema schema = getSchema();
+		String jsonString = readFileFromClassRoot("/wrongNumber.json");
 		
-		String jsonString = "{\"name\":\"Justin\",\"favorite_number22\":{\"int\":256},\"favorite_color\":null}";
-
 		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
 	}	
 	
@@ -119,7 +129,7 @@ public class AvroWithoutCodeGenerationTest {
 		
 		Schema schema = getSchema();
 		
-		String jsonString = "{\"extraField\":\"Justin\",\"name\":\"Justin\",\"favorite_number\":{\"int\":256},\"favorite_color\":null}";
+		String jsonString = readFileFromClassRoot("/extraField.json");
 
 		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
 	}	
