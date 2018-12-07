@@ -11,7 +11,8 @@
                     "type":"record",
                     "fields":[
                         {"name":"name", "type":"string"},
-                        {"name":"birthday", "type":"string"}
+                        {"name":"birthday", "type":"string"},
+                        {"name":"gender", "type":"string", "default": "Male"}                        
                     ]
                 }
             }
