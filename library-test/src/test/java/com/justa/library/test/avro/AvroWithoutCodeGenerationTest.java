@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.avro.AvroTypeException;
@@ -31,6 +32,31 @@ public class AvroWithoutCodeGenerationTest {
 		return schema;
 	}
 	
+	
+	@Test
+	public void testintArraySchema() throws IOException {
+		Schema schema = getSchema("/avro/int_array.json");
+		GenericRecord experience = new GenericData.Record(schema);
+		List<Integer> ages = new ArrayList<>();
+		ages.add(1234);
+		ages.add(2345);
+		experience.put("ages", ages);
+		
+		String jsonString = "{\"ages\": [1234,3456]}";
+
+		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
+	}
+	
+	@Test(expected =  AvroTypeException.class)
+	// AvroTypeException: Expected int. Got VALUE_STRING
+	public void testintArrayFailure() throws IOException {
+		Schema schema = getSchema("/avro/int_array.json");
+		String jsonString = "{\"ages\": [\"1234\",\"3456\"]}";
+
+		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
+	}
+
+
 	@Test
 	public void testEnumSchema() throws IOException {
 		Schema schema = getSchema("/avro/enum_sample.json");

@@ -1,6 +1,6 @@
 {
 	"type": "record",
-	"name": "TestClass",
+	"name": "TestEnum",
 	"namespace": "q42698247",
 	"fields": [
 		{

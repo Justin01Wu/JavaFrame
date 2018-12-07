@@ -1,0 +1,14 @@
+{
+	"type": "record",
+	"name": "TestArray",
+	"namespace": "q42698247",
+	"fields": [
+		{
+			"name": "ages",
+			"type": {
+				"type": "array",
+				"items": "int"
+			}
+		}
+	]
+}
