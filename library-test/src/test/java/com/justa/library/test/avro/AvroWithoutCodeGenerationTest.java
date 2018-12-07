@@ -3,14 +3,13 @@ package com.justa.library.test.avro;
 import static org.junit.Assert.assertEquals;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 
+import org.apache.avro.AvroTypeException;
 import org.apache.avro.Schema;
 import org.apache.avro.generic.GenericRecord;
 import org.junit.Test;
@@ -70,6 +69,60 @@ public class AvroWithoutCodeGenerationTest {
 
 	}
 
+	@Test 
+	public void testDeserialize() throws IOException, URISyntaxException {
+		
+		Schema schema = getSchema();
+		
+		URL url = AvroWithoutCodeGenerationTest.class.getResource("/users.avro");
+		System.out.println(url.getFile());
+		File file = new File(url.getFile());
+		
+		AvroWithoutCodeGeneration.deserialize(schema, file);
+	}
+	
+
+	@Test 
+	public void testJsonDeserialize() throws IOException, URISyntaxException {
+		
+		Schema schema = getSchema();
+		
+		String jsonString = "{\"name\":\"Justin\",\"favorite_number\":{\"int\":256},\"favorite_color\":null}";
+
+		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
+	}
+
+	@Test(expected =  AvroTypeException.class)
+	// AvroTypeException: Expected field name not found: name
+	public void testJsonDeserializeFailure() throws IOException, URISyntaxException {
+		
+		Schema schema = getSchema();
+		
+		String jsonString = "{\"name22\":\"Justin\",\"favorite_number\":{\"int\":256},\"favorite_color\":null}";
+
+		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
+	}	
+
+	@Test (expected =  AvroTypeException.class) 
+	// AvroTypeException :  Expected field name not found: favorite_number
+	public void testJsonDeserializeFailure2() throws IOException, URISyntaxException {
+		
+		Schema schema = getSchema();
+		
+		String jsonString = "{\"name\":\"Justin\",\"favorite_number22\":{\"int\":256},\"favorite_color\":null}";
+
+		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
+	}	
+	
+	@Test 
+	public void testJsonDeserializeWithExtraField() throws IOException, URISyntaxException {
+		
+		Schema schema = getSchema();
+		
+		String jsonString = "{\"extraField\":\"Justin\",\"name\":\"Justin\",\"favorite_number\":{\"int\":256},\"favorite_color\":null}";
+
+		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
+	}	
 	
 	
 

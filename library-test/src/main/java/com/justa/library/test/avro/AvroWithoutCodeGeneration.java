@@ -16,9 +16,10 @@ import org.apache.avro.generic.GenericDatumWriter;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.io.DatumReader;
 import org.apache.avro.io.DatumWriter;
+import org.apache.avro.io.DecoderFactory;
 import org.apache.avro.io.Encoder;
 import org.apache.avro.io.EncoderFactory;
-import org.apache.avro.specific.SpecificDatumWriter;
+import org.apache.avro.io.JsonDecoder;
 
 // comes from : https://avro.apache.org/docs/1.8.2/gettingstartedjava.html
 public class AvroWithoutCodeGeneration {
@@ -93,5 +94,14 @@ public class AvroWithoutCodeGeneration {
 			System.out.println(user);
 		}
 		dataFileReader.close();
+
+	}
+	
+	public static void jsonDeserialize(Schema schema, String jsonString) throws IOException {
+		
+		JsonDecoder decoder  = DecoderFactory.get().jsonDecoder(schema, jsonString);
+		DatumReader<GenericRecord> reader = new GenericDatumReader<GenericRecord>(schema);
+		GenericRecord user = reader.read(null, decoder);
+		System.out.println(user);
 	}
 }
