@@ -14,7 +14,8 @@
 		{
 			"name": "gender",
 			"type": "string",
-			"default": "Male"
+			"default": "Male",
+			"doc": " this field has default value, but doesn't know how to use it."
 		}
 	]
 }

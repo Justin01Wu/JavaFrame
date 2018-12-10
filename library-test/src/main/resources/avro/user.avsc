@@ -1,9 +1,17 @@
 {"namespace": "example.avro",
  "type": "record",
  "name": "User",
+ "doc":"json doesn't support any comment, so use this field in every level to support comment",
  "fields": [
      {"name": "name", "type": "string"},
-     {"name": "favorite_number",  "type": ["int", "null"]},
-     {"name": "favorite_color", "type": ["string", "null"]}
+     {
+     	"name": "favorite_number",  
+     	"type": ["int", "null"],
+     	"doc": "this union type, its input is weird: int:2323 "
+     },
+     {
+     	"name": "favorite_color", 
+     	"type": ["string", "null"]
+     }
  ]
 }

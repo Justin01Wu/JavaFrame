@@ -7,7 +7,8 @@
 			"name": "ages",
 			"type": {
 				"type": "array",
-				"items": "int"
+				"items": "int",
+				"doc": "predefine type can be directly used"
 			}
 		}
 	]
