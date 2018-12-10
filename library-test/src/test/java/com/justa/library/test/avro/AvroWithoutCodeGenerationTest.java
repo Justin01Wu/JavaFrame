@@ -38,11 +38,25 @@ public class AvroWithoutCodeGenerationTest {
 	public void testPerson() throws IOException {
 		Schema schema = getSchema("/avro/person.json");
 		
-		String jsonString = "{\"firstName\": \"Justin\", \"lastName\": \"Wu\"}";
+		//String jsonString = "{\"firstName\": \"Justin\", \"lastName\": \"Wu\"}";  
+		//  will fail without gender even it has default value
+		
+		String jsonString = "{\"firstName\": \"Justin\", \"lastName\": \"Wu\", \"gender\": \"Male\"}";
 
 		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
 	}
 	
+	@Test 
+	public void testPersonSerialize() throws IOException, URISyntaxException {
+		Schema schema = getSchema("/avro/person.json");
+		GenericRecord person = new GenericData.Record(schema);
+		person.put("firstName", "Justin");
+		person.put("lastName", "Wu");
+		person.put("gender", "Male");  // will fail without it even it has default value
+		String result = AvroWithoutCodeGeneration.jsonSerialize(person, schema);
+		System.out.println(result);
+
+	}
 
 	@Test
 	public void testLogicalType() throws IOException {
@@ -218,12 +232,8 @@ public class AvroWithoutCodeGenerationTest {
 		assertEquals(users.size(), 2);
 		
 		// Serialize user1 and user2 to disk
-
 		File file = new File("c:/temp/users.avro");
 		AvroWithoutCodeGeneration.serialize(file, users, schema);
-		
-		
-
 	}
 	
 	@Test 
@@ -233,7 +243,7 @@ public class AvroWithoutCodeGenerationTest {
 		
 		assertEquals(users.size(), 2);
 		
-		String result = AvroWithoutCodeGeneration.jsonSerialize(users, schema);
+		String result = AvroWithoutCodeGeneration.jsonSerialize(users.get(0), schema);
 		System.out.println(result);
 
 	}

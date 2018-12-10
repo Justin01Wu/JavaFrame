@@ -54,15 +54,15 @@ public class AvroWithoutCodeGeneration {
 		return users;
 	}
 
-	public static String jsonSerialize(List<GenericRecord> users, Schema schema) throws IOException {
+	public static String jsonSerialize(GenericRecord record, Schema schema) throws IOException {
 		
 		ByteArrayOutputStream bout = new ByteArrayOutputStream();
 
 		Encoder jsonEncoder = EncoderFactory.get().jsonEncoder(schema, bout);  // use JSON format for output data 
 		
 		DatumWriter<GenericRecord> writer = new GenericDatumWriter<GenericRecord>(schema);
-		GenericRecord user  =  users.get(0); 
-		writer.write(user, jsonEncoder);
+ 
+		writer.write(record, jsonEncoder);
 		
 		jsonEncoder.flush();
 		String data = bout.toString();

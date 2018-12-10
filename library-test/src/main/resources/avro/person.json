@@ -10,6 +10,11 @@
 		{
 			"name": "lastName",
 			"type": "string"
+		},
+		{
+			"name": "gender",
+			"type": "string",
+			"default": "Male"
 		}
 	]
 }
