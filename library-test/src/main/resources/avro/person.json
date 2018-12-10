@@ -15,7 +15,8 @@
 			"name": "gender",
 			"type": "string",
 			"default": "Male",
-			"doc": " this field has default value, but doesn't know how to use it."
+			"doc": " this field has default value, but doesn't know how to use it.",
+			"doc2": "avro support extra fields in its sechema"
 		}
 	]
 }
