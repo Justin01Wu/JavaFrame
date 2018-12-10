@@ -41,7 +41,7 @@ public class AvroWithoutCodeGenerationTest {
 		//String jsonString = "{\"firstName\": \"Justin\", \"lastName\": \"Wu\"}";  
 		//  will fail without gender even it has default value
 		
-		String jsonString = "{\"firstName\": \"Justin\", \"lastName\": \"Wu\", \"gender\": \"Male\"}";
+		String jsonString = "{\"firstName\": \"Justin\", \"lastName\": \"Wu\", \"gender\": \"Female\"}";
 
 		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
 	}
@@ -52,7 +52,7 @@ public class AvroWithoutCodeGenerationTest {
 		GenericRecord person = new GenericData.Record(schema);
 		person.put("firstName", "Justin");
 		person.put("lastName", "Wu");
-		person.put("gender", "Male");  // will fail without it even it has default value
+		person.put("gender", "Female");  // will fail without it even it has default value
 		String result = AvroWithoutCodeGeneration.jsonSerialize(person, schema);
 		System.out.println(result);
 
