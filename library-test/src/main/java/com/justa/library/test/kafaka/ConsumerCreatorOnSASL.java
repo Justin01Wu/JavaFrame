@@ -12,8 +12,9 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.LongDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
-// comes from https://dzone.com/articles/kafka-producer-and-consumer-example
-// https://dzone.com/articles/writing-a-kafka-consumer-in-java
+// please see those URL for details:
+//     https://docs.confluent.io/current/kafka/authentication_sasl/authentication_sasl_plain.html#kafka-sasl-auth-plain
+//  or https://docs.confluent.io/current/kafka/authentication_sasl/authentication_sasl_plain.html
 
 public class ConsumerCreatorOnSASL {
 	
