@@ -25,7 +25,8 @@ public class ConsumerCreatorOnSASL {
 		
 	    // specify the SASL_PLAINTEXT protocol for security
 		props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, "SASL_PLAINTEXT");	   
-		props.put("sasl.mechanism", "PLAIN");
+		props.put("sasl.mechanism", "PLAIN");  // Looks like it a bug of Kafka, need to manually to set it
+		
 		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_BROKERS);
 		System.setProperty("java.security.auth.login.config", "C:/_program2/kafka_2.12-2.1.0/KafkaClient.txt");
 		
