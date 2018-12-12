@@ -12,10 +12,7 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.LongDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
-// please see those URL for details:
-//     https://docs.confluent.io/current/kafka/authentication_sasl/authentication_sasl_plain.html#kafka-sasl-auth-plain
-//  or https://docs.confluent.io/current/kafka/authentication_sasl/authentication_sasl_plain.html
-
+// please see KafakaProducerOnSASL for how to set
 public class ConsumerCreatorOnSASL {
 	
 	public static String KAFKA_BROKERS = "CA09417D.global.local:9093";
