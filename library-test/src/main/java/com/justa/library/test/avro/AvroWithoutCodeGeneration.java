@@ -60,7 +60,7 @@ public class AvroWithoutCodeGeneration {
 
 		Encoder jsonEncoder = EncoderFactory.get().jsonEncoder(schema, bout);  // use JSON format for output data 
 		
-		DatumWriter<GenericRecord> writer = new GenericDatumWriter<GenericRecord>(schema);
+		DatumWriter<GenericRecord> writer = new GenericDatumWriter<>(schema);
  
 		writer.write(record, jsonEncoder);
 		
@@ -72,7 +72,7 @@ public class AvroWithoutCodeGeneration {
 
 	public static void serialize(File file, List<GenericRecord> users, Schema schema) throws IOException {
 		DatumWriter<GenericRecord> datumWriter = new GenericDatumWriter<GenericRecord>(schema);
-		DataFileWriter<GenericRecord> dataFileWriter = new DataFileWriter<GenericRecord>(datumWriter);
+		DataFileWriter<GenericRecord> dataFileWriter = new DataFileWriter<>(datumWriter);
 		dataFileWriter.create(schema, file);
 
 		for (GenericRecord user : users) {
@@ -83,8 +83,8 @@ public class AvroWithoutCodeGeneration {
 
 	public static void deserialize(Schema schema, File file) throws IOException {
 		// deserialize users from disk
-		DatumReader<GenericRecord> datumReader = new GenericDatumReader<GenericRecord>(schema);
-		DataFileReader<GenericRecord> dataFileReader = new DataFileReader<GenericRecord>(file, datumReader);
+		DatumReader<GenericRecord> datumReader = new GenericDatumReader<>(schema);
+		DataFileReader<GenericRecord> dataFileReader = new DataFileReader<>(file, datumReader);
 		GenericRecord user = null;
 		while (dataFileReader.hasNext()) {
 			// Reuse user object by passing it to next(). This saves us from

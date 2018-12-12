@@ -42,8 +42,12 @@ public class AvroWithoutCodeGenerationTest {
 		//  will fail without gender even it has default value
 		
 		String jsonString = "{\"firstName\": \"Justin\", \"lastName\": \"Wu\", \"gender\": \"Female\"}";
-
 		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
+		
+		// failed : test alias familyName reading
+//		jsonString = "{\"firstName\": \"Justin\", \"familyName\": \"Wu\", \"gender\": \"Female\"}";
+//		AvroWithoutCodeGeneration.jsonDeserialize(schema, jsonString);
+		
 	}
 	
 	@Test 
@@ -55,6 +59,16 @@ public class AvroWithoutCodeGenerationTest {
 		person.put("gender", "Female");  // will fail without it even it has default value
 		String result = AvroWithoutCodeGeneration.jsonSerialize(person, schema);
 		System.out.println(result);
+
+		// failed: test Alias on writing
+//		person = new GenericData.Record(schema);
+//		person.put("firstName", "Justin");
+//		person.put("familyName", "Wu");  // this is alias field
+//		person.put("gender", "Female");  // will fail without it even it has default value
+//		result = AvroWithoutCodeGeneration.jsonSerialize(person, schema);
+//		System.out.println(result);
+
+		
 
 	}
 

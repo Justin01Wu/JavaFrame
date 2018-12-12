@@ -9,6 +9,7 @@
 		},
 		{
 			"name": "lastName",
+			"aliases": ["familyName"],
 			"type": "string"
 		},
 		{

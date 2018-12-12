@@ -7,11 +7,12 @@
      {
      	"name": "favorite_number",  
      	"type": ["int", "null"],
-     	"doc": "this union type, its input is weird: int:2323 "
+     	"doc": "this is union type, its input is weird: int:2323 "
      },
      {
      	"name": "favorite_color", 
-     	"type": ["string", "null"]
+     	"type": ["string", "null"],
+     	"doc": "this is union type, its input is weird: string:2323 "
      }
  ]
 }
