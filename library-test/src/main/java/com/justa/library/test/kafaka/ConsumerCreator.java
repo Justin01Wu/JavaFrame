@@ -2,10 +2,12 @@ package com.justa.library.test.kafaka;
 
 import java.time.Duration;
 import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.consumer.ConsumerRebalanceListener;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.LongDeserializer;
@@ -19,7 +21,7 @@ public class ConsumerCreator {
 	public static Consumer<Long, String> createConsumer() {
 		Properties props = new Properties();
 		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, IKafkaConstants.KAFKA_BROKERS);
-		props.put(ConsumerConfig.GROUP_ID_CONFIG, IKafkaConstants.GROUP_ID_CONFIG);
+		props.put(ConsumerConfig.GROUP_ID_CONFIG, IKafkaConstants.GROUP_ID_CONFIG+"3");
 		
 		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, LongDeserializer.class.getName());
 		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
@@ -29,9 +31,15 @@ public class ConsumerCreator {
 		
 		props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
 		props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, IKafkaConstants.OFFSET_RESET_EARLIER);
-		Consumer<Long, String> consumer = new KafkaConsumer<>(props);
+		KafkaConsumer<Long, String> consumer = new KafkaConsumer<>(props);
 		
-		consumer.subscribe(Collections.singletonList(IKafkaConstants.TOPIC_NAME));
+		List<String> topics = Collections.singletonList(IKafkaConstants.TOPIC_NAME);
+		ConsumerRebalanceListener listener;
+		//listener = new MyConsumerRebalanceListener(consumer, 0);  // this line will reset offset to the beginning
+		listener = new MyConsumerRebalanceListener(consumer,50);  // this line will reset offset to 30
+
+		
+		consumer.subscribe(topics, listener);
 		
 		return consumer;
 	}

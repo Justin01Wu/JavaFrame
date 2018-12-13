@@ -45,7 +45,7 @@ public class ConsumerCreatorOnSASL {
 		
 		ConsumerRebalanceListener listener;
 		//listener = new MyConsumerRebalanceListener(consumer, 0);  // this line will reset offset to the beginning
-		listener = new MyConsumerRebalanceListener(consumer,50);  // this line will reset offset to 30
+		listener = new MyConsumerRebalanceListener(consumer,58);  // this line will reset offset to 30
 		
 		consumer.subscribe(topics, listener);
 		
