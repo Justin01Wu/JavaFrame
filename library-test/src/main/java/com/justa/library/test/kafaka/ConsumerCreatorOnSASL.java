@@ -2,11 +2,13 @@ package com.justa.library.test.kafaka;
 
 import java.time.Duration;
 import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 
 import org.apache.kafka.clients.CommonClientConfigs;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.consumer.ConsumerRebalanceListener;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.LongDeserializer;
@@ -37,16 +39,18 @@ public class ConsumerCreatorOnSASL {
 		
 		props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false");
 		props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, IKafkaConstants.OFFSET_RESET_EARLIER);
-		Consumer<Long, String> consumer = new KafkaConsumer<>(props);
+		KafkaConsumer<Long, String> consumer = new KafkaConsumer<>(props);
 		
-		consumer.subscribe(Collections.singletonList(IKafkaConstants.TOPIC_NAME));
+		List<String> topics = Collections.singletonList(IKafkaConstants.TOPIC_NAME);
+		ConsumerRebalanceListener ConsumerRebalanceListener = new MyConsumerRebalanceListener(consumer, 0);  // this line will reset offset 
+		consumer.subscribe(topics, ConsumerRebalanceListener);
 		
 		return consumer;
 	}
 
 	static void runConsumer() throws InterruptedException {
 		final Consumer<Long, String> consumer = createConsumer();
-
+		
 		final int giveUp = 60;
 		int noRecordsCount = 0;
 
@@ -89,4 +93,6 @@ public class ConsumerCreatorOnSASL {
 	public static void main(String... args) throws Exception {
 		runConsumer();
 	}
+	
+	
 }
