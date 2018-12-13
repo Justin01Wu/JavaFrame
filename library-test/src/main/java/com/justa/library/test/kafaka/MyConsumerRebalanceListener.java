@@ -2,6 +2,7 @@ package com.justa.library.test.kafaka;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 
 import org.apache.kafka.clients.consumer.ConsumerRebalanceListener;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -35,8 +36,13 @@ public class MyConsumerRebalanceListener implements ConsumerRebalanceListener {
                 kafkaConsumer.seekToEnd(partitions);
             }else {
                 System.out.println("Resetting offset to " + startingOffset);
-                //kafkaConsumer.seek(partitions, startingOffset);
-                // TODO finish it
+                
+                Iterator<TopicPartition> topicPartitionIterator = partitions.iterator();
+                while(topicPartitionIterator.hasNext()){
+                    TopicPartition topicPartition = topicPartitionIterator.next();
+                    System.out.println("Current offset is " + kafkaConsumer.position(topicPartition) + " committed offset is ->" + kafkaConsumer.committed(topicPartition) );
+                    kafkaConsumer.seek(topicPartition, startingOffset);                    
+                }
             }
     }
 

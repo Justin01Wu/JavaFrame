@@ -42,8 +42,12 @@ public class ConsumerCreatorOnSASL {
 		KafkaConsumer<Long, String> consumer = new KafkaConsumer<>(props);
 		
 		List<String> topics = Collections.singletonList(IKafkaConstants.TOPIC_NAME);
-		ConsumerRebalanceListener ConsumerRebalanceListener = new MyConsumerRebalanceListener(consumer, 0);  // this line will reset offset 
-		consumer.subscribe(topics, ConsumerRebalanceListener);
+		
+		ConsumerRebalanceListener listener;
+		//listener = new MyConsumerRebalanceListener(consumer, 0);  // this line will reset offset to the beginning
+		listener = new MyConsumerRebalanceListener(consumer,50);  // this line will reset offset to 30
+		
+		consumer.subscribe(topics, listener);
 		
 		return consumer;
 	}
@@ -54,7 +58,7 @@ public class ConsumerCreatorOnSASL {
 		final int giveUp = 60;
 		int noRecordsCount = 0;
 
-		Duration oneSecond = Duration.ofSeconds(1l);
+		Duration oneSecond = Duration.ofSeconds(10l);
 		//Duration oneSecond = Duration.ofSeconds(0l);  // no wait
 		while (true) {			
 			
