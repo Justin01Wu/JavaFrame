@@ -1,0 +1,16 @@
+{
+  "name": {
+    "first": "Justin",
+    "last": "Wu"
+  },
+  "phones": [
+    {
+      "number": "226 338 5780",
+      "type": "mobile"
+    },
+    {
+      "number": "647 896 7102",
+      "type": "home"
+    }
+  ]
+}
