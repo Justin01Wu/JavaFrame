@@ -17,7 +17,12 @@ public class UploadObject {
 	private static String bucketName = "justa";
 	private static Regions clientRegion = Regions.US_EAST_1;
 	
-	public static void main(String[] args) throws IOException {        
+	public static void main(String[] args) throws IOException {
+		
+		//  for security 
+		// https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html 
+		// please set env variable AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY
+		
         
         //This code expects that you have AWS credentials set up per:
         // https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html
