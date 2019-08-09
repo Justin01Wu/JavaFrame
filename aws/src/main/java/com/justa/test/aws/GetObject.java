@@ -1,8 +1,12 @@
 package com.justa.test.aws;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.SdkClientException;
-import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
@@ -10,11 +14,8 @@ import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ResponseHeaderOverrides;
 import com.amazonaws.services.s3.model.S3Object;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-
+//  for non-public file access, please set env variable AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY  
+// see here for details:https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html 
 public class GetObject {
 
     public static void main(String[] args) throws IOException {
@@ -26,7 +27,9 @@ public class GetObject {
         try {
             AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
                     .withRegion(clientRegion)
-                    .withCredentials(new ProfileCredentialsProvider())
+                    //.withCredentials(new ProfileCredentialsProvider())   
+                    // this will ask user provide file C:\Users\[USERNAME]\.aws\credentials
+                    // please see here for details  : https://stackoverflow.com/questions/41796355/aws-error-downloading-object-from-s3-profile-file-cannot-be-null/44079772
                     .build();
 
             // Get an object and print its contents.
