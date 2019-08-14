@@ -47,7 +47,27 @@
 				</configuration>
 			</plugin>
 
-			
+			<!-- copy all 3rd libraries to a folder "jars" under target  -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.1.1</version>
+				<executions>
+					<execution>
+            			<id>copy-dependencies</id>
+            			<phase>package</phase>
+            			<goals>
+              				<goal>copy-dependencies</goal>
+            			</goals>				
+						<configuration>
+                            <includes>**/*.jar</includes>
+                            <outputDirectory>${project.build.directory}/jars</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>true</overWriteSnapshots>							
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 		<finalName>${project.artifactId}</finalName>
 	</build>
