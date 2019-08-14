@@ -1,0 +1,32 @@
+
+
+ssh ec2-user@52.21.69.17 -i MyUse1KP.pem
+
+ssh ec2-user@34.205.17.149 -i MyUser2KP.pem
+sudo su
+
+# install JDK 8
+sudo yum install java-1.8.0-openjdk-devel
+
+# install Tomcat 8  https://linuxize.com/post/how-to-install-tomcat-8-5-on-centos-7/
+
+cd /tmp
+sudo useradd -m -U -d /opt/tomcat -s /bin/false tomcat
+wget http://www-us.apache.org/dist/tomcat/tomcat-8/v8.5.43/bin/apache-tomcat-8.5.43.zip
+
+unzip apache-tomcat-*.zip
+sudo mkdir -p /opt/tomcat
+sudo mv apache-tomcat-8.5.43 /opt/tomcat/
+
+sudo ln -s /opt/tomcat/apache-tomcat-8.5.43 /opt/tomcat/latest
+sudo chown -R tomcat: /opt/tomcat
+
+sudo sh -c 'chmod +x /opt/tomcat/latest/bin/*.sh'
+
+then use nano to edit the server.xml port 8080 to 80
+
+yum install git
+yum install maven
+
+java -cp "./aws-test.jar:./jars/*" com.justa.test.aws.GetObject
+
