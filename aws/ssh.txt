@@ -33,4 +33,5 @@ java -cp "./aws-test.jar:./jars/*" com.justa.test.aws.GetObject
 java -cp "./aws-test.jar:./jars/*" com.justa.test.aws.GetBigObject master-iter-NorthAmTorHail-v18.txt Range
 
 For a 700MB S3 file, run in AWS EC2 only need 13 seconds, but it needs 2 minutes 6seconds
-So EC2 is about 10 times faster than remote side
+So EC2 is about 10 times faster than remote side, 
+Also you don't need to set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in EC2
