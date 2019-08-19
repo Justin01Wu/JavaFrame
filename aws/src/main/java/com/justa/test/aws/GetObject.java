@@ -1,8 +1,6 @@
 package com.justa.test.aws;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import com.amazonaws.AmazonServiceException;
@@ -37,14 +35,16 @@ public class GetObject {
             fullObject = s3Client.getObject(new GetObjectRequest(bucketName, key));
             System.out.println("Content-Type: " + fullObject.getObjectMetadata().getContentType());
             System.out.println("Content: ");
-            displayTextInputStream(fullObject.getObjectContent());
+            InputStreamReader isr3 = new InputStreamReader(fullObject.getObjectContent());
+            GetLocalFile.displayTextInputStream(isr3);
 
             // Get a range of bytes from an object and print the bytes.
-            GetObjectRequest rangeObjectRequest = new GetObjectRequest(bucketName, key)
-                    .withRange(0, 9);
+            GetObjectRequest rangeObjectRequest = new GetObjectRequest(bucketName, key).withRange(0, 9);
             objectPortion = s3Client.getObject(rangeObjectRequest);
             System.out.println("Printing bytes retrieved.");
-            displayTextInputStream(objectPortion.getObjectContent());
+
+            InputStreamReader isr = new InputStreamReader(objectPortion.getObjectContent());
+            GetLocalFile.displayTextInputStream(isr);
 
             // Get an entire object, overriding the specified response headers, and print the object's content.
             ResponseHeaderOverrides headerOverrides = new ResponseHeaderOverrides()
@@ -53,7 +53,8 @@ public class GetObject {
             GetObjectRequest getObjectRequestHeaderOverride = new GetObjectRequest(bucketName, key)
                     .withResponseHeaders(headerOverrides);
             headerOverrideObject = s3Client.getObject(getObjectRequestHeaderOverride);
-            displayTextInputStream(headerOverrideObject.getObjectContent());
+            InputStreamReader isr2 = new InputStreamReader(headerOverrideObject.getObjectContent());
+            GetLocalFile.displayTextInputStream(isr2);
         } catch (AmazonServiceException e) {
             // The call was transmitted successfully, but Amazon S3 couldn't process 
             // it, so it returned an error response.
@@ -76,13 +77,5 @@ public class GetObject {
         }
     }
 
-    private static void displayTextInputStream(InputStream input) throws IOException {
-        // Read the text input stream one line at a time and display each line.
-        BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-        String line = null;
-        while ((line = reader.readLine()) != null) {
-            System.out.println(line);
-        }
-        System.out.println();
-    }
+
 }

@@ -55,7 +55,8 @@ public class GetBigObject {
                 System.out.println("Content-Type: " + fullObject.getObjectMetadata().getContentType());
                 System.out.println(new Date());
                 System.out.println("Content: ");
-                displayTextInputStream(fullObject.getObjectContent());
+                InputStreamReader isr = new InputStreamReader(fullObject.getObjectContent());
+                GetLocalFile.displayTextInputStream(isr);
                 System.out.println(new Date());
             }else {
                 // Get a range of bytes from an object and print the bytes.
@@ -65,7 +66,8 @@ public class GetBigObject {
                 objectPortion = s3Client.getObject(rangeObjectRequest);
                 System.out.println(new Date());
                 System.out.println("Printing bytes retrieved.");
-                displayTextInputStream(objectPortion.getObjectContent());
+                InputStreamReader isr = new InputStreamReader(objectPortion.getObjectContent());
+                GetLocalFile.displayTextInputStream(isr);
                 System.out.println(new Date());
             	
             }
@@ -89,17 +91,4 @@ public class GetBigObject {
         }
     }
 
-    private static void displayTextInputStream(InputStream input) throws IOException {
-        // Read the text input stream one line at a time and display each line.
-        BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-        String line = null;
-        int rows = 0;
-        int size = 0;
-        while ((line = reader.readLine()) != null) {
-            //System.out.println(line);
-        	size = size + line.length();  
-            rows++;
-        }
-        System.out.println("rows = " + rows +", size = " + size);
-    }
 }
