@@ -2,15 +2,22 @@
 
 ssh ec2-user@52.21.69.17 -i MyUse1KP.pem
 
-ssh ec2-user@3.89.20.3 -i MyUser2KP.pem
+ssh ec2-user@54.152.44.206 -i MyUser2KP.pem
 
 sudo su
 
 # update all installation
-yum update
+yum update -y
 
+# get current system information:
+curl http://169.254.169.254/latest/meta-data/
+curl http://169.254.169.254/latest/meta-data/public-ipv4
+
+# get boot strap command
+curl http://169.254.169.254/latest/user-data/
+ 
 # install JDK 8
-sudo yum install java-1.8.0-openjdk-devel
+yum install java-1.8.0-openjdk-devel -y
 
 # install Tomcat 8  https://linuxize.com/post/how-to-install-tomcat-8-5-on-centos-7/
 
@@ -36,9 +43,9 @@ cd /opt/tomcat/latest
 mkdir projects
 cd projects
 git clone https://github.com/Justin01Wu/webUI.git
+mvn clean package
 
-mkdir -p /opt/tomcat/latest/webapps/webUi
-ln -s  /opt/tomcat/latest/projects/webUI/src/main/webapp/ /opt/tomcat/latest/webapps/webUi
+cp /opt/tomcat/latest/projects/webUI/target/webUI-1.0-SNAPSHOT.war /opt/tomcat/latest/webapps/webUI.war
 
 
 java -cp "./aws-test.jar:./jars/*" com.justa.test.aws.GetObject
