@@ -4,6 +4,7 @@ ssh ec2-user@52.21.69.17 -i MyUse1KP.pem
 
 ssh ec2-user@54.152.44.206 -i MyUser2KP.pem
 
+#!/bin/bash
 sudo su
 
 # update all installation
@@ -70,3 +71,7 @@ Also you don't need to set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in EC2 be
 
 It only needs 2 seconds if read this file from my local(SSD CPU I7 Desktop)
 It needs 10 seconds if read this file from EC2(Amazon Linux 2 AMI (HVM), SSD Volume t2.micro)
+
+
+yum install mysql
+ mysql -u admin -h justadb.c52rewpdek7m.us-east-1.rds.amazonaws.com --password=Oracle8i
