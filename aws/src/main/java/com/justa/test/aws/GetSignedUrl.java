@@ -26,7 +26,7 @@ public class GetSignedUrl {
 	        try {
 	            AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
 	                    .withRegion(clientRegion)
-	                    .withCredentials(new ProfileCredentialsProvider())
+	                    //.withCredentials(new ProfileCredentialsProvider())
 	                    .build();
 
 	            // Set the presigned URL to expire after one hour.

@@ -29,6 +29,15 @@ public class GetObject {
                     // this will ask user provide file C:\Users\[USERNAME]\.aws\credentials
                     // please see here for details  : https://stackoverflow.com/questions/41796355/aws-error-downloading-object-from-s3-profile-file-cannot-be-null/44079772
                     .build();
+            /*
+            By default, S3 objects are private, can only be accessed in AWS cloud or by login users
+            In the code, you can set user secret in C:\Users\[USERNAME]\.aws\credentials
+            	[default]
+            	aws_access_key_id=dddkkdkd
+            	aws_secret_access_key=sdkaddslda
+            To make it easy, AWS also provide a tool kit for Eclipse. With that tool kit, you don’t need to set that file
+            Also you don’t need set it in EC2 instance
+            */
 
             // Get an object and print its contents.
             System.out.println("Downloading an object");
