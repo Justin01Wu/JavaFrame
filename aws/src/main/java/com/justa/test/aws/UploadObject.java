@@ -58,6 +58,8 @@ public class UploadObject {
         
         String md5 = generateMd5(file);
         metadata.setContentMD5(md5);
+        //MD5 is only meaningful during the transmission and its life cycle stops once the transmission is received and validated
+        
         metadata.addUserMetadata("x-amz-meta-title", "someTitle12345");
         
         PutObjectRequest req = new PutObjectRequest(bucketName, fileObjKeyName, file).withMetadata(metadata);
