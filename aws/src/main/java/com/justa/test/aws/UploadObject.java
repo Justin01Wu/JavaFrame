@@ -58,7 +58,7 @@ public class UploadObject {
         
         String md5 = generateMd5(file);
         metadata.setContentMD5(md5);
-        metadata.addUserMetadata("x-amz-meta-title", "someTitle");
+        metadata.addUserMetadata("x-amz-meta-title", "someTitle12345");
         
         PutObjectRequest req = new PutObjectRequest(bucketName, fileObjKeyName, file).withMetadata(metadata);
         s3Client.putObject(req);

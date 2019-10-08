@@ -52,6 +52,7 @@ public class GetObject {
             System.out.println("Content-Type: " + fullObject.getObjectMetadata().getContentType());
             System.out.println("MD5: " + fullObject.getObjectMetadata().getContentMD5());
             System.out.println("ETAG: " + fullObject.getObjectMetadata().getETag());
+            System.out.println("x-amz-meta-title: " + fullObject.getObjectMetadata().getUserMetaDataOf("x-amz-meta-title"));
             System.out.println("Content: ");
             InputStreamReader isr3 = new InputStreamReader(fullObject.getObjectContent());
             displayTextInputStream(isr3);
