@@ -1,5 +1,6 @@
 package com.justa.test.aws;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -15,12 +16,18 @@ import com.amazonaws.services.s3.model.S3Object;
 //  for non-public file access, please set env variable AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY  
 // see here for details:https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html 
 public class GetObject {
+	
+	private static Regions clientRegion = Regions.US_EAST_1;
+	private static String bucketName = "justa";
+	
+    public static void main(String[] args) throws IOException {        
+        
+    	getFile(UploadObject.key2);
+    	getFile(UploadObject.key1);
 
-    public static void main(String[] args) throws IOException {
-        Regions clientRegion = Regions.US_EAST_1;
-        String bucketName = "justa";
-        String key = "UploadObjectFromString.txt";
-
+    }
+    
+    private static void getFile(String key) throws IOException{
         S3Object fullObject = null, objectPortion = null, headerOverrideObject = null;
         try {
             AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
@@ -40,12 +47,14 @@ public class GetObject {
             */
 
             // Get an object and print its contents.
-            System.out.println("Downloading an object");
+            System.out.println("\r\n\r\n=====>Downloading an object: " + key);
             fullObject = s3Client.getObject(new GetObjectRequest(bucketName, key));
             System.out.println("Content-Type: " + fullObject.getObjectMetadata().getContentType());
+            System.out.println("MD5: " + fullObject.getObjectMetadata().getContentMD5());
+            System.out.println("ETAG: " + fullObject.getObjectMetadata().getETag());
             System.out.println("Content: ");
             InputStreamReader isr3 = new InputStreamReader(fullObject.getObjectContent());
-            GetLocalFile.displayTextInputStream(isr3);
+            displayTextInputStream(isr3);
 
             // Get a range of bytes from an object and print the bytes.
             GetObjectRequest rangeObjectRequest = new GetObjectRequest(bucketName, key).withRange(0, 9);
@@ -53,7 +62,7 @@ public class GetObject {
             System.out.println("Printing bytes retrieved.");
 
             InputStreamReader isr = new InputStreamReader(objectPortion.getObjectContent());
-            GetLocalFile.displayTextInputStream(isr);
+            displayTextInputStream(isr);
 
             // Get an entire object, overriding the specified response headers, and print the object's content.
             ResponseHeaderOverrides headerOverrides = new ResponseHeaderOverrides()
@@ -63,7 +72,7 @@ public class GetObject {
                     .withResponseHeaders(headerOverrides);
             headerOverrideObject = s3Client.getObject(getObjectRequestHeaderOverride);
             InputStreamReader isr2 = new InputStreamReader(headerOverrideObject.getObjectContent());
-            GetLocalFile.displayTextInputStream(isr2);
+            displayTextInputStream(isr2);
         } catch (AmazonServiceException e) {
             // The call was transmitted successfully, but Amazon S3 couldn't process 
             // it, so it returned an error response.
@@ -84,6 +93,22 @@ public class GetObject {
                 headerOverrideObject.close();
             }
         }
+
+    }
+    
+    public static void displayTextInputStream(InputStreamReader isr) throws IOException {
+        // Read the text input stream one line at a time and display each line.
+        BufferedReader reader = new BufferedReader(isr);
+        String line = null;
+        int rows = 0;
+        int size = 0;
+        while ((line = reader.readLine()) != null) {
+            //System.out.println(line);
+        	size = size + line.length();  
+            rows++;
+           	System.out.println(line);
+        }
+        System.out.println("rows = " + rows +", size = " + size);
     }
 
 

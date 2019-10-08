@@ -2,7 +2,7 @@
 
 ssh ec2-user@52.21.69.17 -i MyUse1KP.pem
 
-ssh ec2-user@54.152.44.206 -i MyUser2KP.pem
+ssh ec2-user@34.230.44.200 -i MyUser2KP.pem
 
 #!/bin/bash
 sudo su
