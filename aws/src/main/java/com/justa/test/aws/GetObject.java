@@ -50,8 +50,14 @@ public class GetObject {
             System.out.println("\r\n\r\n=====>Downloading an object: " + key);
             fullObject = s3Client.getObject(new GetObjectRequest(bucketName, key));
             System.out.println("Content-Type: " + fullObject.getObjectMetadata().getContentType());
+            
             System.out.println("MD5: " + fullObject.getObjectMetadata().getContentMD5());
+            //MD5 is only meaningful during the transmission and its life cycle stops once the transmission is received and validated
+            // so here, it is always null
+            
             System.out.println("ETAG: " + fullObject.getObjectMetadata().getETag());
+            // In some cases eTag = md5
+            
             System.out.println("x-amz-meta-title: " + fullObject.getObjectMetadata().getUserMetaDataOf("x-amz-meta-title"));
             System.out.println("Content: ");
             InputStreamReader isr3 = new InputStreamReader(fullObject.getObjectContent());
