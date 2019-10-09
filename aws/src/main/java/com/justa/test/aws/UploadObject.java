@@ -2,10 +2,11 @@ package com.justa.test.aws;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -13,7 +14,9 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.ObjectTagging;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.Tag;
 import com.amazonaws.util.IOUtils;
 
 
@@ -60,9 +63,16 @@ public class UploadObject {
         metadata.setContentMD5(md5);
         //MD5 is only meaningful during the transmission and its life cycle stops once the transmission is received and validated
         
-        metadata.addUserMetadata("x-amz-meta-title", "someTitle12345");
-        
         PutObjectRequest req = new PutObjectRequest(bucketName, fileObjKeyName, file).withMetadata(metadata);
+        
+        // add tags
+        metadata.addUserMetadata("x-amz-meta-title", "someTitle12345");
+        List<Tag> tags = new ArrayList<Tag>();
+        tags.add(new Tag("department", "developer"));
+        tags.add(new Tag("archieveRule", "quick"));
+        req.setTagging(new ObjectTagging(tags));
+        
+        
         s3Client.putObject(req);
 		
 	}
