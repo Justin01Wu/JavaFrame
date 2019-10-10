@@ -29,10 +29,10 @@ public class GetSignedUrl {
 	                    //.withCredentials(new ProfileCredentialsProvider())
 	                    .build();
 
-	            // Set the presigned URL to expire after one hour.
+	            // Set the presigned URL to expire after 5 minutes.
 	            java.util.Date expiration = new java.util.Date();
 	            long expTimeMillis = expiration.getTime();
-	            expTimeMillis += 1000 * 60 * 60;
+	            expTimeMillis += 1000 * 60 * 5;
 	            expiration.setTime(expTimeMillis);
 
 	            // Generate the presigned URL.
