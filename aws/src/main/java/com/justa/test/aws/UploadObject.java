@@ -13,9 +13,11 @@ import org.apache.commons.codec.digest.DigestUtils;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.ObjectTagging;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.StorageClass;
 import com.amazonaws.services.s3.model.Tag;
 import com.amazonaws.util.IOUtils;
 
@@ -63,7 +65,10 @@ public class UploadObject {
         metadata.setContentMD5(md5);
         //MD5 is only meaningful during the transmission and its life cycle stops once the transmission is received and validated
         
-        PutObjectRequest req = new PutObjectRequest(bucketName, fileObjKeyName, file).withMetadata(metadata);
+        PutObjectRequest req = new PutObjectRequest(bucketName, fileObjKeyName, file)
+        		.withMetadata(metadata)
+        		.withCannedAcl(CannedAccessControlList.PublicRead)      // set target file public
+        		.withStorageClass(StorageClass.OneZoneInfrequentAccess);
         
         // add tags
         metadata.addUserMetadata("x-amz-meta-title", "someTitle12345");
