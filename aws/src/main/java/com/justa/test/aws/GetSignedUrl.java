@@ -21,7 +21,7 @@ public class GetSignedUrl {
 	        
 	        Regions clientRegion = Regions.US_EAST_1;
 	        String bucketName = "justa";
-	        String objectKey = "UploadObjectFromString.txt";
+	        String objectKey = "proverb.html";
 
 	        try {
 	            AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
