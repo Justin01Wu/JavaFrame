@@ -2,7 +2,7 @@
 
 ssh ec2-user@52.21.69.17 -i MyUse1KP.pem
 
-ssh ec2-user@34.230.44.200 -i MyUser2KP.pem
+ssh ec2-user@18.212.27.214 -i MyUser2KP.pem
 
 #!/bin/bash
 sudo su
@@ -75,3 +75,10 @@ It needs 10 seconds if read this file from EC2(Amazon Linux 2 AMI (HVM), SSD Vol
 
 yum install mysql
  mysql -u admin -h justadb.c52rewpdek7m.us-east-1.rds.amazonaws.com --password=Oracle8i
+	use sys;
+	select * from sys_config;
+	use test;
+	CREATE TABLE Human ( ID int NOT NULL, name varchar(255) NOT NULL, PRIMARY KEY (ID) );
+	insert into Human values(3, 'aaa');
+	
+mysql -u admin -h justadb-readreplic.c52rewpdek7m.us-east-1.rds.amazonaws.com --password=Oracle8i
