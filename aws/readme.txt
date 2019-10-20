@@ -74,11 +74,11 @@ It needs 10 seconds if read this file from EC2(Amazon Linux 2 AMI (HVM), SSD Vol
 
 
 yum install mysql
- mysql -u admin -h justadb.c52rewpdek7m.us-east-1.rds.amazonaws.com --password=Oracle8i
+ mysql -u admin -h justadb.c52rewpdek7m.us-east-1.rds.amazonaws.com --password=dbPassword
 	use sys;
 	select * from sys_config;
 	use test;
 	CREATE TABLE Human ( ID int NOT NULL, name varchar(255) NOT NULL, PRIMARY KEY (ID) );
 	insert into Human values(3, 'aaa');
 	
-mysql -u admin -h justadb-readreplic.c52rewpdek7m.us-east-1.rds.amazonaws.com --password=Oracle8i
+mysql -u admin -h justadb-readreplic.c52rewpdek7m.us-east-1.rds.amazonaws.com --password=dbPassword

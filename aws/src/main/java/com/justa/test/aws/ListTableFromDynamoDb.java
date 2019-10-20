@@ -9,6 +9,8 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import com.amazonaws.services.dynamodbv2.model.ListTablesRequest;
 import com.amazonaws.services.dynamodbv2.model.ListTablesResult;
 
+
+// comes from https://docs.aws.amazon.com/en_pv/sdk-for-java/v1/developer-guide/examples-dynamodb-tables.html
 public class ListTableFromDynamoDb {
 
 	public static void main(String[] args) {
