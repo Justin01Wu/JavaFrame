@@ -22,7 +22,7 @@ public class ReceiveAndDeleteMessages {
      // receive messages from the queue
         
         ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest(queueUrl)
-        		  .withWaitTimeSeconds(10)     // long poll: wait 10 seconds
+        		  .withWaitTimeSeconds(10)     // long poll: wait 10 seconds, max is 20 seconds
         		  .withMaxNumberOfMessages(10);
         
         System.out.println("start to get message..." + new Date());
