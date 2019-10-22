@@ -1,10 +1,12 @@
 package com.justa.test.aws;
 
+import java.util.Date;
 import java.util.List;
 
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
 import com.amazonaws.services.sqs.model.Message;
+import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
 
 // it comes from https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/examples-sqs-messages.html
 public class ReceiveAndDeleteMessages {
@@ -18,7 +20,14 @@ public class ReceiveAndDeleteMessages {
         
         String queueUrl = sqs.getQueueUrl(QUEUE_NAME).getQueueUrl();
      // receive messages from the queue
-        List<Message> messages = sqs.receiveMessage(queueUrl).getMessages();
+        
+        ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest(queueUrl)
+        		  .withWaitTimeSeconds(10)     // long poll: wait 10 seconds
+        		  .withMaxNumberOfMessages(10);
+        
+        System.out.println("start to get message..." + new Date());
+        
+        List<Message> messages = sqs.receiveMessage(receiveMessageRequest).getMessages();
         if(messages.isEmpty()){
         	System.out.println("didn't get any message");
         }else{
@@ -28,6 +37,8 @@ public class ReceiveAndDeleteMessages {
                 sqs.deleteMessage(queueUrl, m.getReceiptHandle());
             }
         }
+        
+        System.out.println("end at get message..." + new Date());
 
     }
 
