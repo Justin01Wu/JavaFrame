@@ -9,7 +9,7 @@ import com.amazonaws.services.sqs.model.Message;
 import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
 
 // it comes from https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/examples-sqs-messages.html
-public class ReceiveAndDeleteMessages {
+public class ReceiveAndDeleteSQSMessages {
 
 	private static final String QUEUE_NAME = "input" ;
 	
