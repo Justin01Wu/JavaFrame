@@ -1,4 +1,4 @@
-package com.justa.test.aws;
+package com.justa.test.aws.message;
 
 import java.util.Date;
 import java.util.List;

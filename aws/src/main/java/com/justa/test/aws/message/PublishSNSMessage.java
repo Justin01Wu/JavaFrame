@@ -1,4 +1,4 @@
-package com.justa.test.aws;
+package com.justa.test.aws.message;
 
 import com.amazonaws.services.sns.AmazonSNS;
 import com.amazonaws.services.sns.AmazonSNSClientBuilder;

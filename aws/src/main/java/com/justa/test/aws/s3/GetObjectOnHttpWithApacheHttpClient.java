@@ -1,4 +1,4 @@
-package com.justa.test.aws;
+package com.justa.test.aws.s3;
 
 import java.io.BufferedReader;
 import java.io.IOException;

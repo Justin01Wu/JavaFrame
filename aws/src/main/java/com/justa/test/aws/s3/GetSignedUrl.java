@@ -1,4 +1,4 @@
-package com.justa.test.aws;
+package com.justa.test.aws.s3;
 
 import java.io.IOException;
 import java.net.URL;
