@@ -1,4 +1,4 @@
-package com.justa.test.aws.s3;
+package com.justa.test.aws;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ import com.amazonaws.services.dynamodbv2.model.GetItemRequest;
 public class GetItemFromDynamoDb {
 	
 	private static final String tableName = "UserProfile";
-	private static final String userKey = "Wu,Justin";
+	private static final String userKey = "D:W9001-79693-00345";
 	private static final String keyFieldName = "userID";
 	 
 	
