@@ -1,4 +1,4 @@
-package com.justa.test.aws;
+package com.justa.test.aws.dynamo;
 
 import java.io.IOException;
 import java.util.HashMap;
