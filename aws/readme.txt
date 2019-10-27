@@ -58,7 +58,17 @@ java -cp "./aws-test.jar:./jars/*" com.justa.test.aws.CopyBigObject master-iter-
 java -cp "./aws-test.jar:./jars/*" com.justa.test.aws.GetLocalFile master-iter-NorthAmTorHail-v18.txt
 
 
+#AWS command line:
+aws s3 ls
 
+aws sts get-caller-identity
+{
+    "Account": "137200312110",
+    "UserId": "AROAR74OGT4XJA24NUIYS:i-0e387fb768f0e719d",
+    "Arn": "arn:aws:sts::137200312110:assumed-role/WebServerRole/i-0e387fb768f0e719d"
+}
+
+# here ec2 is assigned a role "WebServerRole"
 
 # add support for EFS
 yum install -y amazon-efs-utils
