@@ -12,6 +12,11 @@ import com.amazonaws.services.sns.model.PublishResult;
 // comes from https://docs.aws.amazon.com/sns/latest/dg/sns-tutorial-publish-message-to-topic.html
 // and https://docs.aws.amazon.com/lambda/latest/dg/java-programming-model-handler-types.html
 public class PublishS3ChangeMsg implements RequestHandler<Map<String, Object>, String> {
+	
+	private final static AmazonSNS snsClient = AmazonSNSClientBuilder.defaultClient();
+	// in general all AmazonServiceClient objects are thread-safe.
+	// in this static way, we save time and save money
+	// https://docs.aws.amazon.com/lambda/latest/dg/best-practices.html
 
 	@Override
 	public String handleRequest(Map<String, Object> input, Context context) {		
@@ -71,7 +76,7 @@ public class PublishS3ChangeMsg implements RequestHandler<Map<String, Object>, S
 			return null;
 		}
 		
-		final AmazonSNS snsClient = AmazonSNSClientBuilder.defaultClient();
+		
 		// Publish a message to an Amazon SNS topic.
 		final String msg = "An S3 object is just changed: " + input;
 		final PublishRequest publishRequest = new PublishRequest(topicArn, msg);
