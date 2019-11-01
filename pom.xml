@@ -20,6 +20,7 @@
 		<module>mvn-plugin</module>
 		<module>transaction</module>
 		<module>jdbc</module>
+		<module>jdbc-template</module>		
 		<module>connectionPool</module>
 		<module>api-test</module>
 		
