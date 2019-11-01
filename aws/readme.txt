@@ -92,3 +92,9 @@ yum install mysql
 	insert into Human values(3, 'aaa');
 	
 mysql -u admin -h justadb-readreplic.c52rewpdek7m.us-east-1.rds.amazonaws.com --password=dbPassword
+
+# how to ssh your private EC2
+# firstly yu need to ssh into a public EC2
+# then you need to create a Private RSA key file and copy content from your local, like MyUser3KP.pem
+# chmod 400 MyUser3KP.pem, otherwise SSH will complain UNPROTECTED PRIVATE KEY FILE
+# now you ssh from your public EC2 into your private EC2

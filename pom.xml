@@ -12,6 +12,7 @@
     <modules>
 		<module>scjp</module>
 		<module>aws</module>
+		<module>aws-lambda</module>
         <module>hibernate_h2</module>
         <module>mock</module>
 		<module>library-test</module>
