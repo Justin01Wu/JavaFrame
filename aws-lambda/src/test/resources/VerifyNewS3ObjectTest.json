@@ -27,7 +27,7 @@
           "arn": "arn:aws:s3:::justa-private"
         },
         "object": {
-          "key": "2Columns_facebook.html",
+          "key": "VerifyNewS3ObjectTest.prere.txt",
           "size": 1060,
           "eTag": "4d5eadeb1757569593501bbaeed88156",
           "sequencer": "005DBE18CB76738DE8"
