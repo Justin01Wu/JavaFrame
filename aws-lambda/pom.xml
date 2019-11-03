@@ -9,6 +9,14 @@
 	<name>lambda-example</name>
 
 	<dependencies>
+	
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+		
 		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-lambda-java-core</artifactId>
@@ -20,6 +28,25 @@
 			<artifactId>aws-java-sdk-sns</artifactId>
 			<version>1.11.664</version>
 		</dependency>
+		
+		<dependency>
+  			<groupId>com.amazonaws</groupId>
+  			<artifactId>aws-java-sdk-s3</artifactId>
+  			<version>1.11.665</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.jayway.jsonpath</groupId>
+			<artifactId>json-path</artifactId>
+			<version>2.4.0</version>			
+		</dependency>		
+		
+		<dependency>
+  			<groupId>org.slf4j</groupId>
+  			<artifactId>slf4j-simple</artifactId>
+  			<version>1.7.25</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>

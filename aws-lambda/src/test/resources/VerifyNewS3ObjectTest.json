@@ -1,0 +1,38 @@
+{
+  "Records": [
+    {
+      "eventVersion": "2.1",
+      "eventSource": "aws:s3",
+      "awsRegion": "us-east-1",
+      "eventTime": "2019-11-03T00:01:15.535Z",
+      "eventName": "ObjectCreated:Put",
+      "userIdentity": {
+        "principalId": "AN4PYJ64DU1X5"
+      },
+      "requestParameters": {
+        "sourceIPAddress": "162.247.229.25"
+      },
+      "responseElements": {
+        "x-amz-request-id": "419D2582E8EC8F92",
+        "x-amz-id-2": "XUyzI7k8mU1m8vy3gUnVlkUGRsCgW8oZ9P1Oy1DgjdUXgmBrqMT3Z97khGl30ebaPempMPctaZE="
+      },
+      "s3": {
+        "s3SchemaVersion": "1.0",
+        "configurationId": "NTRiODM3ODctMjU0Ny00ZTc5LTk4OTMtZjJlZTU5YmExZGNl",
+        "bucket": {
+          "name": "justa-private",
+          "ownerIdentity": {
+            "principalId": "AN4PYJ64DU1X5"
+          },
+          "arn": "arn:aws:s3:::justa-private"
+        },
+        "object": {
+          "key": "2Columns_facebook.html",
+          "size": 1060,
+          "eTag": "4d5eadeb1757569593501bbaeed88156",
+          "sequencer": "005DBE18CB76738DE8"
+        }
+      }
+    }
+  ]
+}
