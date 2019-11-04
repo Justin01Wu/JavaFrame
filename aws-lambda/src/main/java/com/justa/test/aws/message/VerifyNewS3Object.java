@@ -3,63 +3,60 @@ package com.justa.test.aws.message;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.List;
 import java.util.Map;
 
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.event.S3EventNotification;
+import com.amazonaws.services.s3.event.S3EventNotification.S3EventNotificationRecord;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.sns.AmazonSNS;
 import com.amazonaws.services.sns.AmazonSNSClientBuilder;
 import com.amazonaws.services.sns.model.PublishRequest;
 import com.amazonaws.services.sns.model.PublishResult;
-import com.jayway.jsonpath.Configuration;
-import com.jayway.jsonpath.JsonPath;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class VerifyNewS3Object implements RequestHandler<Map<String, Object>,String> {
 	
-    private static final AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion(Regions.US_EAST_1).build();
+    private static final AmazonS3 s3Client = AmazonS3ClientBuilder.defaultClient();
     private final static AmazonSNS snsClient = AmazonSNSClientBuilder.defaultClient();
+    // must set region = us-east-1 in C:\Users\USERNAME\.aws\config  [default] section
     
     private static String topicArn = System.getenv("SNS_TOPIC_ARN");  //String topicArn = "arn:aws:sns:us-east-1:137200312110:MyTopic";
     private static String debug = System.getenv("debug");
 	
 	@Override
 	public String handleRequest(Map<String, Object> input, Context context) {		
-		/* event format:
-		{
-			  Records=[
-			    {
-			      messageId=cfcaa69e-feae-4f1d-a160-682e8aa706f3,
-			      receiptHandle=AQEBJBPCvrEy6Gh/WzWUSWu+xygYAst2+WN2lzxrmcSk7ZvdrHdSsdlH9Rr2S4rdoVzH5uxYa2BELZF0q5Xf71/XIldcTXeib3sFQ30Oljf9GIDy326XM79ViXV/BcvK/tbatr0gr+xgTY8z+7zLr7Rn53VxqMfITktFz9ZHHGViyTlkP0/pNHERrIMWIA37YxInEnh5am5uASjUfGXroGCfwNypvaq4+gykhX44FPLOaGQ8e6mHapGWbDvWm4qjE57Uip0Fl0zZzz/OTyDknOaN7iXS3hTod0ntsW+bX7uDlldEIHsFeD5jXlJ7loh69BrXQKOGm0dE+XujcxniUPcB+bV9wBJEfdTNRoaB60Bol37naHYRdECS3KzgI6bAeKXo,
-			      body={
-			        "Records": [
-			            */        
 			                    
 		System.out.println("    input type: " + input.getClass().getName());
 		System.out.println("    input value: " + input);
-		List<?> list = (List<?>)input.get("Records");
-		Map<String, Object> one = (Map<String, Object>)(list.get(0));
-		String json = one.get("body").toString();
+
 		try {
-			handleInput(json);
+			ObjectMapper Obj = new ObjectMapper(); 
+			  
+	        String jsonStr = Obj.writeValueAsString(input); 
+	        System.out.println("    jsonStr: " + jsonStr);
+			handleInput(jsonStr);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 	
-	static void handleInput(String json) throws IOException{
-		System.out.println("    input value: " + json);
+	static void handleInput(String jsonStr) throws IOException{
 		
-		Object document = Configuration.defaultConfiguration().jsonProvider().parse(json);
+		S3EventNotification s3Event = S3EventNotification.parseJson(jsonStr);
+		S3EventNotificationRecord record = s3Event.getRecords().get(0);
+		String bucketName = record.getS3().getBucket().getName();
+		String objectName = record.getS3().getObject().getUrlDecodedKey();
 		
-		String bucketName = JsonPath.read(document, "$.Records[0].s3.bucket.name");
-		String objectName = JsonPath.read(document, "$.Records[0].s3.object.key");
+		// the following way is more generic 
+//		Object document = Configuration.defaultConfiguration().jsonProvider().parse(jsonStr);		
+//		String bucketName = JsonPath.read(document, "$.Records[0].s3.bucket.name");
+//		String objectName = JsonPath.read(document, "$.Records[0].s3.object.key");
 		
 		System.out.println("    bucketName: " + bucketName);
 		System.out.println("    objectName: " + objectName);
