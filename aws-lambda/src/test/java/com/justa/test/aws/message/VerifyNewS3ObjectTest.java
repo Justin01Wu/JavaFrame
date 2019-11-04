@@ -8,6 +8,8 @@ import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.Scanner;
 
+import javax.jms.JMSException;
+
 import org.junit.Test;
 
 public class VerifyNewS3ObjectTest {
@@ -25,7 +27,7 @@ public class VerifyNewS3ObjectTest {
 	}
 
 	@Test
-	public void testHandleInput() throws URISyntaxException, IOException {
+	public void testHandleInput() throws URISyntaxException, IOException, JMSException {
 		String fileName = VerifyNewS3ObjectTest.class.getSimpleName() + ".json";
 		
 		String json = readJSONFile(fileName);
@@ -44,5 +46,11 @@ public class VerifyNewS3ObjectTest {
 			System.out.println(msg);
 		}
 	}
+	
+	@Test
+	public void testNotifySucceed() throws URISyntaxException, IOException, JMSException {
+		VerifyNewS3Object.notifySucceed("justa-private", "VerifyNewS3ObjectTest.prere.txt", "sdt2253521341a", "S3Upload");
+	}
+	
 
 }
