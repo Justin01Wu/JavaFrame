@@ -10,7 +10,6 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
-import javax.jms.TextMessage;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -24,22 +23,15 @@ import com.amazonaws.services.sns.AmazonSNS;
 import com.amazonaws.services.sns.AmazonSNSClientBuilder;
 import com.amazonaws.services.sns.model.PublishRequest;
 import com.amazonaws.services.sns.model.PublishResult;
-import com.amazonaws.services.sqs.AmazonSQS;
-import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
-import com.amazonaws.services.sqs.model.SendMessageRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class VerifyNewS3Object implements RequestHandler<Map<String, Object>,String> {
 	
     private static final AmazonS3 s3Client = AmazonS3ClientBuilder.defaultClient();
     private final static AmazonSNS snsClient = AmazonSNSClientBuilder.defaultClient();
-    private static final AmazonSQS sqs = AmazonSQSClientBuilder.defaultClient();
     // must set region = us-east-1 in C:\Users\USERNAME\.aws\config  [default] section    
     
-    private static String QUEUE_NAME = System.getenv("QUEUE_NAME");  //String topicArn = "arn:aws:sns:us-east-1:137200312110:MyTopic";
-    
-
-    
+    private static String QUEUE_NAME = System.getenv("QUEUE_NAME");     
     private static String topicArn = System.getenv("SNS_TOPIC_ARN");  //String topicArn = "arn:aws:sns:us-east-1:137200312110:MyTopic";
     private static String debug = System.getenv("debug");
 	
@@ -53,7 +45,7 @@ public class VerifyNewS3Object implements RequestHandler<Map<String, Object>,Str
 			ObjectMapper Obj = new ObjectMapper(); 
 			  
 	        String jsonStr = Obj.writeValueAsString(input); 
-	        System.out.println("    jsonStr: " + jsonStr);
+	        System.out.println("==>jsonStr: " + jsonStr);
 			handleInput(jsonStr);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -120,12 +112,9 @@ public class VerifyNewS3Object implements RequestHandler<Map<String, Object>,Str
 	
 	private static void sendMessages(Session session, MessageProducer producer, Message message) {
 		try {
-			System.out.println("Waiting for messages");
-			// Wait 1 minute for a message
 			producer.send(message);
-
 		} catch (JMSException e) {
-			System.err.println("Error send to SQS: " + e.getMessage());
+			System.err.println("==>Error send to SQS: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -143,14 +132,14 @@ public class VerifyNewS3Object implements RequestHandler<Map<String, Object>,Str
             rows++;
             
            	if(rows%1000 == 1){
-           		System.out.println("    rows = " + rows +", size = " + size);
-           		System.out.println("    " + line);           		
+           		System.out.println("==>rows = " + rows +", size = " + size);
+           		System.out.println("==>" + line);           		
            	}
            	
             String[] fields = line.split("\t");
             if(fields.length != 5){
-            	msg = "    expected 5 fields, but not at row " + rows;
-            	msg = msg + "\r\n      : " + line;
+            	msg = "==>expected 5 fields, but not at row " + rows;
+            	msg = msg + "\r\n==>: " + line;
             	return msg;
             }
            	
@@ -158,18 +147,18 @@ public class VerifyNewS3Object implements RequestHandler<Map<String, Object>,Str
             	// IterId	EVENTID	SeqId	LOSS	riskGroup
             	//27	600000002	2013-09-06 21:22:00	13591155.1216389	EuropeEQ
             	if(!verifyInteger(fields[0])){
-            		msg = "    expected integer on field 1 at row " + rows+":" ;
-            		msg = msg + "\r\n      : " + line;
+            		msg = "==>expected integer on field 1 at row " + rows+":" ;
+            		msg = msg + "\r\n==>: " + line;
             		return msg;
             	}
             	if(!verifyInteger(fields[1])){
-            		msg = "    expected integer on field 2 at row " + rows+":" ;
-            		msg = msg + "\r\n      : " + line;
+            		msg = "==>expected integer on field 2 at row " + rows+":" ;
+            		msg = msg + "\r\n==>: " + line;
             		return msg;
             	}
             	if(!verifyDouble(fields[3])){
-            		msg = "    expected integer on field 4 at row " + rows+":" ;
-            		msg = msg + "\r\n      : " + line;
+            		msg = "==>expected integer on field 4 at row " + rows+":" ;
+            		msg = msg + "\r\n==>: " + line;
             		return msg;
             	}
             }           	
@@ -181,13 +170,13 @@ public class VerifyNewS3Object implements RequestHandler<Map<String, Object>,Str
     
     private static void writeMsg(String msg){
 		if(topicArn == null){
-			System.out.println("    Didn't find Environment variable SNS_TOPIC_ARN, so do nothing");
+			System.out.println("==>Didn't find Environment variable SNS_TOPIC_ARN, so do nothing");
 			System.out.println(msg);
 			return ;
 		}else{
 			PublishRequest publishRequest = new PublishRequest(topicArn, msg);
 			PublishResult publishResponse = snsClient.publish(publishRequest);
-			System.out.println("    MessageId: " + publishResponse.getMessageId());
+			System.out.println("==>MessageId: " + publishResponse.getMessageId());
 		}
     }
     
