@@ -79,6 +79,9 @@ but it needs 2 minutes 16seconds on remote side
 So EC2 is about 10 times faster than remote side
 Also you don't need to set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in EC2 because I added s3_admin on this EC2
 
+Without multiPart, the 700MB file need 1 minute 18 seconds
+With multiPart on 5MB batch size, the 700MB file need 1 minute 03 seconds
+
 It only needs 2 seconds if read this file from my local(SSD CPU I7 Desktop)
 It needs 10 seconds if read this file from EC2(Amazon Linux 2 AMI (HVM), SSD Volume t2.micro)
 
