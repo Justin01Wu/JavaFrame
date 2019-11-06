@@ -1,5 +1,6 @@
 package com.justa.test.aws.cache;
 
+import java.util.Date;
 import java.util.HashMap;
 
 import com.whalin.MemCached.MemCachedClient;
@@ -45,6 +46,11 @@ public class MemcachedSample {
 		//use delete function to delete key from cache
 		System.out.println("remove status: "+mcc.delete("1"));
 		System.out.println("Get from Cache after delete: "+mcc.get("1"));
+		
+		// save a java object
+		Date date = new Date();  // must implement Serializable interface, will serialize it
+		System.out.println("set date status: "+mcc.set("currentDate", date));   
+		System.out.println("get date status: "+mcc.get("currentDate"));
 
 		//Use getMulti function to retrieve multiple keys values in one function
 		// Its helpful in reducing network calls to 1

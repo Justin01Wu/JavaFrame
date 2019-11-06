@@ -20,22 +20,8 @@ public class MemcachedLambda implements RequestHandler<Object,String> {
 			serverUrl = serverName + ":" + port;			
 		}
 		
-		System.out.println("connecting  memcached server: "+serverName);
+		MemCachedClient mcc = getMemCachedClient(serverUrl);
 		
-		String[] servers = {serverUrl};
-		SockIOPool pool = SockIOPool.getInstance("Test1");
-		pool.setServers( servers );
-		pool.setFailover( true );
-		pool.setInitConn( 10 );
-		pool.setMinConn( 5 );
-		pool.setMaxConn( 250 );
-		pool.setMaintSleep( 30 );
-		pool.setNagle( false );
-		pool.setSocketTO( 3000 );
-		pool.setAliveCheck( true );
-		pool.initialize();
-		//Get the Memcached Client from SockIOPool named Test1
-		MemCachedClient mcc = new MemCachedClient("Test1");
 		//add some value in cache
 		System.out.println("add status: "+mcc.add("1", "Original"));
 		//Get value from cache
@@ -65,6 +51,26 @@ public class MemcachedLambda implements RequestHandler<Object,String> {
 			System.out.println("KEY: "+key+" VALUE: "+hm.get(key));
 		}
 		return null;
+	}
+	
+	private static MemCachedClient getMemCachedClient(String serverUrl){
+		
+		System.out.println("connecting  memcached server: "+serverUrl);
+		String[] servers = {serverUrl};
+		SockIOPool pool = SockIOPool.getInstance("Test1");
+		pool.setServers( servers );
+		pool.setFailover( true );
+		pool.setInitConn( 10 );
+		pool.setMinConn( 5 );
+		pool.setMaxConn( 250 );
+		pool.setMaintSleep( 30 );
+		pool.setNagle( false );
+		pool.setSocketTO( 3000 );
+		pool.setAliveCheck( true );
+		pool.initialize();
+		//Get the Memcached Client from SockIOPool named Test1
+		MemCachedClient mcc = new MemCachedClient("Test1");
+		return mcc;
 	}
 
 }
