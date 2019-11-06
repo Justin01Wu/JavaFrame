@@ -7,6 +7,10 @@ import com.whalin.MemCached.SockIOPool;
 
 // https://www.journaldev.com/24/memcached-java-client-example
 public class MemcachedSample {
+	
+	// you need to install Memcached by following the below url:
+	// https://www.ubergizmo.com/how-to/install-memcached-windows/
+	// it is pretty simple
 
 
 	/**
@@ -24,22 +28,8 @@ public class MemcachedSample {
 		if(serverName != null){
 			serverUrl = serverName + ":" + port;			
 		}
-		System.out.println("connecting  memcached server: "+serverName);
 		
-		String[] servers = {serverUrl};
-		SockIOPool pool = SockIOPool.getInstance("Test1");
-		pool.setServers( servers );
-		pool.setFailover( true );
-		pool.setInitConn( 10 );
-		pool.setMinConn( 5 );
-		pool.setMaxConn( 250 );
-		pool.setMaintSleep( 30 );
-		pool.setNagle( false );
-		pool.setSocketTO( 3000 );
-		pool.setAliveCheck( true );
-		pool.initialize();
-		//Get the Memcached Client from SockIOPool named Test1
-		MemCachedClient mcc = new MemCachedClient("Test1");
+		MemCachedClient mcc = getMemCachedClient(serverUrl);
 		//add some value in cache
 		System.out.println("add status: "+mcc.add("1", "Original"));
 		//Get value from cache
@@ -68,5 +58,25 @@ public class MemcachedSample {
 		for(String key : hm.keySet()){
 			System.out.println("KEY: "+key+" VALUE: "+hm.get(key));
 		}
+	}
+	
+	private static MemCachedClient getMemCachedClient(String serverUrl){
+		
+		System.out.println("connecting  memcached server: "+serverUrl);
+		String[] servers = {serverUrl};
+		SockIOPool pool = SockIOPool.getInstance("Test1");
+		pool.setServers( servers );
+		pool.setFailover( true );
+		pool.setInitConn( 10 );
+		pool.setMinConn( 5 );
+		pool.setMaxConn( 250 );
+		pool.setMaintSleep( 30 );
+		pool.setNagle( false );
+		pool.setSocketTO( 3000 );
+		pool.setAliveCheck( true );
+		pool.initialize();
+		//Get the Memcached Client from SockIOPool named Test1
+		MemCachedClient mcc = new MemCachedClient("Test1");
+		return mcc;
 	}
 }
