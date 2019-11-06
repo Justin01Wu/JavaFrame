@@ -1,18 +1,17 @@
 package com.justa.test.aws.message;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.whalin.MemCached.MemCachedClient;
 import com.whalin.MemCached.SockIOPool;
 
-public class MemcachedLambda implements RequestHandler<Map<String, Object>,String> {
+public class MemcachedLambda implements RequestHandler<Object,String> {
 	
 
 	@Override
-	public String handleRequest(Map<String, Object> input, Context context) {	
+	public String handleRequest(Object input, Context context) {	
 		String serverName = System.getenv("CacheServerName");   
 		String port = System.getenv("CachePort"); 
 		
