@@ -1,0 +1,50 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.justa999</groupId>		
+	<artifactId>extra-lib</artifactId>
+	<version>1.0.0</version>
+	<name>extra-lib</name>
+	<packaging>pom</packaging>
+	<description>
+		this module collects all jars which can't be found in any maven repository	
+	</description>
+	
+	<build>
+		<finalName>extra-lib</finalName>
+   			
+		<plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-install-plugin</artifactId>
+			<version>2.5.2</version>
+            <executions>
+			
+				<execution>
+                        <id>AmazonElastiCacheClusterClient</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>install-file</goal>
+                        </goals>
+						<configuration>		
+							<groupId>net.spy.memcached</groupId>
+							<artifactId>AmazonElastiCacheClusterClient</artifactId>
+							<version>1.1.1</version>
+							<generatePom>true</generatePom>
+							<file>${basedir}/non_maven_jar/AmazonElastiCacheClusterClient-1.1.1.jar</file>
+							<createChecksum>true</createChecksum>
+							<packaging>jar</packaging>							
+                    </configuration>						
+                </execution>
+				
+				
+				</executions>
+        </plugin>
+      		 			
+		</plugins>
+
+	</build>
+
+</project>
