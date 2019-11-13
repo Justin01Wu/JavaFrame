@@ -12,7 +12,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	
 
 	<dependencies>
 		<dependency>
@@ -28,12 +27,29 @@
     		<version>3.0.2</version>
 		</dependency>
 		
+		<!-- 
 		<dependency>
 			<groupId>net.spy.memcached</groupId>
 			<artifactId>AmazonElastiCacheClusterClient</artifactId>
 			<version>1.1.1</version>
 		</dependency>
+		 -->
+				
 		
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>elasticache-java-cluster-client</artifactId>
+			<version>1.1.1</version>
+		</dependency>		
+		
+		
+		<!--  For PollyDemo  -->
+		<dependency>
+			<groupId>com.googlecode.soundlibs</groupId>
+			<artifactId>jlayer</artifactId>
+			<version>1.0.1.4</version>
+			<type>bundle</type>
+		</dependency>
 
 		
 		<!-- Java API for AWS -->
