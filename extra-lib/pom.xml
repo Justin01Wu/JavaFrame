@@ -23,19 +23,19 @@
             <executions>
 			
 				<execution>
-                        <id>AmazonElastiCacheClusterClient</id>
+                        <id>spnego</id>
                         <phase>verify</phase>
                         <goals>
                             <goal>install-file</goal>
                         </goals>
 						<configuration>		
-							<groupId>net.spy.memcached</groupId>
-							<artifactId>AmazonElastiCacheClusterClient</artifactId>
-							<version>1.1.1</version>
+							<groupId>net.sourceforge</groupId>
+							<artifactId>spnego</artifactId>
+							<version>r7</version>
 							<generatePom>true</generatePom>
-							<file>${basedir}/non_maven_jar/AmazonElastiCacheClusterClient-1.1.1.jar</file>
+							<file>${basedir}/non_maven_jar/spnego-r7.jar</file>
 							<createChecksum>true</createChecksum>
-							<packaging>jar</packaging>							
+							<packaging>jar</packaging>								
                     </configuration>						
                 </execution>
 				
