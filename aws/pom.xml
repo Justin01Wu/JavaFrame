@@ -44,13 +44,14 @@
 		
 		
 		<!--  For PollyDemo  -->
+		<!--
 		<dependency>
 			<groupId>com.googlecode.soundlibs</groupId>
 			<artifactId>jlayer</artifactId>
 			<version>1.0.1.4</version>
 			<type>bundle</type>
 		</dependency>
-
+		-->
 		
 		<!-- Java API for AWS -->
 		<dependency>
