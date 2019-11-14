@@ -1,0 +1,7 @@
+
+#assume you already install python
+
+# install aws skd for python
+pip install boto3 --upgrade
+
+pip install awscli --upgrade
