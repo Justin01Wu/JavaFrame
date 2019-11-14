@@ -36,6 +36,10 @@ public class PollyDemo {
 		
 		polly = AmazonPollyClientBuilder.standard()
 				.withCredentials(p)
+				
+				//.withRegion("us-west-1") 
+				// will throw error because awsLexicon is not in this region
+				
 				.build();
 
 		// Create describe voices request.
