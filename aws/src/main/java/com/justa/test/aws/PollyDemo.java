@@ -22,7 +22,8 @@ import javazoom.jl.player.advanced.PlaybackListener;
 public class PollyDemo {
 	
 	private final AmazonPolly polly;
-	private final Voice voice;
+	private Voice voice ;
+	private final String voiceId = "Justin";
 	private static final String SAMPLE = "Congratulations. You have successfully built this working demo"
 			+ "	of Amazon Polly in Java. Have fun building voice enabled apps with Amazon Polly (that's me!), and always "
 			+ "look at the AWS website for tips and tricks on using Amazon Polly and other great services from AWS";
@@ -37,7 +38,16 @@ public class PollyDemo {
 
 		// Synchronously ask Amazon Polly to describe available TTS voices.
 		DescribeVoicesResult describeVoicesResult = polly.describeVoices(describeVoicesRequest);
-		voice = describeVoicesResult.getVoices().get(0);
+		
+		for(Voice v: describeVoicesResult.getVoices()) {
+			if(v.getId().equals(voiceId)) {
+				voice = v;
+				break;
+			}
+		};
+		if(voice == null) {
+			voice = describeVoicesResult.getVoices().get(0);
+		}
 		System.out.println(voice.getId());
 		System.out.println(voice.getGender());
 		System.out.println(voice.getLanguageName());
@@ -46,7 +56,11 @@ public class PollyDemo {
 	
 	public InputStream synthesize(String text, OutputFormat format) throws IOException {
 		SynthesizeSpeechRequest synthReq = 
-		new SynthesizeSpeechRequest().withText(text).withVoiceId(voice.getId())
+		new SynthesizeSpeechRequest().withText(text)
+		
+		.withVoiceId(voice.getId())
+		
+		.withLexiconNames("awsLexicon")  // must upload it firstly
 				.withOutputFormat(format);
 		SynthesizeSpeechResult synthRes = polly.synthesizeSpeech(synthReq);
 
