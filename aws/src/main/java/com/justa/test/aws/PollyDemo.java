@@ -3,6 +3,7 @@ package com.justa.test.aws;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.polly.AmazonPolly;
@@ -24,13 +25,18 @@ public class PollyDemo {
 	private final AmazonPolly polly;
 	private Voice voice ;
 	private final String voiceId = "Justin";
-	private static final String SAMPLE = "Congratulations. You have successfully built this working demo"
-			+ "	of Amazon Polly in Java. Have fun building voice enabled apps with Amazon Polly (that's me!), and always "
-			+ "look at the AWS website for tips and tricks on using Amazon Polly and other great services from AWS";
+	private static final String SAMPLE = "Congratulations. You have successfully built this AWS working demo"
+			+ "	of Amazon Polly in Java.";
 
 	public PollyDemo(Region region) {
-		// create an Amazon Polly client in a specific region
-		polly = AmazonPollyClientBuilder.standard().build();
+		
+		ProfileCredentialsProvider p = new ProfileCredentialsProvider("restricted");
+		// must define  "restricted" section in C:\Users\[USERNAME]\.aws\credentials
+		
+		
+		polly = AmazonPollyClientBuilder.standard()
+				.withCredentials(p)
+				.build();
 
 		// Create describe voices request.
 		DescribeVoicesRequest describeVoicesRequest = new DescribeVoicesRequest();
