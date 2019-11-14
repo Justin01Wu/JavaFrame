@@ -33,10 +33,15 @@ public class PollyDemo {
 
 		// Create describe voices request.
 		DescribeVoicesRequest describeVoicesRequest = new DescribeVoicesRequest();
+		describeVoicesRequest.setLanguageCode("en-US");
 
 		// Synchronously ask Amazon Polly to describe available TTS voices.
 		DescribeVoicesResult describeVoicesResult = polly.describeVoices(describeVoicesRequest);
 		voice = describeVoicesResult.getVoices().get(0);
+		System.out.println(voice.getId());
+		System.out.println(voice.getGender());
+		System.out.println(voice.getLanguageName());
+		System.out.println(voice.getLanguageCode());
 	}
 	
 	public InputStream synthesize(String text, OutputFormat format) throws IOException {
