@@ -5,3 +5,7 @@
 pip install boto3 --upgrade
 
 pip install awscli --upgrade
+
+# verify your aws cli
+
+aws s3 ls
