@@ -1,0 +1,14 @@
+
+register linux academy  ?
+
+
+You don't need to set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in EC2 because they usually use role to get permissionI
+You can use this CLI command (automatically installed)to verify your role in targte EC2:
+	aws sts get-caller-identity
+	{
+		"Account": "137200312110",
+		"UserId": "AROAR74OGT4XJA24NUIYS:i-0e387fb768f0e719d",
+		"Arn": "arn:aws:sts::137200312110:assumed-role/WebServerRole/i-0e387fb768f0e719d"
+	}
+	
+# here ec2 is assigned a role "WebServerRole"

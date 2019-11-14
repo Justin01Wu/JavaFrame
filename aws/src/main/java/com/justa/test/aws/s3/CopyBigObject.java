@@ -15,8 +15,18 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 
-//  for non-public file access, please set env variable AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY  
-// see here for details:https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html 
+
+/*
+ * 
+ * 
+ * Assumed Ec2 is Amazon Linux 2 AMI (HVM), SSD Volume t2.micro
+For a 700MB S3 file, run in AWS EC2 only need 12 seconds, 
+but it needs 2 minutes 16seconds on remote side (myLocal in Toronto)
+So EC2 is about 10 times faster than remote side
+It only needs 2 seconds if read this file from my local(SSD CPU I7 Desktop)
+It needs 10 seconds if read this file from EC2
+ * 
+ */
 public class CopyBigObject {
 
     public static void main(String[] args) throws IOException {

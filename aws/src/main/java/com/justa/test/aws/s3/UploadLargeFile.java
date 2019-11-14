@@ -14,6 +14,9 @@ import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
 import com.amazonaws.services.s3.transfer.Upload;
 
 // https://www.baeldung.com/aws-s3-multipart-upload
+// Without multiPart, the 700MB file need 1 minute 18 seconds
+// With multiPart on 5MB batch size, the 700MB file need 1 minute 03 seconds
+
 public class UploadLargeFile {
 	private static String bucketName = "justa";
 	public static String keyName = "master-iter-NorthAmTorHail-v18.txt";

@@ -1,0 +1,36 @@
+
+#!/bin/bash
+sudo su
+
+# update all installation
+yum update -y
+
+# install JDK 8
+yum install java-1.8.0-openjdk-devel -y
+
+yum install git -y
+yum install maven -y
+
+# install Tomcat 8 
+
+amazon-linux-extras install tomcat8.5 -y
+
+service tomcat.service start
+
+cd /usr/share/tomcat/
+
+# install my web application
+cd /usr
+mkdir ui
+cd ui
+git clone https://github.com/Justin01Wu/webUI.git
+cd webUI
+mvn clean package
+cp /usr/ui/webUI/target/webUI-1.0-SNAPSHOT.war /usr/share/tomcat/webapps/webUI.war
+
+
+#then use nano to edit the server.xml port 8080 to 80 if you need it
+
+
+
+
