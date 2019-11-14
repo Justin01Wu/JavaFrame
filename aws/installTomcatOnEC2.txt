@@ -13,7 +13,14 @@ yum install maven -y
 
 # install Tomcat 8 
 
+amazon-linux-extras list
 amazon-linux-extras install tomcat8.5 -y
+
+# also you can manually install it:
+#   wget http://www-us.apache.org/dist/tomcat/tomcat-8/v8.5.45/bin/apache-tomcat-8.5.45.zip
+#   unzip apache-tomcat-*.zip
+# ... set permission...
+
 
 service tomcat.service start
 
