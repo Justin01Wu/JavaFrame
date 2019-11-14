@@ -34,7 +34,7 @@
 		</dependency>		
 		
 		
-		<!--  For PollyDemo  -->
+		<!--  For PollyDemo, can't download for that bundle type, TODO fix it-->
 		<!--
 		<dependency>
 			<groupId>com.googlecode.soundlibs</groupId>
@@ -43,6 +43,13 @@
 			<type>bundle</type>
 		</dependency>
 		-->
+		
+		<!--  For PollyDemo  -->
+		<dependency>
+  			<groupId>com.googlecode.soundlibs</groupId>
+  			<artifactId>jlayer</artifactId>
+  			<version>1.0.1-1</version>
+		</dependency>
 		
 		<!-- Java API for AWS -->
 		<dependency>

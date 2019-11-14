@@ -3,11 +3,10 @@ package com.justa.test.aws;
 import java.io.IOException;
 import java.io.InputStream;
 
-import com.amazonaws.ClientConfiguration;
-import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
-import com.amazonaws.services.polly.AmazonPollyClient;
+import com.amazonaws.services.polly.AmazonPolly;
+import com.amazonaws.services.polly.AmazonPollyClientBuilder;
 import com.amazonaws.services.polly.model.DescribeVoicesRequest;
 import com.amazonaws.services.polly.model.DescribeVoicesResult;
 import com.amazonaws.services.polly.model.OutputFormat;
@@ -15,10 +14,14 @@ import com.amazonaws.services.polly.model.SynthesizeSpeechRequest;
 import com.amazonaws.services.polly.model.SynthesizeSpeechResult;
 import com.amazonaws.services.polly.model.Voice;
 
+import javazoom.jl.player.advanced.AdvancedPlayer;
+import javazoom.jl.player.advanced.PlaybackEvent;
+import javazoom.jl.player.advanced.PlaybackListener;
+
 // https://docs.aws.amazon.com/polly/latest/dg/examples-java.html
 public class PollyDemo {
 	
-	private final AmazonPollyClient polly;
+	private final AmazonPolly polly;
 	private final Voice voice;
 	private static final String SAMPLE = "Congratulations. You have successfully built this working demo"
 			+ "	of Amazon Polly in Java. Have fun building voice enabled apps with Amazon Polly (that's me!), and always "
@@ -26,9 +29,8 @@ public class PollyDemo {
 
 	public PollyDemo(Region region) {
 		// create an Amazon Polly client in a specific region
-		polly = new AmazonPollyClient(new DefaultAWSCredentialsProviderChain(), 
-		new ClientConfiguration());
-		polly.setRegion(region);
+		polly = AmazonPollyClientBuilder.standard().build();
+
 		// Create describe voices request.
 		DescribeVoicesRequest describeVoicesRequest = new DescribeVoicesRequest();
 
@@ -52,26 +54,26 @@ public class PollyDemo {
 		//get the audio stream
 		InputStream speechStream = helloWorld.synthesize(SAMPLE, OutputFormat.Mp3);
 
-//		//create an MP3 player
-//		AdvancedPlayer player = new AdvancedPlayer(speechStream,
-//				javazoom.jl.player.FactoryRegistry.systemRegistry().createAudioDevice());
-//
-//		player.setPlayBackListener(new PlaybackListener() {
-//			@Override
-//			public void playbackStarted(PlaybackEvent evt) {
-//				System.out.println("Playback started");
-//				System.out.println(SAMPLE);
-//			}
-//			
-//			@Override
-//			public void playbackFinished(PlaybackEvent evt) {
-//				System.out.println("Playback finished");
-//			}
-//		});
-//		
+		//create an MP3 player
+		AdvancedPlayer player = new AdvancedPlayer(speechStream,
+				javazoom.jl.player.FactoryRegistry.systemRegistry().createAudioDevice());
+
+		player.setPlayBackListener(new PlaybackListener() {
+			@Override
+			public void playbackStarted(PlaybackEvent evt) {
+				System.out.println("Playback started");
+				System.out.println(SAMPLE);
+			}
+			
+			@Override
+			public void playbackFinished(PlaybackEvent evt) {
+				System.out.println("Playback finished");
+			}
+		});
 		
-//		// play it!
-//		player.play();
+		
+		// play it!
+		player.play();
 		
 	}
 }
