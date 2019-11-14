@@ -21,49 +21,44 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<!--  for native MemcachedSample -->
 		<dependency>
     		<groupId>com.whalin</groupId>
     		<artifactId>Memcached-Java-Client</artifactId>
     		<version>3.0.2</version>
 		</dependency>				
 		
+		<!--  for AutoDiscoveryDemo -->
 		<dependency>
 			<groupId>com.amazonaws</groupId>
 			<artifactId>elasticache-java-cluster-client</artifactId>
 			<version>1.1.1</version>
 		</dependency>		
 		
-		
-		<!--  For PollyDemo, can't download for that bundle type, TODO fix it-->
-		<!--
-		<dependency>
-			<groupId>com.googlecode.soundlibs</groupId>
-			<artifactId>jlayer</artifactId>
-			<version>1.0.1.4</version>
-			<type>bundle</type>
-		</dependency>
-		-->
-		
 		<!--  For PollyDemo  -->
 		<dependency>
   			<groupId>com.googlecode.soundlibs</groupId>
   			<artifactId>jlayer</artifactId>
-  			<version>1.0.1-1</version>
+  			<version>1.0.1.4</version>
+  			<!-- original maven repo have this, must disable it, other wise it will get an download error
+  			<type>bundle</type>
+  			 -->
 		</dependency>
 		
-		<!-- Java API for AWS -->
+		<!-- All Java API for AWS -->
 		<dependency>
   			<groupId>com.amazonaws</groupId>
   			<artifactId>aws-java-sdk</artifactId>
   			<version>1.11.606</version>
 		</dependency>
 
-	<dependency>
-		<groupId>com.amazonaws</groupId>
-		<artifactId>amazon-sqs-java-messaging-lib</artifactId>
-		<version>1.0.4</version>
-		<type>jar</type>
-	</dependency>
+		<!--  For JmsReceiver  -->
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>amazon-sqs-java-messaging-lib</artifactId>
+			<version>1.0.4</version>
+			<type>jar</type>
+		</dependency>
 
 	</dependencies>
 	
