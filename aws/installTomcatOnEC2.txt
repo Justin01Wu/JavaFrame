@@ -38,6 +38,6 @@ cp /usr/ui/webUI/target/webUI-1.0-SNAPSHOT.war /usr/share/tomcat/webapps/webUI.w
 
 #then use nano to edit the server.xml port 8080 to 80 if you need it
 
-
-
-
+#Set Auto Start for Tomcat Service
+systemctl list-unit-files|grep tomcat
+systemctl enable tomcat.service
