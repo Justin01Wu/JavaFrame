@@ -17,6 +17,8 @@ import com.amazonaws.services.s3.transfer.Upload;
 // Without multiPart, the 700MB file need 1 minute 18 seconds
 // With multiPart on 5MB batch size, the 700MB file need 1 minute 03 seconds
 
+// TODO try concurrency uploading
+
 public class UploadLargeFile {
 	private static String bucketName = "justa";
 	public static String keyName = "master-iter-NorthAmTorHail-v18.txt";

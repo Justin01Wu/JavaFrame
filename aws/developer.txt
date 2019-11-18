@@ -12,3 +12,6 @@ You can use this CLI command (automatically installed)to verify your role in tar
 	}
 	
 # here ec2 is assigned a role "WebServerRole"
+
+questions:
+(1) how can AWS determine target when an Internet address conflict with an VPC inner address? 
