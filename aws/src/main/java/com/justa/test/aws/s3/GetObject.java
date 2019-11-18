@@ -10,8 +10,11 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.GetObjectRequest;
+import com.amazonaws.services.s3.model.ListObjectsV2Request;
+import com.amazonaws.services.s3.model.ListObjectsV2Result;
 import com.amazonaws.services.s3.model.ResponseHeaderOverrides;
 import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.services.s3.model.S3ObjectSummary;
 
 //  for non-public file access, please set env variable AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY  
 // see here for details:https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html 
@@ -45,6 +48,8 @@ public class GetObject {
             To make it easy, AWS also provide a tool kit for Eclipse. With that tool kit, you don’t need to set that file
             Also you don’t need set it in EC2 instance
             */
+            
+            listObjects(s3Client, bucketName);
 
             // Get an object and print its contents.
             System.out.println("\r\n\r\n=====>Downloading an object: " + key);
@@ -102,6 +107,19 @@ public class GetObject {
         }
 
     }
+    
+	public static void listObjects(AmazonS3 s3client, String bucketName) throws IOException {
+		ListObjectsV2Request req = new ListObjectsV2Request().withBucketName(bucketName).withMaxKeys(5);
+		ListObjectsV2Result result;
+		do {
+			result = s3client.listObjectsV2(req);
+			for (S3ObjectSummary objectSummary : result.getObjectSummaries()) {
+				System.out.println(" - " + objectSummary.getKey() + " " + " (size = " + objectSummary.getSize() + ")");
+			}
+			System.out.println("Next Continuation Token : " + result.getNextContinuationToken());
+			req.setContinuationToken(result.getNextContinuationToken());
+		} while (result.isTruncated() == true);
+	}
     
     public static void displayTextInputStream(InputStreamReader isr) throws IOException {
         // Read the text input stream one line at a time and display each line.
