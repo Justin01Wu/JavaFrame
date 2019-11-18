@@ -15,3 +15,6 @@ You can use this CLI command (automatically installed)to verify your role in tar
 
 questions:
 (1) how can AWS determine target when an Internet address conflict with an VPC inner address? 
+    Internet reserved some IP range for special usuage like private subnet:
+    https://en.wikipedia.org/wiki/Reserved_IP_addresses
+    So you won't get conflict if you follow the above reserved rules.
