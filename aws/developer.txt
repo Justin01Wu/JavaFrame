@@ -18,3 +18,6 @@ questions:
     Internet reserved some IP range for special usuage like private subnet:
     https://en.wikipedia.org/wiki/Reserved_IP_addresses
     So you won't get conflict if you follow the above reserved rules.
+    
+ # create EC2 instance from CLI:
+ $ aws ec2 run-instances --image-id ami-00dc79254d0461090 --count 1 --instance-type t2.micro --key-name MyUser2KP 
