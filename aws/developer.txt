@@ -20,4 +20,4 @@ questions:
     So you won't get conflict if you follow the above reserved rules.
     
  # create EC2 instance from CLI:
- $ aws ec2 run-instances --image-id ami-00dc79254d0461090 --count 1 --instance-type t2.micro --key-name MyUser2KP 
+aws ec2 run-instances --image-id ami-00dc79254d0461090 --instance-type t2.micro --iam-instance-profile Name=WebServerRole --key-name MyUser2KP --security-groups WebDMZ 
