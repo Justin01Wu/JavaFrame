@@ -37,11 +37,15 @@ public class GetSignedUrl {
 
 	            // Generate the presigned URL.
 	            System.out.println("Generating pre-signed URL.");
-	            GeneratePresignedUrlRequest generatePresignedUrlRequest =
-	                    new GeneratePresignedUrlRequest(bucketName, objectKey)
-	                            .withMethod(HttpMethod.GET)
-	                            .withExpiration(expiration);
-	            URL url = s3Client.generatePresignedUrl(generatePresignedUrlRequest);
+	            GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(bucketName, objectKey).withExpiration(expiration);
+	            // objectKey doesn't need to be existing
+	            if(args.length > 0 && args[1].equals("forUpload")) {
+		            request.withMethod(HttpMethod.PUT);
+	            }else {		            
+		            request.withMethod(HttpMethod.GET);
+	            }
+
+	            URL url = s3Client.generatePresignedUrl(request);
 
 	            System.out.println("Pre-Signed URL: " + url.toString());
 	        } catch (AmazonServiceException e) {

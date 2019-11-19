@@ -17,7 +17,12 @@ import com.amazonaws.services.s3.transfer.Upload;
 // Without multiPart, the 700MB file need 1 minute 18 seconds
 // With multiPart on 5MB batch size, the 700MB file need 1 minute 03 seconds
 
-// TODO try concurrency uploading
+/* TODO try concurrency uploading:
+ Amazon S3 does not currently support object locking. If two PUT requests
+are simultaneously made to the same key, the request with the latest time
+stamp wins. If this is an issue, you will be required to build an object locking
+mechanism into your application.
+ */
 
 public class UploadLargeFile {
 	private static String bucketName = "justa";
