@@ -16,7 +16,7 @@ import com.amazonaws.util.IOUtils;
 
 // from https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/examples-crypto-masterkey.html
 // Amazon S3 Client-Side Encryption with Client Master Keys
-public class TestClientMasterKey {
+public class TestClientSideEncryption {
 	
 	private static AmazonS3Encryption encryptionClient;
 
@@ -25,8 +25,7 @@ public class TestClientMasterKey {
 		String objectKey = "FileEncrupedOnClientMasterKey";
 		
 		SecretKey secretKey = KeyGenerator.getInstance("AES").generateKey();
-		// TODO need to save secretKey for next time decrypting.
-		
+		// TODO need to save secretKey for next time decrypting		
 		
 		StaticEncryptionMaterialsProvider materialProvider = new StaticEncryptionMaterialsProvider(new EncryptionMaterials(secretKey));
 		CryptoConfiguration cryptoConfig= new CryptoConfiguration(CryptoMode.EncryptionOnly);
@@ -43,8 +42,7 @@ public class TestClientMasterKey {
 
 		// Download the object.
 		S3Object downloadedObject = encryptionClient.getObject(bucketName, objectKey);
-		// asymmetric key , so use the same key
-		// the ENCRYPTED_KEY is objectKey? risky? 
+		// asymmetric key , so use the same s3 client
 		
 		byte[] decrypted = IOUtils.toByteArray(downloadedObject.getObjectContent());
 		// Verify same data.
