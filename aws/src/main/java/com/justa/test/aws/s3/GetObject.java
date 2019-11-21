@@ -9,6 +9,7 @@ import com.amazonaws.SdkClientException;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.GetBucketLocationRequest;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.ListObjectsV2Request;
 import com.amazonaws.services.s3.model.ListObjectsV2Result;
@@ -49,8 +50,9 @@ public class GetObject {
             Also you don’t need set it in EC2 instance
             */
             
-            listObjects(s3Client, bucketName);
-
+            String bucketLocation = s3Client.getBucketLocation(new GetBucketLocationRequest(bucketName));
+            System.out.println("Bucket location: " + bucketLocation);
+            
             // Get an object and print its contents.
             System.out.println("\r\n\r\n=====>Downloading an object: " + key);
             fullObject = s3Client.getObject(new GetObjectRequest(bucketName, key));
@@ -107,19 +109,6 @@ public class GetObject {
         }
 
     }
-    
-	public static void listObjects(AmazonS3 s3client, String bucketName) throws IOException {
-		ListObjectsV2Request req = new ListObjectsV2Request().withBucketName(bucketName).withMaxKeys(5);
-		ListObjectsV2Result result;
-		do {
-			result = s3client.listObjectsV2(req);
-			for (S3ObjectSummary objectSummary : result.getObjectSummaries()) {
-				System.out.println(" - " + objectSummary.getKey() + " " + " (size = " + objectSummary.getSize() + ")");
-			}
-			System.out.println("Next Continuation Token : " + result.getNextContinuationToken());
-			req.setContinuationToken(result.getNextContinuationToken());
-		} while (result.isTruncated() == true);
-	}
     
     public static void displayTextInputStream(InputStreamReader isr) throws IOException {
         // Read the text input stream one line at a time and display each line.

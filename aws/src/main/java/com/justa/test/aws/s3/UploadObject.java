@@ -17,6 +17,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.ObjectTagging;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectResult;
 import com.amazonaws.services.s3.model.StorageClass;
 import com.amazonaws.services.s3.model.Tag;
 import com.amazonaws.util.IOUtils;
@@ -49,11 +50,17 @@ public class UploadObject {
         s3Client.putObject(bucketName, stringObjKeyName, content);
 
         // Upload a file as a new object with ContentType and title specified.
-        updateAFile(s3Client);
+        PutObjectResult  result = updateAFile(s3Client);
+        System.out.println("Md5 = " + result.getContentMd5());  
+        System.out.println("Etag = " + result.getETag());
+        // both md5 and etag based on file content, won't be affected any others, like tag or user meta data
+        
+        System.out.println("VersionId = " + result.getVersionId());
+        
         System.out.println("Done");
     }
 	
-	private static void updateAFile(AmazonS3 s3Client) throws IOException {
+	private static PutObjectResult updateAFile(AmazonS3 s3Client) throws IOException {
         String fileObjKeyName = key1;
         String fileName =   UploadObject.class.getClassLoader().getResource(key1).getFile();
         File file = new File(fileName);        
@@ -71,14 +78,15 @@ public class UploadObject {
         		.withStorageClass(StorageClass.OneZoneInfrequentAccess);
         
         // add tags
-        metadata.addUserMetadata("x-amz-meta-title", "someTitle12345");
+        metadata.addUserMetadata("x-amz-meta-title", "someTitle12345123");
         List<Tag> tags = new ArrayList<Tag>();
         tags.add(new Tag("department", "developer"));
         tags.add(new Tag("archieveRule", "quick"));
         req.setTagging(new ObjectTagging(tags));
         
         
-        s3Client.putObject(req);
+        PutObjectResult  result = s3Client.putObject(req);
+        return result;
 		
 	}
 	
