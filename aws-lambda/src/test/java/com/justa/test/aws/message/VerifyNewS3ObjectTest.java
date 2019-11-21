@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 import javax.jms.JMSException;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class VerifyNewS3ObjectTest {
@@ -26,7 +27,8 @@ public class VerifyNewS3ObjectTest {
 		return content;
 	}
 
-	@Test
+	@Test	
+	@Ignore("need remote resource")
 	public void testHandleInput() throws URISyntaxException, IOException, JMSException {
 		String fileName = VerifyNewS3ObjectTest.class.getSimpleName() + ".json";
 		
@@ -36,6 +38,7 @@ public class VerifyNewS3ObjectTest {
 	}
 	
 	@Test
+	@Ignore("need remote resource")
 	public void testVerifyTextInputStream() throws URISyntaxException, IOException {
 		String fileName = VerifyNewS3ObjectTest.class.getSimpleName() + ".prere.txt";
 		File targetFile = new File("src\\test\\resources\\" + fileName);
@@ -48,9 +51,16 @@ public class VerifyNewS3ObjectTest {
 	}
 	
 	@Test
+	@Ignore("need remote resource")
 	public void testNotifySucceed() throws URISyntaxException, IOException, JMSException {
 		VerifyNewS3Object.notifySucceed("justa-private", "VerifyNewS3ObjectTest.prere.txt", "sdt2253521341a", "S3Upload");
 	}
+	
+	@Test
+	public void testGetSysteInfo() throws URISyntaxException, IOException, JMSException {
+		VerifyNewS3Object.getSysteInfo();
+	}
+	
 	
 
 }
