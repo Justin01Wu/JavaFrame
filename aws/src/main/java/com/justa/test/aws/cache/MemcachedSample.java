@@ -9,9 +9,17 @@ import com.whalin.MemCached.SockIOPool;
 // https://www.journaldev.com/24/memcached-java-client-example
 public class MemcachedSample {
 	
+	private static String serverUrl = "localhost:11211";
+	
 	// you need to install Memcached by following the below url:
 	// https://www.ubergizmo.com/how-to/install-memcached-windows/
-	// it is pretty simple
+	// it is pretty simple, 
+	// but you can't directly start it, must use admiistrator to run those command:	
+	//  # set it as service:
+	//     memcached.exe -d install
+	//  # start it
+	//     start.bat
+	// to make it simple, you can also start it from task manager service panel
 
 
 	/**
@@ -23,9 +31,8 @@ public class MemcachedSample {
 		//initialize the SockIOPool that maintains the Memcached Server Connection Pool
 		
 		String serverName = System.getenv("CacheServerName");   
-		String port = System.getenv("CachePort"); 
+		String port = System.getenv("CachePort"); 		
 		
-		String serverUrl = "localhost:11211";
 		if(serverName != null){
 			serverUrl = serverName + ":" + port;			
 		}
@@ -64,6 +71,8 @@ public class MemcachedSample {
 		for(String key : hm.keySet()){
 			System.out.println("KEY: "+key+" VALUE: "+hm.get(key));
 		}
+		
+		System.out.println(mcc.stats());
 	}
 	
 	private static MemCachedClient getMemCachedClient(String serverUrl){
