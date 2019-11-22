@@ -17,10 +17,10 @@ public class GetItemFromDynamoDb {
 	
 	private static final String tableName = "UserProfile";
 	private static final String userKey = "D:W9001-79693-00345";
-	private static final String keyFieldName = "userID";
-	 
+	private static final String keyFieldName = "userID";	 
 	
-
+	// try DynamoDB Streams
+	
 	public static void main(String[] args) throws IOException {
 		
 		final AmazonDynamoDB ddb = AmazonDynamoDBClientBuilder
@@ -34,7 +34,10 @@ public class GetItemFromDynamoDb {
 
 		GetItemRequest request = null;
 
-		request = new GetItemRequest().withKey(key_to_get).withTableName(tableName);
+		request = new GetItemRequest().withKey(key_to_get)
+				.withTableName(tableName)
+				.withConsistentRead(true);  // use strongly consistent reads
+		// A strongly consistent read might not be available if there is a network delay or outage
 
 		try {
 			Map<String, AttributeValue> returned_item = ddb.getItem(request).getItem();
