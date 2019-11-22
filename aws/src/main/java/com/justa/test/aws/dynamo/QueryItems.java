@@ -85,7 +85,7 @@ public class QueryItems {
         HashMap<String, Object> valueMap = new HashMap<String, Object>();
         valueMap.put(":gene", "Country");
         valueMap.put(":letter1", "H");
-        valueMap.put(":letter2", "Sp");  // tIn this way, it includes AlbumTitle "Somewhat Famous" 
+        valueMap.put(":letter2", "Sp");  // In this way, it includes AlbumTitle "Somewhat Famous" 
 		QuerySpec spec = new QuerySpec()
 			    .withKeyConditionExpression("Genre  = :gene and AlbumTitle between :letter1 and :letter2 ")
 			    .withValueMap(valueMap);
