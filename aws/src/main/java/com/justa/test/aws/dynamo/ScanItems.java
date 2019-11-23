@@ -18,11 +18,12 @@ public class ScanItems {
 		final AmazonDynamoDB client = AmazonDynamoDBClientBuilder.standard().build();
 
 		Map<String, AttributeValue> expressionAttributeValues = new HashMap<String, AttributeValue>();
-		expressionAttributeValues.put(":val", new AttributeValue().withN("2"));
+		expressionAttributeValues.put(":p1", new AttributeValue().withN("1"));
+		expressionAttributeValues.put(":p2", new AttributeValue().withN("2"));
 
 		ScanRequest scanRequest = new ScanRequest()
 				.withTableName(tableName)
-				.withFilterExpression("Price < :val")
+				.withFilterExpression("Price > :p1 and Price < :p2")
 				.withExpressionAttributeValues(expressionAttributeValues);
 
 		ScanResult result = client.scan(scanRequest);
