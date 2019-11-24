@@ -10,8 +10,21 @@ You can use this CLI command (automatically installed)to verify your role in tar
 		"UserId": "AROAR74OGT4XJA24NUIYS:i-0e387fb768f0e719d",
 		"Arn": "arn:aws:sts::137200312110:assumed-role/WebServerRole/i-0e387fb768f0e719d"
 	}
-	
+
 # here ec2 is assigned a role "WebServerRole"
+
+ARN format:
+	arn:partition:service:region:account-id:resource-type:resource-id	
+	arn:partition:service:region:account-id:resource-type/resource-id	
+For example:  
+    arn:aws:rds:*:123456789012:db:test*
+    here first star means all regions, 
+    last * means all db instance start with "test"
+    
+ Every kind of service defined its own resource-type, you can din them from :
+  	https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazonrds.html#amazonrds-resources-for-iam-policies
+	
+
 
 questions:
 (1) how can AWS determine target when an Internet address conflict with an VPC inner address? 
