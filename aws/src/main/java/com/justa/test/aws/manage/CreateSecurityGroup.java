@@ -12,21 +12,23 @@ import com.amazonaws.services.ec2.model.CreateSecurityGroupResult;
 import com.amazonaws.services.ec2.model.IpPermission;
 import com.amazonaws.services.ec2.model.IpRange;
 
-// create a SecurityGroup for SSH
+// create a SecurityGroup for MySQL
 public class CreateSecurityGroup {
+	
+	public static final String securityGroupName = "MySQLGroup";
 
 	public static void main(String[] args) throws IOException {
 
 		AmazonEC2 client = AmazonEC2ClientBuilder.standard().build();
 
-		String securityGroupName = "SSHGroup-"+ new Date();
+		
 
 		CreateSecurityGroupRequest csgr = new CreateSecurityGroupRequest()
 				.withGroupName(securityGroupName)
-				.withDescription("My SSH group");
+				.withDescription("MySQL group");
 
-		CreateSecurityGroupResult createSecurityGroupResult = client.createSecurityGroup(csgr);
-		System.out.println(createSecurityGroupResult);
+		CreateSecurityGroupResult result = client.createSecurityGroup(csgr);
+		System.out.println(result);
 
 		AuthorizeSecurityGroupIngressRequest request = bindSSHPermission(securityGroupName);
 		client.authorizeSecurityGroupIngress(request);
@@ -41,8 +43,8 @@ public class CreateSecurityGroup {
 
 		ipPermission.withIpv4Ranges(Arrays.asList(new IpRange[] { ipRange1 }))
 			.withIpProtocol("tcp")
-			.withFromPort(22)
-			.withToPort(22);
+			.withFromPort(3306)
+			.withToPort(3306);
 		AuthorizeSecurityGroupIngressRequest request = new AuthorizeSecurityGroupIngressRequest();
 
 		request.withGroupName(securityGroupName).withIpPermissions(ipPermission);
