@@ -51,7 +51,6 @@ public class TestClientSideEncryption {
 		.withCryptoConfiguration(cryptoConfig)
 		.build();
 
-
 		encryptionClient.putObject(bucketName, objectKey, plaintext);
 		
 		System.out.println("  ==>send dercypted data succeefully");

@@ -18,6 +18,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.ObjectTagging;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
+import com.amazonaws.services.s3.model.SSEAwsKeyManagementParams;
 import com.amazonaws.services.s3.model.StorageClass;
 import com.amazonaws.services.s3.model.Tag;
 import com.amazonaws.util.IOUtils;
@@ -75,6 +76,9 @@ public class UploadObject {
         PutObjectRequest req = new PutObjectRequest(bucketName, fileObjKeyName, file)
         		.withMetadata(metadata)
         		.withCannedAcl(CannedAccessControlList.PublicRead)      // set target file public
+        		.withSSEAwsKeyManagementParams(new SSEAwsKeyManagementParams())  // use default S3 key to encrypt data
+        		//.withSSEAwsKeyManagementParams(new SSEAwsKeyManagementParams("d13f8114-47c3-4263-ad47-bf3d5f7fe4bb"))  // use dedicated AWS managed KeyId
+        		// in those way, target s3 file will be marked as "AWS-KMS
         		.withStorageClass(StorageClass.OneZoneInfrequentAccess);
         
         // add tags
