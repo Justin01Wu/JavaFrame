@@ -25,7 +25,8 @@ public class TestClientSideDecryption {
 
 	public static void main(String[] args) throws IOException {
 
-		byte[] aesKeyRaw = readAesKey();  //saved from TestClientSideEncryption
+		byte[] aesKeyRaw = readAesKey();  // TestClientSideEncryption saved it
+		// symmetric key , so use the same s3 client
 		
 		SecretKey aesKey = new SecretKeySpec(aesKeyRaw, "AES");		
 		
@@ -39,7 +40,6 @@ public class TestClientSideDecryption {
 
 		// Download the object.
 		S3Object downloadedObject = encryptionClient.getObject(TestClientSideEncryption.bucketName, TestClientSideEncryption.objectKey);
-		// asymmetric key , so use the same s3 client
 		
 		byte[] decrypted = IOUtils.toByteArray(downloadedObject.getObjectContent());
 		// Verify same data.

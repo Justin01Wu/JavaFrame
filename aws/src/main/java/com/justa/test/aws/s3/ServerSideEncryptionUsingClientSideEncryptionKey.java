@@ -23,7 +23,7 @@ import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.services.s3.model.SSECustomerKey;
 
 // from https://docs.aws.amazon.com/AmazonS3/latest/dev/sse-c-using-java-sdk.html
-// server side will maek those files as SSE-C Encryption
+// server side will mark those files as SSE-C Encryption
 public class ServerSideEncryptionUsingClientSideEncryptionKey {
 	   private static SSECustomerKey SSE_KEY;
 	    private static AmazonS3 S3_CLIENT;
@@ -39,6 +39,11 @@ public class ServerSideEncryptionUsingClientSideEncryptionKey {
 	        KEY_GENERATOR = KeyGenerator.getInstance("AES");
 	        KEY_GENERATOR.init(256, new SecureRandom());
 	        SSE_KEY = new SSECustomerKey(KEY_GENERATOR.generateKey());
+	        
+			// it is the master key of envelope Encryption
+			// S3 service will randomly generate data key and use this to encrypt it
+			// the final data has encrypted data key + encrypted data
+	        
 
 	        try {
 	            S3_CLIENT = AmazonS3ClientBuilder.standard().build();

@@ -1,0 +1,29 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "DenyIncorrectEncryption",
+            "Effect": "Deny",
+            "Principal": "*",
+            "Action": "s3:PutObject",
+            "Resource": "arn:aws:s3:::encrupt-justa/*",
+            "Condition": {
+                "StringNotEquals": {
+                    "s3:x-amz-server-side-encryption": "AES256"
+                }
+            }
+        },
+        {
+            "Sid": "DenyMissingEncryption",
+            "Effect": "Deny",
+            "Principal": "*",
+            "Action": "s3:PutObject",
+            "Resource": "arn:aws:s3:::encrupt-justa/*",
+            "Condition": {
+                "Null": {
+                    "s3:x-amz-server-side-encryption": true
+                }
+            }
+        }
+    ]
+}

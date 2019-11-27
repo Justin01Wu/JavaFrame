@@ -39,9 +39,6 @@ public class TestClientSideEncryption {
 		System.out.println(secretKey.getClass().getName());
 		saveAESKey(secretKey);
 		// save secretKey for next time decryption
-		// it is the master key of envelope Encryption
-		// S3 service will randomly generate data key and use this to encrypt it
-		// the final data has encrypted data key + encrypted data
 		
 		StaticEncryptionMaterialsProvider materialProvider = new StaticEncryptionMaterialsProvider(new EncryptionMaterials(secretKey));
 		CryptoConfiguration cryptoConfig= new CryptoConfiguration(CryptoMode.EncryptionOnly);
