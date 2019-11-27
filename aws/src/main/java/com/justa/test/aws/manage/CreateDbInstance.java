@@ -20,9 +20,6 @@ public class CreateDbInstance {
 	private static final String db_name = "mytestdb";
 	private static final String user_name = "masteruser";
 	private static final String user_password = "mymasterpassw0rd1!";
-	private static final String admin_email = "myemail@myemail.com";
-
-	private static final String rds_endpoint = "";
 
 	public static void main(String[] args) throws IOException {
 
