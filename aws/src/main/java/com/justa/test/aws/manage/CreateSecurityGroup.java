@@ -2,7 +2,6 @@ package com.justa.test.aws.manage;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Date;
 
 import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.AmazonEC2ClientBuilder;
@@ -19,9 +18,7 @@ public class CreateSecurityGroup {
 
 	public static void main(String[] args) throws IOException {
 
-		AmazonEC2 client = AmazonEC2ClientBuilder.standard().build();
-
-		
+		AmazonEC2 client = AmazonEC2ClientBuilder.standard().build();		
 
 		CreateSecurityGroupRequest csgr = new CreateSecurityGroupRequest()
 				.withGroupName(securityGroupName)
@@ -30,12 +27,12 @@ public class CreateSecurityGroup {
 		CreateSecurityGroupResult result = client.createSecurityGroup(csgr);
 		System.out.println(result);
 
-		AuthorizeSecurityGroupIngressRequest request = bindSSHPermission(securityGroupName);
+		AuthorizeSecurityGroupIngressRequest request = bindMySQLPermission(securityGroupName);
 		client.authorizeSecurityGroupIngress(request);
 
 	}
 
-	private static AuthorizeSecurityGroupIngressRequest bindSSHPermission(String securityGroupName) {
+	private static AuthorizeSecurityGroupIngressRequest bindMySQLPermission(String securityGroupName) {
 
 		IpPermission ipPermission = new IpPermission();
 
@@ -44,7 +41,9 @@ public class CreateSecurityGroup {
 		ipPermission.withIpv4Ranges(Arrays.asList(new IpRange[] { ipRange1 }))
 			.withIpProtocol("tcp")
 			.withFromPort(3306)
-			.withToPort(3306);
+			.withToPort(3306);   
+		// port range from 3306 to 3306 means it has only one port 
+		
 		AuthorizeSecurityGroupIngressRequest request = new AuthorizeSecurityGroupIngressRequest();
 
 		request.withGroupName(securityGroupName).withIpPermissions(ipPermission);
