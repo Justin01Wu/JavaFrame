@@ -58,7 +58,7 @@ public class VerifyNewS3ObjectTest {
 	
 	@Test
 	public void testGetSysteInfo() throws URISyntaxException, IOException, JMSException {
-		VerifyNewS3Object.getSysteInfo();
+		GeneralLambda.getSysteInfo();
 	}
 	
 	

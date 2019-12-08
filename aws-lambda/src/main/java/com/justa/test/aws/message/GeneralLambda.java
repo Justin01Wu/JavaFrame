@@ -1,6 +1,8 @@
 package com.justa.test.aws.message;
 
 import java.io.File;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.NumberFormat;
 import java.util.Map;
 
@@ -51,6 +53,17 @@ public class GeneralLambda implements RequestHandler<Map<String, Object>,String>
 		System.out.println("==>allocated memory: " + f.format(allocatedMemory / 1024) );
 		System.out.println("==>max memory: " + f.format(maxMemory / 1024) );
 		System.out.println("==>total free memory: " + f.format((freeMemory + (maxMemory - allocatedMemory))));
+		
+		InetAddress inetAddress;
+		try {
+			inetAddress = InetAddress.getLocalHost();
+	        System.out.println("IP Address:- " + inetAddress.getHostAddress());
+	        System.out.println("Host Name:- " + inetAddress.getHostName());
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		
 		
 	}
