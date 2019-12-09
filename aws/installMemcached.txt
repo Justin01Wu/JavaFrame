@@ -1,0 +1,26 @@
+
+#!/bin/bash
+sudo su
+
+# update all installation
+yum update -y
+
+# install memcached 
+yum install memcached -y
+
+service memcached.service start
+
+#then use nano to edit the /etc/sysconfig/memcached if you need it
+
+#Set Auto Start for memcached Service
+systemctl list-unit-files|grep memcached
+systemctl enable memcached.service
+
+# download a Java applocation to test it
+yum install git -y
+yum install maven -y
+git clone https://github.com/Justin01Wu/JavaFrame.git
+cd JavaFrame/aws
+mvn clean package
+cd target
+java -cp "./aws-test.jar:./jars/*" com.justa.test.aws.cache.MemcachedSample
