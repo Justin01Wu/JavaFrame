@@ -34,7 +34,14 @@ public class ReceiveAndDeleteSQSMessages {
             for (Message m : messages) {
             	System.out.println(m.getMessageId());
             	System.out.println(m.getBody());
-                sqs.deleteMessage(queueUrl, m.getReceiptHandle());
+
+            	String receipt  = m.getReceiptHandle();
+            	sqs.changeMessageVisibility(queueUrl, receipt, 120);
+            	// I need more time to handle this message, so adjust Visibility time out for more time
+            	// do some heavy process
+            	System.out.println("processing...");
+            	
+                sqs.deleteMessage(queueUrl, receipt);
             }
         }
         
