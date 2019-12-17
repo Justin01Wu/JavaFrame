@@ -1,5 +1,6 @@
 package com.justa.test.aws.message;
 
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import javax.jms.Connection;
@@ -19,8 +20,11 @@ public class JmsReceiver {
 	public static void main(String args[]) throws JMSException {
 
 		Connection connection  = AwsSqsFactory.getJmsConnectionn();
+		
 		// Create the session
-		Session session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);
+		Session session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);  
+		// client side must explicitly acknowledge the message
+		
 		MessageConsumer consumer = session.createConsumer(session.createQueue(DEFAULT_QUEUE_NAME));
 
 		connection.start();
@@ -42,7 +46,7 @@ public class JmsReceiver {
 					System.out.println("Shutting down after 10 seconds of silence");
 					break;
 				}
-
+				System.out.println("message: expired on " + new Date(message.getJMSExpiration()));
 				message.acknowledge();
 				System.out.println("Acknowledged message: " + message.getJMSMessageID());
 				String msgBody = ((TextMessage) message).getText();

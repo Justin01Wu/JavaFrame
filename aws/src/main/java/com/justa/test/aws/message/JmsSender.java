@@ -30,7 +30,7 @@ public class JmsSender {
 		System.out.println("Connection closed");
 	}
 
-	private static void sendMessages(Session session, MessageProducer producer) {	
+	private static void sendMessages(Session session, MessageProducer producer) {		
 		
 		try {
 			System.out.println("sending a message...");
