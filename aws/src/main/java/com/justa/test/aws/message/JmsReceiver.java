@@ -44,9 +44,9 @@ public class JmsReceiver {
 				}
 
 				message.acknowledge();
-				System.out.println("Acknowledged message " + message.getJMSMessageID());
+				System.out.println("Acknowledged message: " + message.getJMSMessageID());
 				String msgBody = ((TextMessage) message).getText();
-				System.out.println("Acknowledged message " + msgBody);
+				System.out.println("Acknowledged message: " + msgBody);
 
 			}
 		} catch (JMSException e) {
