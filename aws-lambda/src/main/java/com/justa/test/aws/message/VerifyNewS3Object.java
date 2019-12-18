@@ -1,10 +1,8 @@
 package com.justa.test.aws.message;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.NumberFormat;
 import java.util.Map;
 
 import javax.jms.Connection;
@@ -42,6 +40,8 @@ public class VerifyNewS3Object implements RequestHandler<Map<String, Object>,Str
 		
 		System.out.println("==>input type: " + input.getClass().getName());
 		System.out.println("==>input value: " + input);
+		System.out.println("==>remaining time(s): " + context.getRemainingTimeInMillis()/1000);
+		System.out.println("==>memory limit(MB):" + context.getMemoryLimitInMB());
 
 		try {
 			ObjectMapper Obj = new ObjectMapper(); 

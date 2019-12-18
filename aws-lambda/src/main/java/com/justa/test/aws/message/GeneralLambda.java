@@ -18,6 +18,8 @@ public class GeneralLambda implements RequestHandler<Map<String, Object>,String>
 			System.out.println("==>input type: " + input.getClass().getName());
 			System.out.println("==>input value: " + input);
 		}
+		System.out.println("==>remaining time(s): " + context.getRemainingTimeInMillis()/1000);
+		System.out.println("==>memory limit(MB):" + context.getMemoryLimitInMB());
 		
 		getSysteInfo();
 		return null;
