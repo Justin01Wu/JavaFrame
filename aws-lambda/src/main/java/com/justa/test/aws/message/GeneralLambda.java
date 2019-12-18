@@ -19,6 +19,8 @@ public class GeneralLambda implements RequestHandler<Map<String, Object>,String>
 			System.out.println("==>input value: " + input);
 		}
 		System.out.println("==>remaining time(s): " + context.getRemainingTimeInMillis()/1000);
+		// use this way, lambda can decide to quit gracefully when it is almost time out. 
+		
 		System.out.println("==>memory limit(MB):" + context.getMemoryLimitInMB());
 		
 		getSysteInfo();
