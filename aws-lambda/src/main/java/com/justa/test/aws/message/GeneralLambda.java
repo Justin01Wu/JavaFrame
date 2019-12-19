@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.NumberFormat;
+import java.util.Date;
 import java.util.Map;
 
 import com.amazonaws.services.lambda.runtime.Context;
@@ -24,7 +25,7 @@ public class GeneralLambda implements RequestHandler<Map<String, Object>,String>
 		System.out.println("==>memory limit(MB):" + context.getMemoryLimitInMB());
 		
 		getSysteInfo();
-		return null;
+		return "GeneralLambda at " + (new Date()).toString();
 	}
 	
 	static void getSysteInfo() {
