@@ -20,6 +20,10 @@ public class MemcachedLambda implements RequestHandler<Object,String> {
 			serverUrl = serverName + ":" + port;			
 		}
 		
+		System.out.println("serverName =" + serverName);
+		
+		GeneralLambda.getSysteInfo();
+		
 		MemCachedClient mcc = getMemCachedClient(serverUrl);
 		
 		//add some value in cache

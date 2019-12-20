@@ -54,8 +54,6 @@ public class VerifyNewS3Object implements RequestHandler<Map<String, Object>,Str
 			e.printStackTrace();
 		}
 		
-
-		
 		return null;
 	}
 	
