@@ -54,6 +54,7 @@ public class MemcachedLambda implements RequestHandler<Object,String> {
 		for(String key : hm.keySet()){
 			System.out.println("KEY: "+key+" VALUE: "+hm.get(key));
 		}
+		System.out.println(mcc.stats());
 		return null;
 	}
 	
