@@ -20,7 +20,7 @@ public class MemcachedLambda implements RequestHandler<Object,String> {
 			serverUrl = serverName + ":" + port;			
 		}
 		
-		System.out.println("serverName =" + serverName);
+		System.out.println("serverUrl =" + serverUrl);
 		
 		GeneralLambda.getSysteInfo();
 		
