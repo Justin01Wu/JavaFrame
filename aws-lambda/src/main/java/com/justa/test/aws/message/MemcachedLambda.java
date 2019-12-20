@@ -1,6 +1,11 @@
 package com.justa.test.aws.message;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -24,7 +29,13 @@ public class MemcachedLambda implements RequestHandler<Object,String> {
 		
 		GeneralLambda.getSysteInfo();
 		
-		MemCachedClient mcc = getMemCachedClient(serverUrl);
+		MemCachedClient mcc;
+		try {
+			mcc = getMemCachedClient(serverUrl);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
 		
 		//add some value in cache
 		System.out.println("add status: "+mcc.add("1", "Original"));
@@ -42,6 +53,27 @@ public class MemcachedLambda implements RequestHandler<Object,String> {
 		System.out.println("remove status: "+mcc.delete("1"));
 		System.out.println("Get from Cache after delete: "+mcc.get("1"));
 
+		multiQuery(mcc);		
+		testBigObject(mcc);
+		
+		System.out.println(mcc.stats());
+		return null;
+	}
+	
+	private static void testBigObject(MemCachedClient mcc)  {
+		List<String> bigList = new ArrayList<>();
+		for(int i=0;i<100;i++) {
+			bigList.add("asksajhidizxc"+i);
+		}
+		Calendar now = Calendar.getInstance();
+		now.add(Calendar.SECOND, 10);  // expired in 10 seconds
+		System.out.println("add MyKey2: "+mcc.add("MyKey2", bigList, now.getTime()));
+		
+		System.out.println("get MyKey2: "+mcc.get("MyKey2"));
+			
+	}
+	
+	private static void multiQuery(MemCachedClient mcc) {
 		//Use getMulti function to retrieve multiple keys values in one function
 		// Its helpful in reducing network calls to 1
 		mcc.set("2", "2");
@@ -54,11 +86,9 @@ public class MemcachedLambda implements RequestHandler<Object,String> {
 		for(String key : hm.keySet()){
 			System.out.println("KEY: "+key+" VALUE: "+hm.get(key));
 		}
-		System.out.println(mcc.stats());
-		return null;
 	}
 	
-	private static MemCachedClient getMemCachedClient(String serverUrl){
+	private static MemCachedClient getMemCachedClient(String serverUrl) throws IOException{
 		
 		System.out.println("connecting  memcached server: "+serverUrl);
 		String[] servers = {serverUrl};
@@ -75,6 +105,13 @@ public class MemcachedLambda implements RequestHandler<Object,String> {
 		pool.initialize();
 		//Get the Memcached Client from SockIOPool named Test1
 		MemCachedClient mcc = new MemCachedClient("Test1");
+		
+		Map<String, Map<String, String>> x = mcc.stats();
+		if(x.isEmpty()) {
+			throw new IOException("can't connect the server");
+			// because servers is an array, so it won't get any exception in the whole code if no server is available!!
+			//So we have to manually detect it.
+		}
 		return mcc;
 	}
 
