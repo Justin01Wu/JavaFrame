@@ -37,6 +37,8 @@ public class MemcachedSample {
 			serverUrl = serverName + ":" + port;			
 		}
 		
+		System.out.println("serverUrl =" + serverUrl);
+		
 		MemCachedClient mcc = getMemCachedClient(serverUrl);
 		//add some value in cache
 		System.out.println("add status: "+mcc.add("1", "Original"));
