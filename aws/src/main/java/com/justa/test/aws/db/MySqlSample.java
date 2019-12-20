@@ -16,8 +16,8 @@ public class MySqlSample {
 
 	public static void main(String args[]) throws ClassNotFoundException, SQLException {
 
-		String serverName = System.getenv("CacheServerName");
-		String port = System.getenv("CachePort");
+		String serverName = System.getenv("ServerName");
+		String port = System.getenv("Port");
 
 		if (serverName != null && port != null) {
 			serverUrl = serverName + ":" + port;
