@@ -11,6 +11,8 @@ yum install memcached -y
 service memcached.service start
 
 #then use nano to edit the /etc/sysconfig/memcached if you need it
+# by default, it only open port to the localhost, you need to change it to add other address
+#   OPTIONS="-l 127.0.0.1,::1"    ==>   OPTIONS="-l 0.0.0.0,::1"
 
 #Set Auto Start for memcached Service
 systemctl list-unit-files|grep memcached
