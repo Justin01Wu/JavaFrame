@@ -24,5 +24,4 @@ yum install maven -y
 git clone https://github.com/Justin01Wu/JavaFrame.git
 cd JavaFrame/aws
 mvn clean package
-cd target
-java -cp "./aws-test.jar:./jars/*" com.justa.test.aws.cache.MemcachedSample
+java -cp "target/aws-test.jar:target/jars/*" com.justa.test.aws.cache.MemcachedSample
