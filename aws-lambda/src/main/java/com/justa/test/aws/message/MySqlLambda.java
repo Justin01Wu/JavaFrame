@@ -11,6 +11,12 @@ import java.util.Date;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
+/**
+ * Because it is a Lamdba function, so we don't need connection pool for database.
+ * But build up a new Db connection is costly, so maybe we can try AWS database proxy in Lambda console
+ * @author Rita
+ *
+ */
 public class MySqlLambda implements RequestHandler<Object,Date> {
 	
 	private static String ServerName = "localhost";

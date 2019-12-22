@@ -4,7 +4,6 @@ import java.io.File;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.NumberFormat;
-import java.util.Date;
 import java.util.Map;
 
 import com.amazonaws.services.lambda.runtime.Context;
