@@ -6,11 +6,12 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
-public class MySqlLambda implements RequestHandler<Object,String> {
+public class MySqlLambda implements RequestHandler<Object,Date> {
 	
 	private static String ServerName = "localhost";
 	private static String PORT = "3306";
@@ -19,7 +20,7 @@ public class MySqlLambda implements RequestHandler<Object,String> {
 	private static String Password = "admin123";
 	
 	@Override
-	public String handleRequest(Object input, Context context)  {	
+	public Date handleRequest(Object input, Context context)  {	
 		String serverName = System.getenv("ServerName");
 		if (serverName != null ) {
 			ServerName = serverName ;

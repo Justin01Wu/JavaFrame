@@ -16,7 +16,11 @@ public class ManuallyCallLambda {
 
 		Map<String, Object> map = new LinkedHashMap<>();
 		map.put("test", "abc");
-		String output = generalLambdaService.callGeneralLambda(map);
-		System.out.println(output);
+		
+		for(int i=0;i<10;i++) {
+			String output = generalLambdaService.callGeneralLambda(map);
+			System.out.println(output);
+		}
+
 	}
 }

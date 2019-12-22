@@ -33,7 +33,7 @@ public class GeneralLambda implements RequestHandler<Map<String, Object>,String>
 		
 		getSysteInfo();
 		
-		return "run GeneralLambda at " + (new Date()).toString();
+		return "run GeneralLambda at " + context.getFunctionVersion();
 	}
 	
 	static void getSysteInfo() {
