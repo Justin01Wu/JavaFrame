@@ -1,6 +1,7 @@
 package com.justa.test.aws.db;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -44,11 +45,22 @@ public class MySqlSample {
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection con = DriverManager.getConnection(dbUrl, User, Password);		
 
-		
 		Statement stmt = con.createStatement();
-//		stmt.executeUpdate("CREATE TABLE Human ( ID int NOT NULL, name varchar(255) NOT NULL, PRIMARY KEY (ID) )");
-//		stmt.executeUpdate("insert into Human values(1, 'Justin')");
-//		stmt.executeUpdate("insert into Human values(3, 'Rita')");
+		DatabaseMetaData dbm = con.getMetaData();
+		System.out.println("==>    check if [Human] table is there...");
+		ResultSet tables = dbm.getTables(null, null, "Human", null);
+		if (tables.next()) {
+		  // Table exists
+		} else {
+		  // Table does not exist
+			System.out.println("==>    creating [Human] table and add some data...");
+			
+			stmt.executeUpdate("CREATE TABLE Human ( ID int NOT NULL, name varchar(255) NOT NULL, PRIMARY KEY (ID) )");
+			stmt.executeUpdate("insert into Human values(1, 'Justin')");
+			stmt.executeUpdate("insert into Human values(2, 'Yan')");
+			stmt.executeUpdate("insert into Human values(3, 'Rita')");
+		}
+
 		ResultSet rs = stmt.executeQuery("select * from Human ");
 		while (rs.next())
 			System.out.println(rs.getInt("Id") + "  " + rs.getString("name") );
