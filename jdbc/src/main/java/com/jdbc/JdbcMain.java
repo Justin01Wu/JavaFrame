@@ -13,7 +13,7 @@ import java.sql.Statement;
 // it comes from http://www.jointforce.com/jfperiodical/article/3808
 
 
-public class ConnectionPool  {
+public class JdbcMain  {
 	
 	public static Connection  getConnection() throws ClassNotFoundException, SQLException{
 		
@@ -36,7 +36,7 @@ public class ConnectionPool  {
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {	
 
         
-		Connection con = ConnectionPool.getConnection();		
+		Connection con = JdbcMain.getConnection();		
         String s = "CREATE TABLE test (id INTEGER, name char(50), last_name char(50), age INTEGER)";
         Statement sst = con.createStatement();
         sst.executeUpdate(s);  
@@ -56,7 +56,7 @@ public class ConnectionPool  {
         
 		con.close();
 		
-		try (Connection me = ConnectionPool.getConnection()) { // this grammar start
+		try (Connection me = JdbcMain.getConnection()) { // this grammar start
 	        String s2 = "CREATE TABLE test2 (id INTEGER, name char(50), last_name char(50), age INTEGER)";
 	        Statement sst2 = con.createStatement();
 	        sst2.executeUpdate(s2); 
