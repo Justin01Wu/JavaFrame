@@ -26,5 +26,10 @@ public class Person {
 	public void setAddresses(List<String> addresses) {
 		this.addresses = addresses;
 	}
+	
+	@Override
+	public String toString() {
+		return "id=" +personId +",name:" + name;
+	}
 
 }

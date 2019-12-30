@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -38,7 +39,21 @@ public class ConnectionPool  {
 		Connection con = ConnectionPool.getConnection();		
         String s = "CREATE TABLE test (id INTEGER, name char(50), last_name char(50), age INTEGER)";
         Statement sst = con.createStatement();
-        sst.executeUpdate(s);         
+        sst.executeUpdate(s);  
+        
+        String sql = "insert into test (id , name ) values(1,'justin')";
+        sst = con.createStatement();
+        sst.executeUpdate(sql);
+        
+        String sql2 = "select * from test  where id  =1";
+        sst = con.createStatement();
+        ResultSet rs = sst.executeQuery(sql2);
+        if(rs.next()) {
+        	System.out.print(rs.getInt("id"));
+        	System.out.println(" " + rs.getString("name"));
+        }
+
+        
 		con.close();
 		
 		try (Connection me = ConnectionPool.getConnection()) { // this grammar start

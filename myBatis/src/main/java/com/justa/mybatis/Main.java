@@ -2,6 +2,7 @@ package com.justa.mybatis;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -42,7 +43,12 @@ public class Main  {
 		    p.setName("Justin");
 		    PersonMapper mapper = session.getMapper(PersonMapper.class);   
 		    mapper.save(p);
+		    session.commit();
+		    
 		    System.out.println("succeedfully insert a person");
+		    
+		    Person p2 = mapper.getPersonById(1);
+		    System.out.println("succeedfully get a person:" + p2);
 		    
 		}
 		
