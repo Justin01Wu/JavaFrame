@@ -9,8 +9,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 
-// this is a dynamic proxy connection pool sample
-// it comes from http://www.jointforce.com/jfperiodical/article/3808
+// this is a MyBatis sample
+// it comes from https://www.baeldung.com/mybatis
+// and https://www.tutorialspoint.com/mybatis/index.htm
 
 
 public class Main  {
