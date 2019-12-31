@@ -85,6 +85,9 @@ public class KinesisStream {
 			request2.setStreamName(kinesisStreamName);
 			request2.setShardId(shard.getShardId());
 			request2.setShardIteratorType(ShardIteratorType.TRIM_HORIZON);
+			
+//			request2.setShardIteratorType(ShardIteratorType.AFTER_SEQUENCE_NUMBER);			
+//			request2.setStartingSequenceNumber(startingSequenceNumber);
 		    
 			GetShardIteratorResult result2 = client.getShardIterator(request2);
 			
