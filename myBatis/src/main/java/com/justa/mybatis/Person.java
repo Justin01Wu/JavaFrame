@@ -15,7 +15,7 @@ public class Person {
 	// by default myBatis will use enum.name() to convert an enum to a string
 	// but you can use statusAsStr to do a customized converting
 	
-	private List<String> addresses;
+	private List<Address> addresses;
 	
 	public Integer getPersonId() {
 		return personId;
@@ -29,10 +29,10 @@ public class Person {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public List<String> getAddresses() {
+	public List<Address> getAddresses() {
 		return addresses;
 	}
-	public void setAddresses(List<String> addresses) {
+	public void setAddresses(List<Address> addresses) {
 		this.addresses = addresses;
 	}
 	

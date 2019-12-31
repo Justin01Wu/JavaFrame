@@ -22,8 +22,11 @@ public interface PersonMapper {
       @Result(property="birthday", column = "birthday"),
       @Result(property="statusAsInt", column = "status"),
       @Result(property="gender", column = "gender"),      
+      
       @Result(property = "addresses", javaType = List.class,
-        column = "personId", many=@Many(select = "getAddresses"))
+        column = "personId", many=@Many(select = "getAddresses"))   
+      // will call next method
+      
     })
     public Person getPersonById(Integer personId);
     

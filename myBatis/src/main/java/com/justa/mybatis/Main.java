@@ -45,10 +45,10 @@ public class Main  {
 		    
 		    PersonMapper mapper = session.getMapper(PersonMapper.class);   
 		    int personId = mapper.save(p);		    
-		    
-		    List<Address> addressList = createAddress(personId);
+
 		    AddressMapper mapper2 = session.getMapper(AddressMapper.class);
-		    for(Address a: addressList) {			       
+		    for(Address a: p.getAddresses()) {
+		    	a.setPersonId(personId);
 			    mapper2.save(a);
 		    }
 		    
@@ -87,20 +87,21 @@ public class Main  {
 	    p.setBirthday(new Date());
 	    p.setStatus(StatusEnum.Active);
 	    p.setGender(GenderEnum.Female);
+	    
+	    List<Address> addressList = createAddress();
+	    p.setAddresses(addressList);
 	    return p;
 	}
 	
-	private static List<Address> createAddress(int personId) {
+	private static List<Address> createAddress() {
 		
 		List<Address> result = new ArrayList<>();
 		Address a = new Address();		    
 	    a.setStreetAddress("10 Main street");
-	    a.setPersonId(personId);
 	    result.add(a);
 	    
 	    a = new Address();		    
 	    a.setStreetAddress("31 Yong street");
-	    a.setPersonId(personId);
 	    result.add(a);
 	    return result;
 	 }
