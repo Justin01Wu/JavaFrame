@@ -1,6 +1,9 @@
 package com.justa.mybatis;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -18,10 +21,12 @@ public interface PersonMapper {
       @Result(property="name", column = "name"),
       @Result(property="birthday", column = "birthday"),
       @Result(property="statusAsInt", column = "status"),
-      @Result(property="gender", column = "gender")
-      
-//      , @Result(property = "addresses", javaType = List.class,
-//        column = "personId", many=@Many(select = "getAddresses"))
+      @Result(property="gender", column = "gender"),      
+      @Result(property = "addresses", javaType = List.class,
+        column = "personId", many=@Many(select = "getAddresses"))
     })
     public Person getPersonById(Integer personId);
+    
+    @Select("select addressId, streetAddress, personId from address where personId=#{personId}")
+    public Address getAddresses(Integer personId);
 }

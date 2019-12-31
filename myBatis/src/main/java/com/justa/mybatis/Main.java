@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -30,11 +32,9 @@ public class Main  {
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {	
 
         
-		Connection con = Main.getConnection();		
-        String s = "CREATE TABLE Person (personId IDENTITY, name varchar(50), status int, gender varchar(10),birthday TIMESTAMP)";
-        Statement sst = con.createStatement();
-        sst.executeUpdate(s);		
-	    System.out.println("created a table [person]");
+		Connection con = Main.getConnection();	
+		
+		createTables(con);
 		
 		SqlSessionFactory factory = MyFactory.buildqlSessionFactory();
 		try(SqlSession session = factory.openSession()) {
@@ -44,7 +44,14 @@ public class Main  {
 			Person p = createPerson();		    
 		    
 		    PersonMapper mapper = session.getMapper(PersonMapper.class);   
-		    int personId = mapper.save(p);
+		    int personId = mapper.save(p);		    
+		    
+		    List<Address> addressList = createAddress(personId);
+		    AddressMapper mapper2 = session.getMapper(AddressMapper.class);
+		    for(Address a: addressList) {			       
+			    mapper2.save(a);
+		    }
+		    
 		    session.commit();		    
 		    
 		    System.out.println("inserted a person");
@@ -60,6 +67,20 @@ public class Main  {
 		
 	}
 	
+	private static void createTables(Connection con) throws SQLException {
+		
+        String s = "CREATE TABLE Person (personId IDENTITY, name varchar(50), status int, gender varchar(10),birthday TIMESTAMP)";
+        Statement sst = con.createStatement();
+        sst.executeUpdate(s);		
+	    System.out.println("created a table [person]");	    
+
+        s = "CREATE TABLE address (addressId IDENTITY, streetAddress varchar(50), personId int)";
+        sst = con.createStatement();
+        sst.executeUpdate(s);		
+	    System.out.println("created a table [address]");
+
+	}
+	
 	private static Person createPerson() {
 	    Person p = new Person();		    
 	    p.setName("Justin");
@@ -68,6 +89,21 @@ public class Main  {
 	    p.setGender(GenderEnum.Female);
 	    return p;
 	}
+	
+	private static List<Address> createAddress(int personId) {
+		
+		List<Address> result = new ArrayList<>();
+		Address a = new Address();		    
+	    a.setStreetAddress("10 Main street");
+	    a.setPersonId(personId);
+	    result.add(a);
+	    
+	    a = new Address();		    
+	    a.setStreetAddress("31 Yong street");
+	    a.setPersonId(personId);
+	    result.add(a);
+	    return result;
+	 }
 
 
 }

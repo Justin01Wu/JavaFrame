@@ -65,7 +65,12 @@ public class Person {
 	
 	@Override
 	public String toString() {
-		return "id=" +personId +",name:" + name +", birthday:" + birthday + ", status:" + status+ ", gender:" + gender;
+		return "id=" +personId 
+				+",name:" + name 
+				+", birthday:" + birthday 
+				+ ", status:" + status
+				+ ", gender:" + gender
+				+ ", address:" + addresses;
 	}
 
 }
