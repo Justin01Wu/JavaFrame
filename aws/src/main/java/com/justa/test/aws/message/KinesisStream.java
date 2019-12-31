@@ -35,13 +35,12 @@ public class KinesisStream {
     	checkCreatingStatus(client);  // need about 1 minute
     	
     	System.out.println("created:" + new Date());
-
-    	ByteBuffer data =  ByteBuffer.wrap("From KinesisSample".getBytes());
-		client.putRecord(kinesisStreamName, data, "california");
+    	
+    	writeRecords(client);
 		
-		System.out.println("added a record:" + new Date());
-		
-		readRecords(client);
+		readRecords(client, kinesisStreamName);
+		readRecords(client, kinesisStreamName);
+		// can read same record twice, can use pos to remember what is previous		
 		
 		System.out.println("read a record:" + new Date());
 		
@@ -52,8 +51,26 @@ public class KinesisStream {
     	
     }
     
-    private static void readRecords(AmazonKinesis client) {
+    private static void writeRecords(AmazonKinesis client) {
+    	String data = "From KinesisSample (1) at " + new Date();
+    	ByteBuffer bb =  ByteBuffer.wrap(data.getBytes());
+		client.putRecord(kinesisStreamName, bb, "california");
+		
+    	data = "From KinesisSample (2) at " + new Date();
+    	bb =  ByteBuffer.wrap(data.getBytes());
+		client.putRecord(kinesisStreamName, bb, "NewYork");
+
+    	data = "From KinesisSample (3) at " + new Date();
+    	bb =  ByteBuffer.wrap(data.getBytes());
+		client.putRecord(kinesisStreamName, bb, "NewYork");
+		
+		System.out.println("added 3 records:" + new Date());
+    }
+    
+    private static void readRecords(AmazonKinesis client, String kinesisStreamName) {
 		ListShardsRequest request = new ListShardsRequest();
+		
+		
 		request.setStreamName(kinesisStreamName);
 
 		ListShardsResult result = client.listShards(request);
