@@ -25,7 +25,7 @@ public interface PersonMapper {
       
       @Result(property = "addresses", javaType = List.class,
         column = "personId", many=@Many(select = "getAddresses"))   
-      // will call next method
+      // will call method getAddresses
       
     })
     public Person getPersonById(Integer personId);
