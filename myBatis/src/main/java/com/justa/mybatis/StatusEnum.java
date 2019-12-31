@@ -1,21 +1,21 @@
 package com.justa.mybatis;
 
 public enum StatusEnum {
-	Active("A"),
-	Inactive("I");
+	Active(10),
+	Inactive(20);
 	
-	private final String value;
-	StatusEnum(String value){
+	private final int value;
+	StatusEnum(int value){
 		this.value = value;		
 	}
 	
-	public String getValue() {
+	public int getValue() {
 		return value;
 	}
 	
-	public static StatusEnum getEnum(String v) {
+	public static StatusEnum getEnum(Integer v) {
 		for(StatusEnum one : StatusEnum.values()) {
-			if(v.equals(one.name())) {
+			if(v.equals(one.getValue())) {
 				return one;
 			}
 		}

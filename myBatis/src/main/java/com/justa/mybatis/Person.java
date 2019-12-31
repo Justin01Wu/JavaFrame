@@ -1,5 +1,6 @@
 package com.justa.mybatis;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -7,11 +8,12 @@ public class Person {
 	
 	private Integer personId;
 	private String name;
-	private Date birthday;
+	private Date birthday;	
 	
+	private GenderEnum gender;
 	private StatusEnum status;   
 	// by default myBatis will use enum.name() to convert an enum to a string
-	// but you can use StatusTypeHandler to do a customized converting
+	// but you can use statusAsStr to do a customized converting
 	
 	private List<String> addresses;
 	
@@ -34,10 +36,7 @@ public class Person {
 		this.addresses = addresses;
 	}
 	
-	@Override
-	public String toString() {
-		return "id=" +personId +",name:" + name +", birthday:" + birthday + ", status:" + status;
-	}
+
 	public Date getBirthday() {
 		return birthday;
 	}
@@ -49,6 +48,24 @@ public class Person {
 	}
 	public void setStatus(StatusEnum status) {
 		this.status = status;
+	}
+	
+	public Integer getStatusAsInt() {
+		return status.getValue();
+	}
+	public void setStatusAsInt(Integer status) throws SQLException {
+		this.status = StatusTypeHandler.getEnum(status);
+	}
+	public GenderEnum getGender() {
+		return gender;
+	}
+	public void setGender(GenderEnum gender) {
+		this.gender = gender;
+	}
+	
+	@Override
+	public String toString() {
+		return "id=" +personId +",name:" + name +", birthday:" + birthday + ", status:" + status+ ", gender:" + gender;
 	}
 
 }

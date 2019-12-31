@@ -11,7 +11,7 @@ import org.apache.ibatis.type.TypeHandler;
 // comes from https://stackoverflow.com/questions/10219253/mybatis-enum-usage
 public class StatusTypeHandler implements TypeHandler<StatusEnum> {
 	
-	private static StatusEnum getEnum(String v) throws SQLException {
+	public static StatusEnum getEnum(Integer v) throws SQLException {
 		if(v== null) {
 			return null;
 		}
@@ -24,25 +24,25 @@ public class StatusTypeHandler implements TypeHandler<StatusEnum> {
 
 	@Override
 	public StatusEnum getResult(ResultSet rs, String param) throws SQLException {
-		String v = rs.getString(param);
+		Integer v = rs.getInt(param);
 		return getEnum(v);
 	}
 
 	@Override
 	public StatusEnum getResult(CallableStatement cs, int col) throws SQLException {
-		String v = cs.getString(col);
+		Integer v = cs.getInt(col);
 		return getEnum(v);
 	}
 
 	@Override
 	public void setParameter(PreparedStatement ps, int paramInt, StatusEnum paramType, JdbcType jdbctype)
 			throws SQLException {
-		ps.setString(paramInt, paramType.getValue());
+		ps.setInt(paramInt, paramType.getValue());
 	}
 
 	@Override
 	public StatusEnum getResult(ResultSet rs, int columnIndex) throws SQLException {
-		String v = rs.getString(columnIndex);
+		Integer v = rs.getInt(columnIndex);
 		return getEnum(v);
 	}
 }

@@ -31,18 +31,18 @@ public class Main  {
 
         
 		Connection con = Main.getConnection();		
-        String s = "CREATE TABLE Person (personId IDENTITY, name varchar(50), status varchar(10), birthday TIMESTAMP)";
+        String s = "CREATE TABLE Person (personId IDENTITY, name varchar(50), status int, gender varchar(10),birthday TIMESTAMP)";
         Statement sst = con.createStatement();
         sst.executeUpdate(s);		
 	    System.out.println("created a table [person]");
 		
 		SqlSessionFactory factory = MyFactory.buildqlSessionFactory();
 		try(SqlSession session = factory.openSession()) {
+			
 			System.out.println(session.getConnection().getAutoCommit());
-		    Person p = new Person();		    
-		    p.setName("Justin");
-		    p.setBirthday(new Date());
-		    p.setStatus(StatusEnum.Active);
+		    
+			Person p = createPerson();		    
+		    
 		    PersonMapper mapper = session.getMapper(PersonMapper.class);   
 		    int personId = mapper.save(p);
 		    session.commit();		    
@@ -58,6 +58,15 @@ public class Main  {
 		
 		con.close();
 		
+	}
+	
+	private static Person createPerson() {
+	    Person p = new Person();		    
+	    p.setName("Justin");
+	    p.setBirthday(new Date());
+	    p.setStatus(StatusEnum.Active);
+	    p.setGender(GenderEnum.Female);
+	    return p;
 	}
 
 
