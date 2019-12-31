@@ -2,9 +2,9 @@ package com.justa.mybatis;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -31,29 +31,34 @@ public class Main  {
 
         
 		Connection con = Main.getConnection();		
-        String s = "CREATE TABLE Person (personId INTEGER, name char(50), last_name char(50), age INTEGER)";
+        String s = "CREATE TABLE Person (personId IDENTITY, name varchar(50), status varchar(10), birthday TIMESTAMP)";
         Statement sst = con.createStatement();
         sst.executeUpdate(s);		
-	    System.out.println("succeedfully create a table person");
+	    System.out.println("created a table [person]");
 		
 		SqlSessionFactory factory = MyFactory.buildqlSessionFactory();
 		try(SqlSession session = factory.openSession()) {
-		    Person p = new Person();
-		    p.setPersonId(1);
+			System.out.println(session.getConnection().getAutoCommit());
+		    Person p = new Person();		    
 		    p.setName("Justin");
+		    p.setBirthday(new Date());
+		    p.setStatus(StatusEnum.Active);
 		    PersonMapper mapper = session.getMapper(PersonMapper.class);   
-		    mapper.save(p);
-		    session.commit();
+		    int personId = mapper.save(p);
+		    session.commit();		    
 		    
-		    System.out.println("succeedfully insert a person");
+		    System.out.println("inserted a person");
 		    
-		    Person p2 = mapper.getPersonById(1);
-		    System.out.println("succeedfully get a person:" + p2);
+		    System.out.println(session.getConnection().getAutoCommit());
+		    
+		    Person p2 = mapper.getPersonById(personId);
+		    System.out.println("got a person:" + p2);
 		    
 		}
 		
 		con.close();
 		
 	}
+
 
 }

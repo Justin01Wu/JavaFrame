@@ -1,0 +1,26 @@
+<configuration>
+
+	<typeAliases>
+		<typeAlias alias="Person"
+			type="com.justa.mybatis.Person" />
+	</typeAliases>
+
+	<environments default="default_environment _name">
+		<environment id="environment_id">
+			<transactionManager type="JDBC/MANAGED" />
+
+			<dataSource type="UNPOOLED/POOLED/JNDI">
+				<property name="driver" value="org.h2.Driver" />
+				<property name="url" value="jdbc:h2:mem:unittest" />
+				<property name="username" value="sa" />
+				<property name="password" value="" />
+			</dataSource>
+
+		</environment>
+	</environments>
+
+	<mappers>
+		<mapper resource="mybatis/Person.xml" />
+	</mappers>
+
+</configuration>
