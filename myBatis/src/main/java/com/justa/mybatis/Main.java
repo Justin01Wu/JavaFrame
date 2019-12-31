@@ -74,7 +74,10 @@ public class Main  {
         sst.executeUpdate(s);		
 	    System.out.println("created a table [person]");	    
 
-        s = "CREATE TABLE address (addressId IDENTITY, streetAddress varchar(50), personId int)";
+        s = "CREATE TABLE address (addressId IDENTITY, streetAddress varchar(50), personId int, "
+        		+ " CONSTRAINT FK_address_person foreign key (personId) references Person(personId))";
+        
+        
         sst = con.createStatement();
         sst.executeUpdate(s);		
 	    System.out.println("created a table [address]");
