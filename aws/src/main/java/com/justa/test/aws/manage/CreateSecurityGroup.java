@@ -3,6 +3,8 @@ package com.justa.test.aws.manage;
 import java.io.IOException;
 import java.util.Arrays;
 
+import com.amazonaws.ClientConfiguration;
+import com.amazonaws.retry.RetryPolicy;
 import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.AmazonEC2ClientBuilder;
 import com.amazonaws.services.ec2.model.AuthorizeSecurityGroupIngressRequest;
@@ -17,8 +19,15 @@ public class CreateSecurityGroup {
 	public static final String securityGroupName = "MySQLGroup";
 
 	public static void main(String[] args) throws IOException {
+		
+		ClientConfiguration clientConfiguration = new ClientConfiguration();
 
-		AmazonEC2 client = AmazonEC2ClientBuilder.standard().build();		
+	    clientConfiguration.setRequestTimeout(5000);
+	    clientConfiguration.setRetryPolicy(new RetryPolicy(null, null, 3, true));
+
+		AmazonEC2 client = AmazonEC2ClientBuilder.standard()
+				.withClientConfiguration(clientConfiguration)
+				.build();		
 
 		CreateSecurityGroupRequest csgr = new CreateSecurityGroupRequest()
 				.withGroupName(securityGroupName)
