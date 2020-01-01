@@ -3,6 +3,8 @@ package com.justa.test.aws.dynamo;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.concurrent.Callable;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
@@ -14,6 +16,10 @@ import com.amazonaws.services.dynamodbv2.document.QueryOutcome;
 import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.document.spec.QuerySpec;
 import com.amazonaws.services.dynamodbv2.document.utils.ValueMap;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.QueryRequest;
+import com.amazonaws.services.dynamodbv2.model.QueryResult;
+import com.amazonaws.services.dynamodbv2.model.ReturnConsumedCapacity;
 
 public class QueryItems {
 	private static final String tableName = "Music";
@@ -27,10 +33,9 @@ public class QueryItems {
         // use primary partition key only
         ItemCollection<QueryOutcome> items = table.query("Artist", "The Acme Band");  
         Iterator<Item> iterator  = items.iterator();
-        while (iterator.hasNext()) {
-            Item item = iterator.next();
-            System.out.println("SongTitle:" + item.getString("SongTitle") + ", Price:" + item.getNumber("Price") + ", Genre: " + item.getString("Genre"));
-        }
+        print(iterator); 
+        
+        useQueryRequest(client);
         
         System.out.println("");
         queryPrimaryKey(table);
@@ -44,6 +49,24 @@ public class QueryItems {
 
 	}
 	
+	private static void useQueryRequest(AmazonDynamoDB client) {
+
+		Map<String, AttributeValue> eav = new HashMap<String, AttributeValue>();
+
+		eav.put(":atst", new AttributeValue().withS("The Acme Band"));
+
+		final QueryRequest queryRequest = new QueryRequest()
+				.withTableName(tableName)
+				.withKeyConditionExpression("Artist = :atst")
+				.withExpressionAttributeValues(eav)
+				.withReturnConsumedCapacity(ReturnConsumedCapacity.TOTAL);
+
+		QueryResult result = client.query(queryRequest);
+		System.out.println("ConsumedCapacity = " + result.getConsumedCapacity());
+		System.out.println("result.getCount() = " + result.getCount());
+
+	}
+	
 	private static void queryPrimaryKey(Table table) {
 	     // use primary partition key range 
 			QuerySpec spec = new QuerySpec()
@@ -53,10 +76,8 @@ public class QueryItems {
 				        );
 			ItemCollection<QueryOutcome> items = table.query(spec);  
 			Iterator<Item> iterator  = items.iterator();
-	        while (iterator.hasNext()) {
-	            Item item = iterator.next();
-	            System.out.println("SongTitle:" + item.getString("SongTitle") + ", Price:" + item.getNumber("Price") + ", Genre: " + item.getString("Genre"));
-	        }
+			print(iterator);
+
 	}
 	
 	private static void querySortRange(Table table) {
@@ -71,10 +92,8 @@ public class QueryItems {
 			    .withValueMap(valueMap);
 		ItemCollection<QueryOutcome> items = table.query(spec);  
 		Iterator<Item> iterator  = items.iterator();
-        while (iterator.hasNext()) {
-            Item item = iterator.next();
-            System.out.println("SongTitle:" + item.getString("SongTitle") + ", Price:" + item.getNumber("Price") + ", Genre: " + item.getString("Genre"));
-        }
+		print(iterator);
+
 	}
 	
 	private static void queryIndexRange(Table table) {
@@ -91,6 +110,11 @@ public class QueryItems {
 			    .withValueMap(valueMap);
 		ItemCollection<QueryOutcome> items = index.query(spec);  
 		Iterator<Item> iterator  = items.iterator();
+		print(iterator);
+
+	}
+	
+	private static void print(Iterator<Item> iterator){
         while (iterator.hasNext()) {
             Item item = iterator.next();
             System.out.println("SongTitle:" + item.getString("SongTitle") + ", Price:" + item.getNumber("Price") + ", Genre: " + item.getString("Genre"));
