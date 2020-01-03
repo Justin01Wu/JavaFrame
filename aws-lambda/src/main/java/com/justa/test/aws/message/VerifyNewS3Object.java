@@ -33,7 +33,6 @@ public class VerifyNewS3Object implements RequestHandler<Map<String, Object>,Str
     
     private static String QUEUE_NAME = System.getenv("QUEUE_NAME");     
     private static String topicArn = System.getenv("SNS_TOPIC_ARN");  //String topicArn = "arn:aws:sns:us-east-1:137200312110:MyTopic";
-    private static String debug = System.getenv("debug");
 	
 	@Override
 	public String handleRequest(Map<String, Object> input, Context context) {
