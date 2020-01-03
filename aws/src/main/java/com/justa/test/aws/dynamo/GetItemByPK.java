@@ -28,7 +28,7 @@ public class GetItemByPK {
 				.withConsistentRead(true); 
 			
 		// use strongly consistent reads
-		// A strongly consistent read might not be available if there is a network delay  or outage
+		// A strongly consistent read might not be available if there is a network delay  or outrage
 		
         Item outcome = table.getItem(request);
         System.out.println("GetItem succeeded: " + outcome);

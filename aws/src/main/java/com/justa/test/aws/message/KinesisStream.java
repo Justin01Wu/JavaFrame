@@ -1,6 +1,7 @@
 package com.justa.test.aws.message;
 
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 import com.amazonaws.services.kinesis.AmazonKinesis;
@@ -35,15 +36,17 @@ public class KinesisStream {
     	checkCreatingStatus(client);  // need about 1 minute
     	
     	System.out.println("created:" + new Date());
-
-    	ByteBuffer data =  ByteBuffer.wrap("From KinesisSample".getBytes());
-		client.putRecord(kinesisStreamName, data, "california");
+    	
+    	writeRecords(client);
 		
-		System.out.println("added a record:" + new Date());
+    	System.out.println("\r\n");
+		readRecords(client, kinesisStreamName);
+		System.out.println("\r\n");
+		readRecords(client, kinesisStreamName);
+		System.out.println("\r\n");
+		// can read same record twice, can use setShardIteratorType to start with a seqNum		
 		
-		readRecords(client);
-		
-		System.out.println("read a record:" + new Date());
+		System.out.println("read records:" + new Date());
 		
 		client.deleteStream(kinesisStreamName);		
 		
@@ -52,8 +55,26 @@ public class KinesisStream {
     	
     }
     
-    private static void readRecords(AmazonKinesis client) {
-		ListShardsRequest request = new ListShardsRequest();
+    private static void writeRecords(AmazonKinesis client) {
+    	String data = "From KinesisSample (1) at " + new Date();
+    	ByteBuffer bb =  ByteBuffer.wrap(data.getBytes());
+		client.putRecord(kinesisStreamName, bb, "california");
+		
+    	data = "From KinesisSample (2) at " + new Date();
+    	bb =  ByteBuffer.wrap(data.getBytes());
+		client.putRecord(kinesisStreamName, bb, "NewYork");
+
+    	data = "From KinesisSample (3) at " + new Date();
+    	bb =  ByteBuffer.wrap(data.getBytes());
+		client.putRecord(kinesisStreamName, bb, "NewYork");
+		
+		System.out.println("added 3 records:" + new Date() );
+    }
+    
+    private static void readRecords(AmazonKinesis client, String kinesisStreamName) {    	
+    	
+		ListShardsRequest request = new ListShardsRequest();		
+		
 		request.setStreamName(kinesisStreamName);
 
 		ListShardsResult result = client.listShards(request);
@@ -64,6 +85,9 @@ public class KinesisStream {
 			request2.setStreamName(kinesisStreamName);
 			request2.setShardId(shard.getShardId());
 			request2.setShardIteratorType(ShardIteratorType.TRIM_HORIZON);
+			
+//			request2.setShardIteratorType(ShardIteratorType.AFTER_SEQUENCE_NUMBER);			
+//			request2.setStartingSequenceNumber(startingSequenceNumber);
 		    
 			GetShardIteratorResult result2 = client.getShardIterator(request2);
 			
@@ -72,8 +96,10 @@ public class KinesisStream {
 			GetRecordsResult result3 = client.getRecords(getRecordsRequest );
 			
 			for(Record r: result3.getRecords()) {
-				System.out.println("key:" + r.getPartitionKey());
-				System.out.println("data:" + r.getData().toString());
+				System.out.println("key:" + r.getPartitionKey() + ", seqNum: " + r.getSequenceNumber());
+				
+				String str =StandardCharsets.UTF_8.decode(r.getData()).toString();
+				System.out.println("data:" + str);
 			}
 		}
     }

@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -12,7 +13,7 @@ import java.sql.Statement;
 // it comes from http://www.jointforce.com/jfperiodical/article/3808
 
 
-public class ConnectionPool  {
+public class JdbcMain  {
 	
 	public static Connection  getConnection() throws ClassNotFoundException, SQLException{
 		
@@ -35,13 +36,27 @@ public class ConnectionPool  {
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {	
 
         
-		Connection con = ConnectionPool.getConnection();		
+		Connection con = JdbcMain.getConnection();		
         String s = "CREATE TABLE test (id INTEGER, name char(50), last_name char(50), age INTEGER)";
         Statement sst = con.createStatement();
-        sst.executeUpdate(s);         
+        sst.executeUpdate(s);  
+        
+        String sql = "insert into test (id , name ) values(1,'justin')";
+        sst = con.createStatement();
+        sst.executeUpdate(sql);
+        
+        String sql2 = "select * from test  where id  =1";
+        sst = con.createStatement();
+        ResultSet rs = sst.executeQuery(sql2);
+        if(rs.next()) {
+        	System.out.print(rs.getInt("id"));
+        	System.out.println(" " + rs.getString("name"));
+        }
+
+        
 		con.close();
 		
-		try (Connection me = ConnectionPool.getConnection()) { // this grammar start
+		try (Connection me = JdbcMain.getConnection()) { // this grammar start
 	        String s2 = "CREATE TABLE test2 (id INTEGER, name char(50), last_name char(50), age INTEGER)";
 	        Statement sst2 = con.createStatement();
 	        sst2.executeUpdate(s2); 
