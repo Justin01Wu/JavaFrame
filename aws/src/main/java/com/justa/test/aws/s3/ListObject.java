@@ -17,15 +17,20 @@ public class ListObject {
 	public static void main(String[] args) throws IOException {
 
 		AmazonS3 s3Client = AmazonS3ClientBuilder.standard().build();
-
-		listObjectA(s3Client);
+		
+		listObjectSimple(s3Client);
+		
 		System.out.println(System.lineSeparator());
-		listObjectB(s3Client);
+		listObjectComplicated(s3Client);
 
 	}
 	
-	private static void listObjectA(AmazonS3 s3Client) {
-		ListObjectsV2Request req = new ListObjectsV2Request().withBucketName(bucketName).withMaxKeys(5);
+	private static void listObjectComplicated(AmazonS3 s3Client) {
+		ListObjectsV2Request req = new ListObjectsV2Request()
+				.withBucketName(bucketName)
+				.withPrefix("IMG")				
+				.withMaxKeys(4);
+		
 		ListObjectsV2Result result;
 		do {
 			result = s3Client.listObjectsV2(req);
@@ -37,7 +42,7 @@ public class ListObject {
 		} while (result.isTruncated() == true);
 	}
 
-	private static void listObjectB(AmazonS3 s3Client) {
+	private static void listObjectSimple(AmazonS3 s3Client) {
 		ObjectListing objectListing = s3Client.listObjects(bucketName);
 		while (true) {
 			Iterator<S3ObjectSummary> objIter = objectListing.getObjectSummaries().iterator();
