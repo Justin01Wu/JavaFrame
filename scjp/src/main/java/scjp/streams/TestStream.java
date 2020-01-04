@@ -32,6 +32,9 @@ public class TestStream {
 		
 		handleStreamFromFile();
 		System.out.println();
+		
+		reduceDoubleList();
+		System.out.println();
 	}
 
 	private static void print10Integer() {
@@ -76,7 +79,7 @@ public class TestStream {
 		Arrays.stream( new int[] {2,3,4,5})  // create a int stream from an array
 				.map(x -> x * x)
 				.average()
-				.ifPresent(System.out::println);
+				.ifPresent(x -> System.out.println("average = " + x));
 	}
 	
 	private static void handleStreamFromFile() throws IOException, URISyntaxException {
@@ -86,6 +89,12 @@ public class TestStream {
 		.forEach(System.out::println);
 		bands.close();
 
+	}
+	
+	private static void reduceDoubleList() {
+		double total = Stream.of(7.5,1.5, 4.8) // create a double stream with given values 
+				.reduce(0.0, (Double a, Double b) -> a +b );
+		System.out.println("total = " + total);
 	}
 
 }
