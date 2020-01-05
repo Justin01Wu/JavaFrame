@@ -52,9 +52,9 @@ public class ListObject {
 				System.out.println(" - " + sum.getKey() + " " + " (size = " + sum.getSize() + ")");
 			}
 			// If the bucket contains many objects, the listObjects() call
-			// might not return all of the objects in the first listing. Check to
+			// only return first 1000 objects in the first listing. Check to
 			// see whether the listing was truncated. If so, retrieve the next page of
-			// objects  and delete them.
+			// objects.
 			if (objectListing.isTruncated()) {
 				objectListing = s3Client.listNextBatchOfObjects(objectListing);
 			} else {
