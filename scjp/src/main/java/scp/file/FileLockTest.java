@@ -56,6 +56,6 @@ public class FileLockTest implements Runnable {
 		t1.start();
 		t2.start();
 
-		// usually thread 1 will succeed, thread will throw verlappingFileLockException on fc.tryLock
+		// usually thread 1 will succeed, thread 2 will throw verlappingFileLockException on fc.tryLock
 	}
 }
