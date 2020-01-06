@@ -18,6 +18,13 @@ public class FileWatcher {
  
         Path path = Paths.get(System.getProperty("user.home"));
         System.out.println("watching folder: " + path);
+        
+        // If a watched file is not located on a local storage device 
+        // then it is implementation specific if changes to the file can be detected. In particular, 
+        // it is not required that changes to files carried out on remote systems be detected.
+        //  https://stackoverflow.com/questions/48919086/java-watch-service-not-working-for-remote-files-mounted-in-the-local-server
+        // https://stackoverflow.com/questions/8476419/java-watchservice-not-generating-events-while-watching-mapped-drives
+        
         path.register(
           watchService, 
             StandardWatchEventKinds.ENTRY_CREATE, 
