@@ -8,8 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HelloController {
 
   @RequestMapping("/greeting")
-  public String index() {
+  public String greeting() {
     return "Greetings from Spring Boot!";
+  }
+  
+  @RequestMapping("/greeting2")
+  public Greeting greeting2() {
+    return new Greeting(1, "greeting2");
+ 
   }
 
 }
