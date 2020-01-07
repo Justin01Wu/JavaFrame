@@ -23,6 +23,7 @@
 		<module>myBatis</module>
 		<module>jdbc-template</module>		
 		<module>connectionPool</module>
+		<module>springBoot</module>
 		<module>api-test</module>
 		
 		
