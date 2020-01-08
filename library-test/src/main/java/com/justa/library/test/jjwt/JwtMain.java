@@ -72,8 +72,13 @@ public class JwtMain {
 	}
 	
 	public static void main(String[] args) throws Exception {
+		
+		//long ttlMillis = 3600000l;  // one hour
+		long ttlMillis = 86400000l;   // one day
+		//long ttlMillis = 31536000000l;  // one year
+		
 		JwtMain util=   new JwtMain();
-        String ab=util.createJWT("2409347239042", "{id:100,name:justin wu}", 60000000000l);
+        String ab=util.createJWT("2409347239042", "{id:100,name:justin wu}", ttlMillis);
         System.out.println(ab);
         
         Claims c=util.parseJWT(ab); 

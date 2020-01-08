@@ -56,8 +56,12 @@ public class JwtUtil {
 	
 	public static void main(String[] args) throws Exception {
 		
+		//long ttlMillis = 3600000l;  // one hour
+		long ttlMillis = 86400000l;   // one day
+		//long ttlMillis = 31536000000l;  // one year
 		
-		String token = JwtUtil.createToken(1237, "Justin.Wu", 60000000000l);
+		Integer userId = 1237;
+		String token = JwtUtil.createToken(userId, "Justin.Wu", ttlMillis);
 		
 		System.out.println(token);
 		
