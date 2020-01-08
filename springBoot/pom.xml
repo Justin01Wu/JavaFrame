@@ -22,10 +22,26 @@
 	</properties>
 
 	<dependencies>
+	
+	<!--  this is the core part ofspring boot -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		
+		<!--  this will dynamically pickup new changing (hot swapping) in the project:
+		       Java changing, pom.xml changing
+		      restart application automatically 		      
+		 -->
+		 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+		
+		
 	</dependencies>
 
 	<build>
