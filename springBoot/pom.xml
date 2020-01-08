@@ -47,6 +47,7 @@
 	<build>
 		<plugins>
 	
+			<!-- this plugin set up Java version -->
 		    <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -56,10 +57,22 @@
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
-			</plugin>				
+			</plugin>	
+
+			<!-- this plugin will build fat jar : including dependencies -->
+			<!-- also it provide some directly run command like 
+			    mvn spring-boot:run
+			-->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			
 		</plugins>
 		<finalName>${project.artifactId}</finalName>
 	</build>
+
+
 
 
 
