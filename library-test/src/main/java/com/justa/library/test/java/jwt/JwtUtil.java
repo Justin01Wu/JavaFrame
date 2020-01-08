@@ -24,6 +24,7 @@ public class JwtUtil {
 				.withIssuer("Jersey2")
 				.withClaim("userName", userName)
 				.withClaim("justin", "I can add any fields into JWT token")
+				.withClaim("email", "justin.wu@global.local")
 				.sign(algorithm);
 		return token;
 	}
