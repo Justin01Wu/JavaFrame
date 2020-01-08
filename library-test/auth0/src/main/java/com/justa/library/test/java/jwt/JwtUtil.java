@@ -6,6 +6,9 @@ import java.security.interfaces.RSAPublicKey;
 import java.util.Base64;
 import java.util.Date;
 
+import org.codehaus.jackson.JsonNode;
+import org.codehaus.jackson.map.ObjectMapper;
+
 import com.auth0.jwk.Jwk;
 import com.auth0.jwk.JwkException;
 import com.auth0.jwk.JwkProvider;
@@ -14,11 +17,11 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.justa.library.test.jjwt.JWTSetting;
 
 public class JwtUtil {
+	
+	public static final String JWT_SECRET = "sdtuO3495783490";
+	
 	
 	private static final String CHARSET_NAME = "UTF-8";
   private static final String FIELD_NAME = "kid";
@@ -30,7 +33,7 @@ public class JwtUtil {
 		long expMillis = now.getTime() + ttlMillis;
 		Date exp = new Date(expMillis); // expired time
 
-		Algorithm algorithm = Algorithm.HMAC256(JWTSetting.JWT_SECRET);
+		Algorithm algorithm = Algorithm.HMAC256(JWT_SECRET);
 		String token = JWT.create()
 				.withExpiresAt(exp)
 				.withKeyId("Jersey2_"+ now)
@@ -86,7 +89,7 @@ public class JwtUtil {
 	    JsonNode bodyNode = new ObjectMapper().readTree(body);
 
 	    String alg = headerNode.get("alg").textValue();
-	    Algorithm a = Algorithm.HMAC256(JWTSetting.JWT_SECRET);
+	    Algorithm a = Algorithm.HMAC256(JWT_SECRET);
 	    if(a.getName().equals(alg)){
 	    	return a;
 	    }	    

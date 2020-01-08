@@ -34,6 +34,16 @@
     		<version>0.9.0</version>
 		</dependency>
 		
+		<dependency>
+  			<groupId>org.glassfish.jersey.media</groupId>
+  			
+  			<artifactId>jersey-media-json-jackson1</artifactId>
+  			<!--  to avoid conflict with jjwt and java-jwt, we use version 1-->
+  			
+  			<scope>compile</scope>
+			<version>2.29.1</version>
+		</dependency>		
+		
 		
 	</dependencies>
 	
