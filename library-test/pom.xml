@@ -45,11 +45,6 @@
 			<version>2.27</version>
 		</dependency>
 		
-		<dependency>
-  			<groupId>org.apache.avro</groupId>
-  			<artifactId>avro</artifactId>
-  			<version>1.8.2</version>
-		</dependency>		
 		
 		<!-- Java API for JSON Processing (API) -->
 		<dependency>
@@ -104,18 +99,7 @@
 				</executions>
 			</plugin>
 			
-			<!-- exclude integration testing from normal unit test -->
-			<!-- comes from http://cupofjava.de/blog/2013/02/05/integration-tests-with-maven-and-tomcat/ -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.22.0</version>
-				<configuration>
-					<excludedGroups>com.justa.library.IntegrationTest, com.justa.library.ManualTest</excludedGroups>
-					<parallel>classes</parallel>
-					<threadCount>4</threadCount>
-				</configuration>
-			</plugin>			
+		
 			
 		</plugins>
 		<finalName>${project.artifactId}</finalName>
