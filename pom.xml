@@ -15,7 +15,7 @@
 		<module>aws-lambda</module>
         <module>hibernate_h2</module>
         <module>mock</module>
-		<module>library-test</module>
+		<module>test</module>
 		<module>jmx</module>
 		<module>mvn-plugin</module>
 		<module>transaction</module>
