@@ -12,7 +12,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	
 
 	<dependencies>
 		<dependency>
@@ -29,12 +28,14 @@
 			<version>2.10.2</version>
 		</dependency>			
 		
+		<!--  core function of jWT  -->
 		<dependency>
     		<groupId>com.auth0</groupId>
     		<artifactId>java-jwt</artifactId>
     		<version>3.9.0</version>
 		</dependency>
 		
+		<!--  to verify RS256 JWT token  -->
 		<dependency>
     		<groupId>com.auth0</groupId>
     		<artifactId>jwks-rsa</artifactId>
@@ -57,7 +58,6 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
-
 			
 		</plugins>
 		<finalName>${project.artifactId}</finalName>

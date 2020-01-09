@@ -14,6 +14,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.auth0.jwt.interfaces.Verification;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -43,10 +44,14 @@ public class JwtUtil {
 
 	public static DecodedJWT verifyToken(String token) throws SecurityException, IOException, JwkException {
 
-		// Algorithm algorithm = Algorithm.HMAC256(JWTSetting.JWT_SECRET);
 		Algorithm algorithm = extractAlgorithm(token);
-
-		JWTVerifier verifier = JWT.require(algorithm).withIssuer("Jersey2").build(); // Reusable verifier instance
+		Verification ver = JWT.require(algorithm);
+		if(algorithm.getName().equals("HS256")) {
+			ver = ver.withIssuer("Jersey2");
+		}else {
+			ver = ver.acceptExpiresAt(6678520957l);  // to skip expired verification
+		}
+		JWTVerifier verifier = ver.build(); // Reusable verifier instance
 		DecodedJWT jwt = verifier.verify(token);
 
 		return jwt;
@@ -83,14 +88,29 @@ public class JwtUtil {
 		String issuerUri = bodyNode.get(ISS_FIELD_NAME).textValue();
 		// Provider for retrieving public/private keys used by Microsoft to sign the
 		// token
-//	    Optional<String> jwksUri = trustedIdps.getJwksUriByIssuerUri(issuerUri);
-//	    if (!jwksUri.isPresent()) {
-//	      throw new SecurityException(
-//	          String.format("No mapping jwksUri found for issuerUri: %s", issuerUri));
-//	    }
-//	    JwkProvider provider = new UrlJwkProvider(new URL(jwksUri.get()));
+		String jwksUri;		
+		if(issuerUri.equals("https://idp02.validusholdings.com:8443/auth/realms/vcaps-test")) {
+			jwksUri = "https://idp02.validusholdings.com:8443/auth/realms/vcaps-test/protocol/openid-connect/certs";	
+		}else {
+			throw new SecurityException("unknown issuerUri: " + issuerUri);
+		}
 
-		JwkProvider provider = new UrlJwkProvider(new URL(issuerUri));
+		
+		JwkProvider provider = new UrlJwkProvider(new URL(jwksUri));
+		/* this URL will return those information:
+		{
+			  "keys": [
+			    {
+			      "kid": "8UXJpSYq8I4_ziHX_LqVu393gCsXQFj-Jw03o7uXjJ4",
+			      "kty": "RSA",
+			      "alg": "RS256",
+			      "use": "sig",
+			      "n": "u7ZLRxTGyUX1SO-CZjNpUTU037weWUXpyBcppGTbv0EDtDzF1oZPBs1JOjDpFKOn4X5uHJl-VZkkBfRO5b6WwLwW-nSjsHM8pSc82rRbH6pcAU7-hJqKBIXFFSk3t9NIYADRjozaA1d4l83Iq42bCidvHaAcBNNgtR5huhFx3Iqax1msV7dNcxN1iFD8qBjQd436l791-XeRGfyrRLWoJS9cYsP8t2TDd8jy5wRgliwUFLJRI6yA_q9G5f3Q-1yRtl9_XR5yi1t8bj2aaKzzqvYw8S0EawAac5XQUB2sLPAKFqXAWOBhwj0nksSVAv2p-csjfikg0XUh9o5h3dMcOQ",
+			      "e": "AQAB"
+			    }
+			  ]
+			}
+		*/
 
 		Jwk jwk = provider.get(kid);
 
