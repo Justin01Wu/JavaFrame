@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.justa</groupId>
-	<artifactId>library-test</artifactId>
+	<artifactId>jjwt-test</artifactId>
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
-	<name>library-test</name>
+	<name>jjwt-test</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
