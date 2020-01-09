@@ -6,9 +6,6 @@ import java.security.interfaces.RSAPublicKey;
 import java.util.Base64;
 import java.util.Date;
 
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
-
 import com.auth0.jwk.Jwk;
 import com.auth0.jwk.JwkException;
 import com.auth0.jwk.JwkProvider;
@@ -17,6 +14,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JwtUtil {
 	
@@ -85,6 +84,7 @@ public class JwtUtil {
 	    System.out.println(String.format("Decoded token's header: %s, and boy: %s", header, body));
 
 	    // The kid claim indicates the particular public key that was used to sign the token
+	    new ObjectMapper();
 	    JsonNode headerNode = new ObjectMapper().readTree(header);
 	    JsonNode bodyNode = new ObjectMapper().readTree(body);
 

@@ -22,6 +22,13 @@
 			<scope>test</scope>
 		</dependency>
 		
+		<!--  java-jwt has this in runtime, but we need this to compile , so explictly add it -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.10.2</version>
+		</dependency>			
+		
 		<dependency>
     		<groupId>com.auth0</groupId>
     		<artifactId>java-jwt</artifactId>
@@ -33,18 +40,7 @@
     		<artifactId>jwks-rsa</artifactId>
     		<version>0.9.0</version>
 		</dependency>
-		
-		<dependency>
-  			<groupId>org.glassfish.jersey.media</groupId>
-  			
-  			<artifactId>jersey-media-json-jackson1</artifactId>
-  			<!--  to avoid conflict with jjwt and java-jwt, we use version 1-->
-  			
-  			<scope>compile</scope>
-			<version>2.29.1</version>
-		</dependency>		
-		
-		
+				
 	</dependencies>
 	
 	<build>
