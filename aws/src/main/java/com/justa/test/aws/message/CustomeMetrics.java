@@ -22,13 +22,14 @@ public class CustomeMetrics {
 		MetricDatum datum = new MetricDatum()
 				.withMetricName("PAGES_VISITED")
 				.withUnit(StandardUnit.None)
-				.withValue(2.0d).withDimensions(dimension);
+				.withValue(4.0d).withDimensions(dimension);
 
 		PutMetricDataRequest request = new PutMetricDataRequest()
 				.withNamespace("SITE/TRAFFIC")
 				.withMetricData(datum);
 
 		PutMetricDataResult response = cw.putMetricData(request);
+		System.out.println("sent CloudWatch metric on SITE/TRAFFIC namespace");
 
 	}
 }
