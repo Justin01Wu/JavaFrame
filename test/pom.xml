@@ -10,8 +10,11 @@
     <name>Java Frame work testing</name>
 	
     <modules>
-		<module>kafka</module>
+		
 		<module>auth0</module>
+		<module>avro</module>
+		<module>ews</module>
+		<module>kafka</module>
 		
 		
     </modules>	
