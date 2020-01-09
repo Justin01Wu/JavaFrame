@@ -28,31 +28,7 @@
   			<artifactId>jjwt</artifactId>
   			<version>0.9.1</version>
 		</dependency>
-				
-		<dependency>
-  			<groupId>org.glassfish.jersey.media</groupId>
-  			
-  			<artifactId>jersey-media-json-jackson1</artifactId>
-  			<!--  to avoid conflict with jjwt and java-jwt, we use version 1-->
-  			
-  			<scope>compile</scope>
-			<version>2.27</version>
-		</dependency>
-		
-		
-		<!-- Java API for JSON Processing (API) -->
-		<dependency>
-		    <groupId>javax.json</groupId>
-		    <artifactId>javax.json-api</artifactId>
-		    <version>1.1.2</version>
-		</dependency>
-		
-		<!-- Java API for JSON Processing (implementation) -->
-		<dependency>
-		    <groupId>org.glassfish</groupId>
-		    <artifactId>javax.json</artifactId>
-		    <version>1.1.2</version>
-		</dependency>		
+	
 		
 	</dependencies>
 	
@@ -71,30 +47,6 @@
 				</configuration>
 			</plugin>
 
-			<!-- copy all 3rd libraries to a folder "jars" under target  -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>3.1.1</version>
-				<executions>
-					<execution>
-            			<id>copy-dependencies</id>
-            			<phase>package</phase>
-            			<goals>
-              				<goal>copy-dependencies</goal>
-            			</goals>				
-						<configuration>
-                            <includes>**/*.jar</includes>
-                            <outputDirectory>${project.build.directory}/jars</outputDirectory>
-                            <overWriteReleases>false</overWriteReleases>
-                            <overWriteSnapshots>true</overWriteSnapshots>							
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			
-		
-			
 		</plugins>
 		<finalName>${project.artifactId}</finalName>
 	</build>
