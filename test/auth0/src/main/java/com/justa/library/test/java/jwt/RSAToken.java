@@ -42,10 +42,10 @@ public class RSAToken {
 	
 	public static String createToken(Integer userId, String userName, long ttlMillis, KeyPair kp) {
 
-		RSAPublicKey pub = (RSAPublicKey)kp.getPublic();
+		RSAPublicKey publicKey = (RSAPublicKey)kp.getPublic();
 		RSAPrivateKey privateKey = (RSAPrivateKey)kp.getPrivate();
 
-		Algorithm algorithm = Algorithm.RSA256(pub, privateKey);
+		Algorithm algorithm = Algorithm.RSA256(publicKey, privateKey);
 
 		Date now = new Date(); // create time
 		long expMillis = now.getTime() + ttlMillis;
@@ -68,10 +68,9 @@ public class RSAToken {
 	
 	public static DecodedJWT verifyToken(KeyPair kp, String token ) throws SecurityException, IOException, JwkException {
 		
-		RSAPublicKey pub = (RSAPublicKey)kp.getPublic();
-		RSAPrivateKey privateKey = (RSAPrivateKey)kp.getPrivate();  // TODO how to remove private KEY because it is not available
+		RSAPublicKey publicKey = (RSAPublicKey)kp.getPublic();
 
-	    Algorithm algorithm = Algorithm.RSA256(pub, privateKey);
+	    Algorithm algorithm = Algorithm.RSA256(publicKey, null);  // we don't need private key if it is verifying
 	    JWTVerifier verifier = JWT.require(algorithm)
 	        .withIssuer("JUSTA")
 	        .build(); //Reusable verifier instance
