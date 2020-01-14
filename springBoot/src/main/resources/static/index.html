@@ -6,11 +6,14 @@
 </head>
 <body>
 	<h1>Spring boot demo</h1>
-    <p>Get your greeting <a href="/greeting">here</a></p>
+	
+	<p>Get your token firstly, otherwise all other links will failed on security checking <a href="/public/authenticate?username=justin&password=pp">here</a></p>
+	
+    <p>Get your greeting <a href="/api/greeting">here</a></p>
     
-    <p>Get your greeting2 <a href="/greeting2">here</a></p>
+    <p>Get your greeting2 <a href="/api/greeting2">here</a></p>
     
-    <p>Get your greeting 3 <a href="/greeting3">here</a></p>
+    <p>Get your greeting 3 <a href="/api/greeting3">here</a></p>
     
 </body>
 </html>

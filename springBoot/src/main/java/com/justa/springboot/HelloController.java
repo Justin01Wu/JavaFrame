@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloController {
 
-  @RequestMapping("/greeting")
+  @RequestMapping("/api/greeting")
   public String greeting() {
     return "Greetings from Spring Boot!";
   }
   
-  @RequestMapping("/greeting2")
+  @RequestMapping("/api/greeting2")
   //@ResponseBody
   public Greeting greeting2() {
     return new Greeting(1, "greeting2");
@@ -20,7 +20,7 @@ public class HelloController {
   }
   
   //@RequestMapping(value="/greeting3", produces={"application/json","application/xml"})  
-  @RequestMapping(value="/greeting3", produces={"application/json"})
+  @RequestMapping(value="/api/greeting3", produces={"application/json"})
   // have to use produces to set return content-type, but it can be dynamically to match request content-type if it is a list  
   public String greeting3() {
     return "{\"msg\": \"greeting 3\"}";
