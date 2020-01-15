@@ -35,15 +35,25 @@ public class JwtAuthenticationController {
 	
 	@RequestMapping(value = "/public/authenticate", method = RequestMethod.GET)
 	public ResponseEntity<?> createAuthenticationToken2(@RequestParam(name = "username") String userName,  @RequestParam(name = "password") String password) throws Exception {
-		authenticate(userName, password);
-		final UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
-		final String token = jwtTokenUtil.generateToken(userDetails);
-		return ResponseEntity.ok(new JwtResponse(token));
+		
+		//authenticate(userName, password);  // this need encoded password, so we will use the following simple way:
+		if("justin".equals(userName) && "password".equals(password)) {
+			final UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
+			final String token = jwtTokenUtil.generateToken(userDetails);
+			return ResponseEntity.ok(new JwtResponse(token));
+			
+		}else {
+			throw new RuntimeException("incorrect password");
+			
+		}
+		
+		
 	}
 
 	private void authenticate(String username, String password) throws Exception {
 		try {
-			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
+			authenticationManager.authenticate(token);
 		} catch (DisabledException e) {
 			throw new Exception("USER_DISABLED", e);
 		} catch (BadCredentialsException e) {
