@@ -3,93 +3,30 @@
 <head>
     <title>SpringBoot demo</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
 </head>
 <body>
 	<h1>Spring boot demo</h1>
 	
-	<button onClick=getToken();>get token: </button>
+	<button onClick=API_UTIL.getToken();>get token: </button>
 	
 	<label id="infoLabel">token is not got</label>
 	
 	<p>Get your token firstly, otherwise all other links will failed on security checking </p>
 	
-	<button onClick=callTokenApiA('/api/greeting');>Get your greeting 1</button>
+	<button onClick=API_UTIL.callTokenApi('/api/greeting');>Get your greeting 1</button>
     
-    <button onClick=callTokenApiA('/api/greeting2');>Get your greeting 2</button>
+    <button onClick=API_UTIL.callTokenApi('/api/greeting2');>Get your greeting 2</button>
     
     
-    <button onClick=callTokenApiA('/api/greeting3');>Get your greeting 3</button>
+    <button onClick=API_UTIL.callTokenApi('/api/greeting3');>Get your greeting 3</button>
     
     <br/>
     <br/>
     <br/>
     API return: <label id="ApiLabel"></label>
     
-   <script>
-   
-   function loadTokeNFromResponse(request){
-	   var info = document.getElementById('infoLabel');
-	   if (request.status >= 200 && request.status < 400) {
-    	   // Begin accessing JSON data here
-    	   var data = JSON.parse(request.response);
-    	   
-	       console.log(data);    	       	
-			info.innerHTML = data.token;  
-	   } else {
-		   
-	     var msg = 'error on status: ' + request.status;
-	     info.innerHTML = msg;
-	   }
-   }
-   function getToken () {
-	   
-	   var url = '/public/authenticate?username=justin&password=password';
-		var callBack = loadTokeNFromResponse;
-		callGetAPI(url, callBack);
-   }
-   
-   function callTokenApiA (url) {
-	   
-	   
-		var callBack = display;
-		
-		var info = document.getElementById('infoLabel');		
-		var token  = info.innerHTML;
-		
-		callGetAPI(url, callBack, token);
-   	
-   }
-   
-   function callGetAPI(url, callBack, token){
-       var request = new XMLHttpRequest()
-
-       request.open('GET', url, true)
-		if(token){
-			request.setRequestHeader("Authorization", "Bearer " + token);
-		}
-           
-
-       request.onload = function() {
-    	   callBack(request);
-       }
-
-       request.send();
-	   
-   }
-   
-   function display(request){
-	   var info = document.getElementById('ApiLabel');
-	   if (request.status >= 200 && request.status < 400) {
-    	   // Begin accessing data here    	   
-	       console.log(request.response);    	       	
-			info.innerHTML = request.response;  
-	   } else {
-		   
-	     var msg = 'error on status: ' + request.status;
-	     info.innerHTML = msg;
-	   }
-   }
-   </script>
+   <script src="index.js"></script>
     
 </body>
  
