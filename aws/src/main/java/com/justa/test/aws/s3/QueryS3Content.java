@@ -110,7 +110,10 @@ public class QueryS3Content {
 		request.setExpressionType(ExpressionType.SQL);
 
 		InputSerialization inputSerialization = new InputSerialization();
-		inputSerialization.setCsv(new CSVInput().withFieldDelimiter(";").withFileHeaderInfo(FileHeaderInfo.USE));
+		inputSerialization.setCsv(new CSVInput()
+				.withFieldDelimiter(";")    // delimiter is ";" , default is ","
+				.withFileHeaderInfo(FileHeaderInfo.USE)  // use first line as header
+				);
 		inputSerialization.setCompressionType(CompressionType.NONE);
 		request.setInputSerialization(inputSerialization);
 
@@ -129,7 +132,9 @@ public class QueryS3Content {
 		request.setExpressionType(ExpressionType.SQL);
 
 		InputSerialization inputSerialization = new InputSerialization();
-		inputSerialization.setJson(new JSONInput().withType(JSONType.LINES));
+		inputSerialization.setJson(new JSONInput()
+				.withType(JSONType.LINES)  // every line is a json object
+				);
 		inputSerialization.setCompressionType(CompressionType.NONE);
 		request.setInputSerialization(inputSerialization);
 
