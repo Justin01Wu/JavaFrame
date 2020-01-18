@@ -13,6 +13,7 @@ import com.amazonaws.services.s3.model.CSVInput;
 import com.amazonaws.services.s3.model.CSVOutput;
 import com.amazonaws.services.s3.model.CompressionType;
 import com.amazonaws.services.s3.model.ExpressionType;
+import com.amazonaws.services.s3.model.FileHeaderInfo;
 import com.amazonaws.services.s3.model.InputSerialization;
 import com.amazonaws.services.s3.model.JSONInput;
 import com.amazonaws.services.s3.model.JSONType;
@@ -27,8 +28,29 @@ public class QueryS3Content {
 	private static String bucketName = "developer719";
 
 	public static void main(String[] args) throws IOException {
+		
 		AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion(clientRegion).build();
 
+		queryJson(s3Client);
+		queryCSV(s3Client);
+
+	}
+	
+	private static void queryCSV(AmazonS3 s3Client) throws IOException {
+		/**
+		 * sample data: 
+			firstName;lastName
+			justin;wu
+		 */
+		String query = "select s.firstName, s.lastName from s3object s where s.firstName ='justin'";
+		SelectObjectContentRequest selectRequest = generateBaseCSVRequest(bucketName, "users.csv", query);
+
+		SelectObjectContentResult result = s3Client.selectObjectContent(selectRequest);
+		
+		printResult(result);
+	}
+	
+	private static void queryJson(AmazonS3 s3Client) throws IOException {
 		/**
 		 * sample data: 
 		 * {"name": "Joe", "company": "AMAZON", "favorite_color": "blue"}
@@ -38,7 +60,12 @@ public class QueryS3Content {
 		SelectObjectContentRequest selectRequest = generateBaseJsonRequest(bucketName, "jsonList.json", query);
 
 		SelectObjectContentResult result = s3Client.selectObjectContent(selectRequest);
-
+		
+		printResult(result);
+	}
+	
+	
+	private static void printResult(SelectObjectContentResult result) throws IOException {
 		final AtomicBoolean isResultComplete = new AtomicBoolean(false);
 		InputStream resultInputStream = result.getPayload()
 				.getRecordsInputStream(new SelectObjectContentEventVisitor() {
@@ -60,7 +87,6 @@ public class QueryS3Content {
 
 		String str = convertInputStreamToString(resultInputStream);
 		System.out.println(str);
-
 	}
 
 	private static String convertInputStreamToString(InputStream inputStream) throws IOException {
@@ -84,7 +110,7 @@ public class QueryS3Content {
 		request.setExpressionType(ExpressionType.SQL);
 
 		InputSerialization inputSerialization = new InputSerialization();
-		inputSerialization.setCsv(new CSVInput());
+		inputSerialization.setCsv(new CSVInput().withFieldDelimiter(";").withFileHeaderInfo(FileHeaderInfo.USE));
 		inputSerialization.setCompressionType(CompressionType.NONE);
 		request.setInputSerialization(inputSerialization);
 
