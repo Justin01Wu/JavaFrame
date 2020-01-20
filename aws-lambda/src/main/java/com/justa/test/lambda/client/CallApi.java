@@ -33,7 +33,8 @@ public class CallApi {
 		HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 		
 		//conn.setDoOutput(true);  
-		// only for post method, it will fail on 403 error if it is a GET
+		// only for post method, 
+		//it will fail on 403 "Missing Authentication Token" if it is a GET
 		
 		conn.setRequestMethod("GET");
 		conn.setRequestProperty("Content-Type", "application/json");		
