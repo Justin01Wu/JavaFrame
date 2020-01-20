@@ -14,8 +14,8 @@ import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
 import com.amazonaws.services.s3.transfer.Upload;
 
 // https://www.baeldung.com/aws-s3-multipart-upload
-// Without multiPart, the 700MB file need 1 minute 18 seconds
-// With multiPart on 5MB batch size, the 700MB file need 1 minute 03 seconds
+// Without multiPart, the 700MB file need 1 minute 18 seconds in EC2
+// With multiPart on 5MB batch size, the 700MB file need 1 minute 03 seconds in EC2
 
 /* TODO try concurrency uploading:
  Amazon S3 does not currently support object locking. If two PUT requests
