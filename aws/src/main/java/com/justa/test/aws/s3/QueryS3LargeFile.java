@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Date;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import com.amazonaws.regions.Regions;
@@ -23,44 +24,36 @@ import com.amazonaws.services.s3.model.SelectObjectContentEventVisitor;
 import com.amazonaws.services.s3.model.SelectObjectContentRequest;
 import com.amazonaws.services.s3.model.SelectObjectContentResult;
 
-public class QueryS3Content {
+// need 9 seconds to query a 700 M file and find 7 rows
+// it is a lot fast than remote read all rows which is about 6 minutes
+// it is even fast than EC2 read all rows which is 1 minute 03
+// please compare with UploadLargeFile
+
+public class QueryS3LargeFile {
+
 	private static Regions clientRegion = Regions.US_EAST_1;
 	private static String bucketName = "developer719";
-	private static String csvFileName = "users.csv";
-	private static String jsonFileName = "jsonList.json";
-	
+	private static String fileName = "largeCSV.txt";
 
 	public static void main(String[] args) throws IOException {
 		
 		AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion(clientRegion).build();
-
-		queryJson(s3Client);
+		Date since =  new Date();
 		queryCSV(s3Client);
+		Date now = new Date();
+		
+		System.out.println("cost (sec) : " + (now.getTime() - since.getTime()) /1000);
 
 	}
 	
 	private static void queryCSV(AmazonS3 s3Client) throws IOException {
 		/**
 		 * sample data: 
-			firstName;lastName
-			justin;wu
+			eventID	iterationID	sequenceID	quantile
+			21987670	12307	82026	0.41397880227240585
 		 */
-		String query = "select s.firstName, s.lastName from s3object s where s.firstName ='justin'";
-		SelectObjectContentRequest selectRequest = generateBaseCSVRequest(bucketName, csvFileName, query);
-
-		SelectObjectContentResult result = s3Client.selectObjectContent(selectRequest);
-		
-		printResult(result);
-	}
-	
-	private static void queryJson(AmazonS3 s3Client) throws IOException {
-		/**
-		 * sample data: 
-		 * {"name": "Joe", "company": "AMAZON", "favorite_color": "blue"}
-		 * {"name": "Mike", "company": "WHOLE FOODS", "favorite_color": "green"}
-		 */
-		String query = "select s.name, s.company from s3object s where s.company ='AMAZON'";
-		SelectObjectContentRequest selectRequest = generateBaseJsonRequest(bucketName, jsonFileName, query);
+		String query = "select s.eventID, s.iterationID,s.sequenceID, s.quantile from s3object s where s.eventID ='23483082'";
+		SelectObjectContentRequest selectRequest = generateBaseCSVRequest(bucketName, fileName, query);
 
 		SelectObjectContentResult result = s3Client.selectObjectContent(selectRequest);
 		
@@ -114,7 +107,7 @@ public class QueryS3Content {
 
 		InputSerialization inputSerialization = new InputSerialization();
 		inputSerialization.setCsv(new CSVInput()
-				.withFieldDelimiter(";")    // delimiter is ";" , default is ","
+				.withFieldDelimiter("\t")    // delimiter is "tab" , default is ","
 				.withFileHeaderInfo(FileHeaderInfo.USE)  // use first line as header
 				);
 		inputSerialization.setCompressionType(CompressionType.NONE);
@@ -147,4 +140,5 @@ public class QueryS3Content {
 
 		return request;
 	}
+
 }
