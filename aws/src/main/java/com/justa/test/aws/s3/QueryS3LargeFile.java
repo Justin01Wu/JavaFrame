@@ -24,7 +24,7 @@ import com.amazonaws.services.s3.model.SelectObjectContentEventVisitor;
 import com.amazonaws.services.s3.model.SelectObjectContentRequest;
 import com.amazonaws.services.s3.model.SelectObjectContentResult;
 
-// need 9 seconds to query a 700 M file and find 7 rows
+// need 9 seconds to query a 700 M file and find 7 rows( no matter it is remote side or EC2)
 // it is a lot fast than remote read all rows which is about 6 minutes
 // it is even fast than EC2 read all rows which is 1 minute 03
 // please compare with UploadLargeFile

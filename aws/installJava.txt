@@ -28,3 +28,5 @@ java -cp "./aws-test.jar:./jars/*" com.justa.test.aws.s3.GetBigObject master-ite
 java -cp "./aws-test.jar:./jars/*" com.justa.test.aws.s3.CopyBigObject master-iter-NorthAmTorHail-v18.txt
 
 java -cp "./aws-test.jar:./jars/*" com.justa.test.aws.GetLocalFile master-iter-NorthAmTorHail-v18.txt
+
+java -cp "./aws-test.jar:./jars/*" com.justa.test.aws.s3.QueryS3LargeFile
