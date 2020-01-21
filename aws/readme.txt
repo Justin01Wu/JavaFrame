@@ -45,3 +45,6 @@ mysql -u admin -h justadb-readreplic.c52rewpdek7m.us-east-1.rds.amazonaws.com --
 
 # how to increase EBS size without downtime
 #    https://hackernoon.com/tutorial-how-to-extend-aws-ebs-volumes-with-no-downtime-ec7d9e82426e
+
+# how to increase Linux CPU utilization(infinite loop)
+#    while true; do echo; done
