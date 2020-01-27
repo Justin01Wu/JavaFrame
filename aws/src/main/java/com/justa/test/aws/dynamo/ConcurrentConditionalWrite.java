@@ -18,6 +18,7 @@ import com.amazonaws.services.dynamodbv2.model.ReturnValue;
 
 // https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GettingStarted.Java.03.html#GettingStarted.Java.03.05
 // first writing wins, others failed  (Optimistic locking?)
+// TODO test DynamoDBVersionAttribute
 public class ConcurrentConditionalWrite {
 	private static final String tableName = "Music";
 	private static final PrimaryKey key = new PrimaryKey("Artist", "The Acme Band", "SongTitle", "Still In Love");
