@@ -36,7 +36,7 @@ public class ReceiveAndDeleteSQSMessages {
             	System.out.println(m.getBody());
 
             	String receipt  = m.getReceiptHandle();
-            	sqs.changeMessageVisibility(queueUrl, receipt, 120);
+            	sqs.changeMessageVisibility(queueUrl, receipt, 120);  //default is 30 seconds
             	// I need more time to handle this message, so adjust Visibility time out for more time
             	// do some heavy process
             	System.out.println("processing...");
