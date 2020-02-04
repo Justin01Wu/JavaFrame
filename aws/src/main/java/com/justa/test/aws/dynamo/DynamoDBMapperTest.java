@@ -1,7 +1,9 @@
 package com.justa.test.aws.dynamo;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
@@ -27,7 +29,13 @@ public class DynamoDBMapperTest {
         obj.setAlbumTitle("Hey Now");
         obj.setGenre("Rocky");
         obj.setYear(1990);
+        obj.setCriticRating(1d);
         obj.setPrice(23.232d);
+        
+        List<String> authors =  new ArrayList<>();
+        authors.add("Justin");
+        authors.add("Rita");
+        obj.setAuthors(authors);
         return obj;
 	}
 }
