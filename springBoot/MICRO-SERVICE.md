@@ -11,5 +11,5 @@ We can easily find those so called benefits. So we mainly discuss drawbacks
    They think micro-service is the silver bullet 
 - Heterogeneous environment is our difficulties, they usually comes from companies merging. 
    But now people used micro-service to open Pandora's box  
-- default value
+- This article is created by Justin.wu justin01.wu@gmail.com, please contact me if you like to discuss
 
