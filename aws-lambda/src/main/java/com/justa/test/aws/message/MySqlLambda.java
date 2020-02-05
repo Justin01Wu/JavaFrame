@@ -22,7 +22,7 @@ public class MySqlLambda implements RequestHandler<Object,Date> {
 	private static String PORT = "3306";
 	private static String DB = "testDb";
 	private static String User = "admin";
-	private static String Password = "admin123";
+	private static String Password = "dbPassword";
 	
 	@Override
 	public Date handleRequest(Object input, Context context)  {	
@@ -31,8 +31,14 @@ public class MySqlLambda implements RequestHandler<Object,Date> {
 			ServerName = serverName ;
 		}
 		
+		String dbName = System.getenv("DbName");
+		if (dbName != null ) {
+			DB = dbName ;
+		}
+		// TODO use Encryption configuration to get Db password
+		
 		try {
-			callMySql(ServerName);
+			callMySql(ServerName, DB);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -40,8 +46,8 @@ public class MySqlLambda implements RequestHandler<Object,Date> {
 		return null;
 	}
 	
-	private void callMySql(String ServerName) throws ClassNotFoundException, SQLException {
-		String dbUrl = "jdbc:mysql://"+ ServerName + ":" + PORT + "/"+ DB;
+	private void callMySql(String ServerName, String dbName) throws ClassNotFoundException, SQLException {
+		String dbUrl = "jdbc:mysql://"+ ServerName + ":" + PORT + "/"+ dbName;
 		System.out.println(dbUrl);
 		Class.forName("com.mysql.jdbc.Driver");
 		Connection con = DriverManager.getConnection(dbUrl, User, Password);	
@@ -62,6 +68,7 @@ public class MySqlLambda implements RequestHandler<Object,Date> {
 			stmt.executeUpdate("insert into Human values(3, 'Rita')");
 		}
 		
+		System.out.println("==>    query [Human] table ");
 		ResultSet rs = stmt.executeQuery("select * from Human ");
 		while (rs.next()) {
 			System.out.println(rs.getInt("Id") + "  " + rs.getString("name") );

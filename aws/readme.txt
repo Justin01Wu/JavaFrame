@@ -28,14 +28,15 @@ yum install -y amazon-efs-utils
 
 
 yum install mysql
- mysql -u admin -h justadb.c52rewpdek7m.us-east-1.rds.amazonaws.com --password=dbPassword
+ mysql -u admin -h mydevdb.c52rewpdek7m.us-east-1.rds.amazonaws.com --password=dbPassword
+                   
 	use sys;
 	select * from sys_config;
-	use test;
+	use testDb;
 	CREATE TABLE Human ( ID int NOT NULL, name varchar(255) NOT NULL, PRIMARY KEY (ID) );
-	insert into Human values(3, 'aaa');
+	insert into Human values(5, 'aaa');
 	
-mysql -u admin -h justadb-readreplic.c52rewpdek7m.us-east-1.rds.amazonaws.com --password=dbPassword
+mysql -u admin -h mydevdb.c52rewpdek7m.us-east-1.rds.amazonaws.com --password=dbPassword
 
 # how to ssh your private EC2
 # firstly you need to ssh into a public EC2
