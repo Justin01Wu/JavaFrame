@@ -12,12 +12,15 @@ public class NoNameClass{
     }
     
     public void go(){
-        //here can put a interface, I don't understand
-        // I guess it is a kind of no name class
+        //can create a object from an interface with implemented methods, 
+    	//it is a no-name class
         Remote r = new Remote(){
+        	
+        	// need to implement all interface methods
             public void test(){
                 System.out.println("run test method");
                 System.out.println("name: " + this.getClass().getName());
+                // will print:  scjp.testclass.NoNameClass$1
             } 
         };
         

@@ -15,11 +15,15 @@ class MyClass {
     
     public static void main(String[ ] args) {
         MyClass newClass=new MyClass();
-        System.out.println( newClass.getMyClass().myName );
-        newClass.xxx();
+        
+        MyClass y = newClass.getMyClass();
+        System.out.println( y.myName );  
+        // here y is null, but we can get myName without exception
+        
+        newClass.print();
     }
     
-    private void xxx(){
+    private void print(){
         System.out.println(MyClass.this.myName);
         //System.out.println(MyClass.null.myName);  //this is a compile error
         //System.out.println((MyClass)null.myName); //this is a compile error
