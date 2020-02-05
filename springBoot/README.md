@@ -14,6 +14,13 @@ Spring boot can get configure setting from many resources:
 
 In this list, the top one override the bottom one if they have the same setting name
 
+#### Server http port
+Spring boot used this to set server port:
+`server.port=9090'
+
+You can see Spring boot has a bad naming conversion: 
+We don't know a setting is Spring boot reserved setting name or just one was created by a developer.  
+
 ### cache
 #### template cache
 By default, Spring boot will load templates into the memory and ignore all modification. 
@@ -23,7 +30,7 @@ It is inconvenient for the developer, So you use this to disable it:
 For production, you should never do it.
 
 #### Java code cache
-By default, Spring boot will load Java Class into the memory and ignore all Java modification
+By default, Spring boot will load Java Class into the memory and ignore all Java modification.
 It is inconvenient for the developer, So you use this to disable it:
 ```xml
 		<dependency>
@@ -34,5 +41,5 @@ It is inconvenient for the developer, So you use this to disable it:
 		</dependency>
 ```
 
-In this way, Spring boot will automatically detect your changing and load them.
+In this way, Spring boot will automatically detect your changing and load them(hot swapping).
 For production, you should never do it.
