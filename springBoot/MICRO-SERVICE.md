@@ -34,8 +34,10 @@ So I mainly discuss drawbacks here:
   But the vendor refused to accept and insisted us to try different ways which can’t help until 3 weeks has passed. 
   I am lucky because I have a chance to see their source code and I understand their code a little bit.
 - This article is created by Justin.wu justin01.wu@gmail.com, please contact me if you like to discuss  
-- complicated relationship: 
-  How do we handle complicated relationship when a new version is not backwards compatible?
+* Complicated relationship: 
+  * How do we handle complicated relationship when a new version is not backwards compatible?
+  * How do we know what will be afftected if we adjust some behaviours?
+  * How do we know what will be afftected if we remove an deprecated function?
 * What is cost for this direction:
     * developing cost, running cost, and maintain cost, Data management cost (back up data, copy to testing environment)
     * learning curve
@@ -66,7 +68,7 @@ So I mainly discuss drawbacks here:
 - Compare docker vs VM and JVM? Compare traditional cluster with docker ?
 - How does a web UI handle cross domain request easily?
 - How do we protect our services when it is exposed to the public cloud?
-- Every service needs an SSL certificate? How much does it cost? Self signed certificate?
+- Every service needs a SSL certificate? How much does it cost? Self signed certificate?
 
 - How can we mark a function or service is deprecated on micro service level
 
