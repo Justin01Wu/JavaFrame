@@ -61,10 +61,10 @@ So I mainly discuss drawbacks here:
     how to know who is using what?
     how to know call stack?    
     how to declare a deprecation: good document?   
--  How to handle transaction cross multiple services?
-    Data streaming: debezium and Kafka: 
-    https://www.youtube.com/watch?v=MrV0DqTqpFU&t=224s
-    events? 
+*  How to handle transaction cross multiple services?
+	* Data streaming: debezium and Kafka:  https://www.youtube.com/watch?v=MrV0DqTqpFU&t=224s
+	* events? 
+	* Eventual consistency  or "Starbuck model" like this https://stackoverflow.com/questions/30213456/transactions-across-rest-microservices?rq=1
 - Compare docker vs VM and JVM? Compare traditional cluster with docker ?
 - How does a web UI handle cross domain request easily?
 - How do we protect our services when it is exposed to the public cloud?
