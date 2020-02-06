@@ -39,18 +39,21 @@ We can easily find those so called benefits. So we mainly discuss drawbacks
     Data management cost (back up data, copy to testing environment)
     learning curve
     Did we compare the benefits and costs before we go to this direction?
-- How to handle Microservices security:
-    -- centralized authentication centre to manage all types of users?
-    -- How about external users or inner users?
-    -- who manage roles? different services needs different roles and users
-    -- Different services needs different way to handle authorization: self managed vs centralized management...
-       some need department info, some need roles, some need multiple level of department and roles
-	-- relationship with AD if it is inner users    
 
-- How to handle dependency:
-  -- inner dependency and external dependency
-  -- how to handle security between them?
-  --  How to communicate with legacy system     
+
+* How to handle Microservices security:
+    * centralized authentication centre to manage all types of users?
+    * How about external users or inner users?
+    * who manage roles? different services needs different roles and users
+    * Different services needs different way to handle authorization: self managed vs centralized management...
+       some need department info, some need roles, some need multiple level of department and roles
+	* relationship with AD if it is inner users    
+
+* How to handle dependency:
+  * inner dependency and external dependency
+  * how to handle security between them?
+  *  How to communicate with legacy system     
+  
 - How to handle version:     
    How to deprecate functions?
     how to know who is using what?
