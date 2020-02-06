@@ -15,7 +15,6 @@ So I mainly discuss drawbacks here:
    But now people used micro-service to open Pandora's box: 
    Now we are creating heterogeneous environments for no good reason:
    https://blog.overops.com/5-ways-to-not-f-up-your-microservices-in-production/
-- This article is created by Justin.wu justin01.wu@gmail.com, please contact me if you like to discuss
 - How to manage the array of Microservices?
    We have 10 Micro-Services, We have QA, Dev, UAT,and Prod. 
    so we need to manage 40 Micro-Service instances which is risky: 
@@ -34,13 +33,13 @@ So I mainly discuss drawbacks here:
   For example, I found a bug in the new SICS server. 
   But the vendor refused to accept and insisted us to try different ways which can’t help until 3 weeks has passed. 
   I am lucky because I have a chance to see their source code and I understand their code a little bit.
-- complicated relationship 
+- This article is created by Justin.wu justin01.wu@gmail.com, please contact me if you like to discuss  
+- complicated relationship: 
   How do we handle complicated relationship when a new version is not backwards compatible?
-- What is cost for this direction:
-    developing cost, running cost, and maintain cost
-    Data management cost (back up data, copy to testing environment)
-    learning curve
-    Did we compare the benefits and costs before we go to this direction?
+* What is cost for this direction:
+    * developing cost, running cost, and maintain cost, Data management cost (back up data, copy to testing environment)
+    * learning curve
+    * Did we compare the benefits and costs before we go to this direction?
 
 * How to handle Microservices security:
     * centralized authentication centre to manage all types of users?
@@ -65,7 +64,7 @@ So I mainly discuss drawbacks here:
     https://www.youtube.com/watch?v=MrV0DqTqpFU&t=224s
     events? 
 - Compare docker vs VM and JVM? Compare traditional cluster with docker ?
-- How does a web ui handle cross domain request easily?
+- How does a web UI handle cross domain request easily?
 - How do we protect our services when it is exposed to the public cloud?
 - Every service needs an SSL certificate? How much does it cost? Self signed certificate?
 
