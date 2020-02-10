@@ -56,11 +56,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests().antMatchers(
 					"/", 
 					"*.html", 
-					"/**/*.js", 
-					"/autoconfig",
+					"/**/*.js",
 					"/actuator/**",					
-					"/beans",
-					"/dump",					
 					"/public/**").permitAll().
 			
 
