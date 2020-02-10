@@ -53,7 +53,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		// don't authenticate this particular request
 		
-			.authorizeRequests().antMatchers("/", "*.html", "/**/*.js", "/public/**").permitAll().
+			.authorizeRequests().antMatchers(
+					"/", 
+					"*.html", 
+					"/**/*.js", 
+					"/autoconfig",
+					"/beans",
+					"/dump",					
+					"/public/**").permitAll().
 			
 
 		
