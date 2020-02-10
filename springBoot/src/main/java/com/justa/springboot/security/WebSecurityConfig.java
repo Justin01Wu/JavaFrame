@@ -58,6 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					"*.html", 
 					"/**/*.js", 
 					"/autoconfig",
+					"/actuator/**",					
 					"/beans",
 					"/dump",					
 					"/public/**").permitAll().
