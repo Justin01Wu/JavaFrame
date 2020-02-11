@@ -43,3 +43,10 @@ It is inconvenient for the developer, So you use this to disable it:
 
 In this way, Spring boot will automatically detect your changing and load them(hot swapping).
 For production, you should never do it.
+
+### Run as a service
+Usually your code is in a war file, and OS administrator already set your web server as a service.
+But as a SpringBoot, your code itself has container, which make it difficult to set it as a service.
+To solve this issue, Spring Boot provide war build option with a little code changing: 
+- adding an SpringBootServletInitialize
+- use Profile to design prod only parameters

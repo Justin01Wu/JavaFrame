@@ -1,10 +1,12 @@
 package com.justa.test.aws.message;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.text.NumberFormat;
 import java.util.Map;
+import java.util.concurrent.Executors;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -49,6 +51,12 @@ public class GeneralLambda implements RequestHandler<Map<String, Object>,String>
 		
 		File file = new File(GeneralLambda.class.getProtectionDomain().getCodeSource().getLocation().getPath());
 		System.out.println("==>current Class file = " +  file.getAbsolutePath());
+		try {
+			callOsLs(false, file.getAbsolutePath());
+		} catch (IOException | InterruptedException e1) {
+			e1.printStackTrace();
+		}
+		
 		
 		System.out.println("==>Os name = " +  System.getProperty("os.name"));
 		System.out.println("==>Os version = " +  System.getProperty("os.version"));
@@ -82,6 +90,22 @@ public class GeneralLambda implements RequestHandler<Map<String, Object>,String>
 
 		
 		
+	}
+	
+	static void callOsLs(boolean isWindows, String folder) throws IOException, InterruptedException {
+		Process process;
+		if (isWindows) {
+		    process = Runtime.getRuntime()
+		      .exec(String.format("cmd.exe /c dir %s", folder));
+		} else {
+		    process = Runtime.getRuntime()
+		      .exec(String.format("ls -l %s", folder));
+		}
+		StreamGobbler streamGobbler = 
+		  new StreamGobbler(process.getInputStream(), System.out::println);
+		Executors.newSingleThreadExecutor().submit(streamGobbler);
+		int exitCode = process.waitFor();
+		assert exitCode == 0;
 	}
 
 }
