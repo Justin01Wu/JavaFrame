@@ -45,6 +45,10 @@ public class GeneralLambda implements RequestHandler<Map<String, Object>,String>
 		System.out.println("==>java.vm.vendor = " +  System.getProperty("java.vm.vendor"));
 		System.out.println("==>java.vm.name = " +  System.getProperty("java.vm.name"));			 
 		System.out.println("==>Java home = " +  System.getProperty("java.home"));
+		System.out.println("==>java.class.path = " +  System.getProperty("java.class.path"));
+		
+		File file = new File(GeneralLambda.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+		System.out.println("==>current Class file = " +  file.getAbsolutePath());
 		
 		System.out.println("==>Os name = " +  System.getProperty("os.name"));
 		System.out.println("==>Os version = " +  System.getProperty("os.version"));

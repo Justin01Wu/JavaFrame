@@ -1,10 +1,8 @@
 package com.justa.test.aws.lambda;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 import com.amazonaws.services.lambda.AWSLambdaClientBuilder;
 import com.amazonaws.services.lambda.invoke.LambdaInvokerFactory;
+import com.justa.test.aws.message.MyDataDto;
 
 public class ManuallyCallLambda {
 	public static void main(String args[]) throws Exception {
@@ -14,12 +12,12 @@ public class ManuallyCallLambda {
 				.lambdaClient(AWSLambdaClientBuilder.defaultClient())
 				.build(GeneralLambdaService.class);
 
-		Map<String, Object> map = new LinkedHashMap<>();
-		map.put("test", "abc");
 		
-		for(int i=0;i<10;i++) {
-			String output = generalLambdaService.callGeneralLambda(map);
-			System.out.println(output);
+		for(int i=0; i<10; i++) {
+			MyDataDto dto =  new MyDataDto();
+			dto.setId(i);
+			MyDataDto output = generalLambdaService.callGeneralLambda(dto);
+			System.out.println(output.getCreatedAt());
 		}
 
 	}

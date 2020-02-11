@@ -73,6 +73,13 @@
     		<version>5.1.6</version>
 		</dependency>
 
+	<!--  for lambda -->
+		<dependency>
+			<groupId>com.justa</groupId>
+			<artifactId>lambda-sample</artifactId>	
+			<version>1.0</version>    		
+		</dependency>
+
 	</dependencies>
 	
 	<build>
