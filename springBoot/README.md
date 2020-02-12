@@ -44,6 +44,11 @@ It is inconvenient for the developer, So you use this to disable it:
 In this way, Spring boot will automatically detect your changing and load them(hot swapping).
 For production, you should never do it.
 
+### security
+When security is enabled, many inner URL is blocked, we need to set exceptions for those URL. 
+But some inner path is hidden in the code, we don't know the URL. 
+For example, H2-console is not working properly when security is enabled.
+
 ### Run as a service
 Usually your code is in a war file, and OS administrator already set your web server as a service.
 But as a SpringBoot, your code itself has container, which make it difficult to set it as a service.

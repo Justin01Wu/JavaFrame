@@ -60,7 +60,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					"/actuator/**",		
 					"/public/**").permitAll().
 			
+/*
+ * When security is enabled, many inner URL is blocked, we need to set exceptions for those URL. 
+But some inner path is hidden in the code, we don't know the URL. 
+For example, H2-console is not working properly when security is enabled.
 
+TODO fix it
+*/
 		
 		// all other requests need to be authenticated
 			anyRequest().authenticated().and().
