@@ -8,22 +8,24 @@
 <body>
 	<h1>Spring boot demo</h1>
 	
+	<button onClick=API_UTIL.getToken();>get token: </button>
 	
-	<button onClick=API_UTIL.callApi('/api/greeting');>Get your greeting 1</button>
+	<label id="infoLabel">token is not got</label>
+	
+	<p>Get your token firstly, otherwise all other buttons will failed on security checking </p>
+	
+	<button onClick=API_UTIL.callTokenApi('/api/greeting');>Get your greeting 1</button>
     
-    <button onClick=API_UTIL.callApi('/api/greeting2');>Get your greeting 2</button>
+    <button onClick=API_UTIL.callTokenApi('/api/greeting2');>Get your greeting 2</button>
     
     
-    <button onClick=API_UTIL.callApi('/api/greeting3');>Get your greeting 3</button>
+    <button onClick=API_UTIL.callTokenApi('/api/greeting3');>Get your greeting 3</button>
     
     <br/>
     <br/>
     <br/>
     API return: <label id="ApiLabel"></label><br/>
     
-    <h2>H2 Database</h2>
-    
-    <a href="/h2-console" target="_blank">h2-console</a><br/>
     <h2>Actuator</h2>
     <a href="/actuator/beans" target="_blank">actuator/beans</a><br/>
     <a href="/actuator/info" target="_blank">actuator/info</a><br/>

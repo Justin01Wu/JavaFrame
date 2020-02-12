@@ -3,12 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.justa</groupId>
-	<artifactId>springboot</artifactId>
+	<artifactId>springboot-security</artifactId>
 	<version>0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>springboot</name>
-	<description>Demo project for Spring Boot</description>
+	<name>springboot-security</name>
+	<description>Demo project for Spring Boot security</description>
 	
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -30,12 +30,10 @@
 		</dependency>		
 
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-			<version>1.4.193</version>
-		</dependency>
-
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>		
+		
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>

@@ -57,7 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					"/", 
 					"*.html", 
 					"/**/*.js",
-					"/actuator/**",					
+					"/actuator/**",		
 					"/public/**").permitAll().
 			
 
