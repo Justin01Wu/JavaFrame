@@ -53,12 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		// don't authenticate this particular request
 		
-			.authorizeRequests().antMatchers(
-					"/", 
-					"*.html", 
-					"/**/*.js",
-					"/actuator/**",		
-					"/public/**").permitAll().
+			.authorizeRequests().antMatchers("/api/**").denyAll().
 			
 /*
  * When security is enabled, many inner URL is blocked, we need to set exceptions for those URL. 

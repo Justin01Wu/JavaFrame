@@ -1,8 +1,10 @@
-DROP TABLE IF EXISTS billionaires;
+
+-- spring boot will automatically run this sql when it has spring-boot-starter-data-jpa dependency
+
+DROP TABLE IF EXISTS user;
  
-CREATE TABLE billionaires (
+CREATE TABLE user (
   id INT AUTO_INCREMENT  PRIMARY KEY,
-  first_name VARCHAR(250) NOT NULL,
-  last_name VARCHAR(250) NOT NULL,
-  career VARCHAR(250) DEFAULT NULL
+  name VARCHAR(250) NOT NULL,
+  email VARCHAR(250) NOT NULL  
 );

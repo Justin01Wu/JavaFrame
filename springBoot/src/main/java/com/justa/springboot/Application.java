@@ -14,16 +14,16 @@ import org.springframework.context.annotation.Bean;
 // from https://spring.io/guides/gs/spring-boot/
 @SpringBootApplication
 public class Application {
-	
+		
 	private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
-  public static void main(String[] args) {
+	public static void main(String[] args) {
 	  
-	  logger.info("    ==>> application started from here...");
+		logger.info("    ==>> application started from here...");
 	  
-    SpringApplication.run(Application.class, args);
+		SpringApplication.run(Application.class, args);
     
-    // please see WebSecurityConfig for how to pass token check 
+		// please see WebSecurityConfig for how to pass token check 
   }
 
   @Bean

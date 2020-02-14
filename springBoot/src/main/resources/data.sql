@@ -1,6 +1,7 @@
 
+-- spring boot will automatically run this sql when it has spring-boot-starter-data-jpa dependency
  
-INSERT INTO billionaires (first_name, last_name, career) VALUES
-  ('Aliko', 'Dangote', 'Billionaire Industrialist'),
-  ('Bill', 'Gates', 'Billionaire Tech Entrepreneur'),
-  ('Folrunsho', 'Alakija', 'Billionaire Oil Magnate');
+INSERT INTO user (name, email) VALUES
+  ('Justin', 'justin@gmail.com'),
+  ('Rita', 'rita@hotmail.com'),
+  ('Yan', 'None');
