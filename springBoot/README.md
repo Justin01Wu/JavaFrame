@@ -1,4 +1,4 @@
-## This a Spring boot test project
+## Learing Spring boot project
 
 ### Configure
 Spring boot can get configure setting from many resources:
