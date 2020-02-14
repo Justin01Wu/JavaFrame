@@ -16,20 +16,22 @@
     
     <button onClick=API_UTIL.callApi('/api/greeting3');>Get your greeting 3</button>
     
-    <br/><br/>
-    <a href="api/users/all" target="_blank">all users</a>
     
+    <button onClick=API_UTIL.callPostAPI('/api/users/add');>add a user</button>
     
-    
-    <br/>
-    <br/>
     <br/>
     API return: <label id="ApiLabel"></label><br/>
+        
+    <br/>
+    <a href="api/users/all" target="_blank">all users</a>    
     
+    <br/>
+    <br/>
+    <br/>
+ 
     <h2>H2 Database</h2>
     
-    <a href="/h2-console" target="_blank">h2-console</a><br/>
-    <p> This function is provided by H2 database, not spring boot</p>
+    <a href="/h2-console" target="_blank">h2-console</a><br/>: This function is provided by H2 database, not spring boot
     <br/>
     
     <h2>Actuator</h2>

@@ -27,6 +27,23 @@
 		request.send();
 
 	}
+	
+	function callPostAPI(url) {
+		
+		var request = new XMLHttpRequest();
+		
+		var callBack = display;
+		request.open('POST', url, true)
+		request.setRequestHeader("Content-Type", "application/json");
+		
+		request.onload = function() {
+			callBack(request);
+		}
+		let user = {name:'fromUI', email:'aaa'};
+		let payload = JSON.stringify(user)
+		request.send(payload);
+
+	}
 
 	function display(request) {
 		var info = document.getElementById('ApiLabel');
@@ -44,5 +61,7 @@
 	API_UTIL.display = display;
 	API_UTIL.callApi = callApi;
 	API_UTIL.display = display;
+	API_UTIL.callPostAPI = callPostAPI;
+	
 
 })(); // directly run anonymous function
