@@ -21,6 +21,11 @@ Spring boot used this to set server port:
 You can see Spring boot has a bad naming conversion: 
 We don't know a setting is Spring boot reserved setting name or just one was created by a developer.  
 
+## Error handling
+- Spring boot will stop if it detect any error: <img src="img/springBootStartError.png">
+
+
+
 ### cache
 #### template cache
 By default, Spring boot will load templates into the memory and ignore all modification. 
