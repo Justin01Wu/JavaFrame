@@ -24,7 +24,7 @@ public class PalindromeCounter {
     			if(s.charAt(i) == s.charAt(j)) {
     				String sub = s.substring(i, j+1);
     				if(isPalindromes(sub)) {
-    					System.out.println(sub);
+    					//System.out.println(sub);
     					total ++;
     				}
     			}
