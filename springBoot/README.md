@@ -1,4 +1,13 @@
-## Learing Spring boot project
+## Learning Spring boot project
+
+### Benefits
+- Easy to start
+- Solve dependency hell
+
+### Drawbacks
+- Dependency bound together, hard to adjust
+- Dependency Injection makes code static analysis harder, hard to refactor
+- hard to get rid of it, fill coupled, bad for long existing application
 
 ### Configure
 Spring boot can get configure setting from many resources:
@@ -26,7 +35,7 @@ We don't know a setting is Spring boot reserved setting name or just one was cre
 
 
 
-### cache
+### Cache
 #### template cache
 By default, Spring boot will load templates into the memory and ignore all modification. 
 It is inconvenient for the developer, So you use this to disable it:
