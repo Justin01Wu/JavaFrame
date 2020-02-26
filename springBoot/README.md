@@ -69,3 +69,12 @@ But as a SpringBoot, your code itself has container, which make it difficult to 
 To solve this issue, Spring Boot provide war build option with a little code changing: 
 - adding an SpringBootServletInitialize
 - use Profile to design prod only parameters
+
+## JPA
+Spring boot will automatically run schema.sql and data.sql in the resources folder when 
+- it has spring-boot-starter-data-jpa dependency
+- spring.jpa.hibernate.ddl-auto=none in the application.properties
+
+By default, spring.jpa.hibernate.ddl-auto = true, so spring boot run schema.sql and data.sql firstly, then re-create those tables from ddl-auto.
+This means  schema.sql and data.sql won't by default
+
