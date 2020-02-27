@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 // from https://spring.io/guides/gs/accessing-data-mysql/
 @Entity // This tells Hibernate to make a table out of this class
@@ -14,6 +15,7 @@ public class User {
 
 	private String name;
 	
+	@Transient   // it means JPA won't persist this field
 	private String gender;
 	
 	private String email;
