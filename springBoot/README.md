@@ -75,6 +75,17 @@ Spring boot will automatically run schema.sql and data.sql in the resources fold
 - it has spring-boot-starter-data-jpa dependency
 - spring.jpa.hibernate.ddl-auto=none in the application.properties
 
-By default, spring.jpa.hibernate.ddl-auto = true, so spring boot run schema.sql and data.sql firstly, then re-create those tables from ddl-auto.
-This means  schema.sql and data.sql won't by default
+The spring.jpa.hibernate.ddl-auto is special, depending on runtime conditions, it has different defaults:
+- If an embedded database is used and no schema manager (such as Liquibase or Flyway) is handling the DataSource, it defaults to create-drop. 
+- In all other cases, it defaults to none.
+
+In this project, we used H2 embedded database, so spring boot will:
+- run schema.sql and data.sql firstly, 
+- then re-create those tables from ddl-auto.
+This means schema.sql and data.sql won't work by default
+
+To make sure our Code matched the database, we can set to this:
+- spring.jpa.hibernate.ddl-auto=validate<img src="img/schema_validate_failure.png">
+
+
 
