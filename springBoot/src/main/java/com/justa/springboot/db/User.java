@@ -14,6 +14,8 @@ public class User extends BaseEntity  {
 	@Transient   // it means JPA won't persist this field
 	private String gender;
 	
+	private PositionEnum position;
+	
 	private String email;
 
 	public String getName() {
@@ -44,4 +46,12 @@ public class User extends BaseEntity  {
 	  public int hashCode() {
 	    return Objects.hash(getId(), name, email);
 	  }
+
+	public PositionEnum getPosition() {
+		return position;
+	}
+
+	public void setPosition(PositionEnum position) {
+		this.position = position;
+	}
 }
