@@ -1,5 +1,7 @@
 package com.justa.springboot.db;
 
+import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 
@@ -37,4 +39,9 @@ public class User extends BaseEntity  {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+	
+	  @Override
+	  public int hashCode() {
+	    return Objects.hash(getId(), name, email);
+	  }
 }
