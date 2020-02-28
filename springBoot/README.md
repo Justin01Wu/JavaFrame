@@ -87,5 +87,28 @@ This means schema.sql and data.sql won't work by default
 To make sure our Code matched the database, we can set to this:
 - spring.jpa.hibernate.ddl-auto=validate<img src="img/schema_validate_failure.png">
 
+### general mapping
+Hibernate will automatically find many errors when it is starting. For example:
+- it will throw this error if getter didn't match setter:
+    `org.hibernate.PropertyNotFoundException: Could not locate setter method for property [abc.validation.domain.Item#price]`
+
+###Enum mapping
+- By default, Hibernate maps an enum to a number. It uses the ordinal value.
+- You can map the enum value to a String like this way:
+
+```java
+  @Enumerated(EnumType.STRING)
+  private Rating rating;
+```
+- You can create a Custom Mapping by implementing AttributeConverter
+- You can tell the JPA provider to use your customized enum converter automatically in any entity 
+
+```java
+	@Converter(autoApply = true)
+```
+- please go [here](https://thoughts-on-java.org/hibernate-enum-mappings/) for details. 
+
+
+
 
 
