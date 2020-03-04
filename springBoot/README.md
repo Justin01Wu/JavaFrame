@@ -1,8 +1,8 @@
 ## Learning Spring boot project
 
 ### Benefits
-- Easy to start
-- Solve dependency hell
++ Easy to start
++ Solve dependency hell
 
 ### Drawbacks
 - Dependency bound together, hard to adjust
@@ -64,11 +64,11 @@ But some inner path is hidden in the code, we don't know the URL.
 For example, H2-console is not working properly when security is enabled.
 
 ### Run as a service
-Usually your code is in a war file, and OS administrator already set your web server as a service.
-But as a SpringBoot, your code itself has container, which make it difficult to set it as a service.
-To solve this issue, Spring Boot provide war build option with a little code changing: 
-- adding an SpringBootServletInitialize
-- use Profile to design prod only parameters
++ Usually your code is in a war file, and OS administrator already set your web server as a service.
++ But as a SpringBoot, your code itself has container, which make it difficult to set it as a service.
++ To solve this issue, Spring Boot provide war build option with a little code changing: 
+    + adding an SpringBootServletInitialize
+    + use Profile to design prod only parameters
 
 ## JPA
 Spring boot will automatically run schema.sql and data.sql in the resources folder when 
@@ -80,8 +80,9 @@ The spring.jpa.hibernate.ddl-auto is special, depending on runtime conditions, i
 - In all other cases, it defaults to none.
 
 In this project, we used H2 embedded database, so spring boot will:
-- run schema.sql and data.sql firstly, 
-- then re-create those tables from ddl-auto.
++ run schema.sql and data.sql firstly, 
++ then re-create those tables from ddl-auto.
+
 This means schema.sql and data.sql won't work by default
 
 To make sure our Code matched the database, we can set to this:
