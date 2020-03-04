@@ -13,12 +13,17 @@ public class ManuallyCallLambda {
 				.build(GeneralFunctionService.class);
 
 		
-		for(int i=0; i<10; i++) {
+		for(int i=0; i<1; i++) {
 			MyDataDto dto =  new MyDataDto();
-			dto.setId(i);
+			dto.setId(i+100);
+			dto.setDesc("index: "+i);
+			dto.setValue2(12345.3d);
 			
 			MyDataDto output = generalFunctionService.callGeneralFunction(dto);
 			System.out.println(output.getCreatedAt());
+			
+			System.out.println(output.getDesc());  
+			// this will be null because it is @JsonIgnore field
 		}
 
 	}

@@ -20,14 +20,18 @@ public class AsyncCallLambda {
 		MyDataDto dto =  new MyDataDto();
 		dto.setId(1212);
 		
+		dto.setDesc("aasasasasa22342");
+		dto.setValue2(12345.3d);
+		
 		ObjectMapper Obj = new ObjectMapper(); 
 		  
-        String jsonStr = Obj.writeValueAsString(dto); 
+        String jsonStr = Obj.writeValueAsString(dto);        
+        System.out.println(jsonStr);
         
         ByteBuffer payload = ByteBuffer.wrap(jsonStr.getBytes());
 		
 		invokeRequest.withFunctionName("GeneralFunction:GeneralFunctionTest").withPayload(payload);
-
+		
 		InvokeResult invokeResult = awsLambdaAsync.invoke(invokeRequest); 
 		String result = new String(invokeResult.getPayload().array());
 		System.out.println(result);
