@@ -47,10 +47,12 @@ How to link S3 web server to your web domain:
 <img src="img/linkS3WebServer.png">
  
 By default, S3 objects are private, can only be accessed in AWS cloud or by login users
-In the code, you can set user secret in C:\Users\[USERNAME]\.aws\credentials
-[default]
-aws_access_key_id=dddkkdkd
-aws_secret_access_key=sdkaddslda
+In the code, you can set user secret in `C:\Users\[USERNAME]\.aws\credentials`
+```
+	[default]
+	aws_access_key_id=dddkkdkd
+	aws_secret_access_key=sdkaddslda
+```
 To make it easy, AWS also provide a tool kit for Eclipse. With that tool kit, you don’t need to set that file, Also you don’t need to set it in EC2 instance
 
 Object etag based on file content, not filename or updatedTime.
@@ -81,8 +83,8 @@ CloudFront also can link to a private S3 bucket, but access will be rejected unl
 IAM(Identity and access management) : users, groups, roles, policies
 IAM allows you to control how people and programs are allowed to manipulate your AWS infrastructure, not non AWS service
 IAM can integrate with two different types of outside Identity Providers (IdP):
-OpenId for federating web identities, like FaceBook...
-SAML for federating internal identities, Like Active Directory or LDAP
++ OpenId for federating web identities, like FaceBook...
++ SAML for federating internal identities, Like Active Directory or LDAP
 
 IAM permits users to have no more than two active access keys at one time, it is for rotation
 
@@ -96,8 +98,8 @@ You can only assign a single role to an EC2 instance, so it’s concept is diffe
 Group is a special case of the role,  it collects policies, Role can do others like link to web identity ,SAML or other AWS account.
 
 Every policy still have a lot of permissions on each aspect of the target service to finish the whole workflow, for example, AmazonRDSDataFullAccess include those allowed permissions:
-DBQMS.GetQueryString, DBQMS.CreateFavoriteQuery …
-RDS Data API:BeginTransaction ExecuteStatement ,CommitTransaction , RollbackTransaction ...
++ DBQMS.GetQueryString, DBQMS.CreateFavoriteQuery …
++ RDS Data API:BeginTransaction ExecuteStatement ,CommitTransaction , RollbackTransaction ...
 
 ## EC2
 
@@ -107,21 +109,21 @@ EC = Elastic Computing
 You can only create max 20 EC2 instances in a region, but you can ask Amazon to increase the number.
 
 EC2 has different pricing model: 
-On demand(fixed rate by hours and power of the AMI), 
-Reserved: a contract cover years for AMI,cost less than On demand
-Spot instance: bid price on what you want, not guarantee you can get it or keep it
-Dedicated instance: physical instance for your dedicated use , good for some server license
++ On demand(fixed rate by hours and power of the AMI), 
++ Reserved: a contract cover years for AMI,cost less than On demand
++ Spot instance: bid price on what you want, not guarantee you can get it or keep it
++ Dedicated instance: physical instance for your dedicated use , good for some server license
 EC2 has three types of placement group:
-Clustered, stay closely as they can, get network performance benefit
-Spread: stay away in the same AZ, get safe benefit, can only has max 7 instances in one AZ
-Partitioned: a mix of spread and clustered: spread a group of clustered instances 
++ Clustered, stay closely as they can, get network performance benefit
++ Spread: stay away in the same AZ, get safe benefit, can only has max 7 instances in one AZ
++ Partitioned: a mix of spread and clustered: spread a group of clustered instances 
 
 Until very recently AWS exclusively used Xen Hypervisors, Recently they started making use of Nitro Hypervisors
 
 In addition to choosing the correct EBS volume type for your specific task, what else can be done to increase the performance of your volume?
-striping using RAID 0
-choose an EC2 instance type that supports EBS optimisation
-scheduled snapshots are carried at times of low usage for HDD
++ striping using RAID 0
++ choose an EC2 instance type that supports EBS optimisation
++ scheduled snapshots are carried at times of low usage for HDD
 
 Some types of EC2 instances have an extra instance store volume(default is EBS). Instance store volumes are ephemeral, meaning that they exist ONLY in conjunction with their accompanying EC2 instance. This storage is located on disks that are physically attached to
 the host computer..It also have very high IOPS. 
@@ -130,9 +132,9 @@ On the other hand, EBS is networking attached, so need EBS optimization to get d
 To set disaster recovery for a single-region application, you need : copy AMI from source region, manually apply launch permission, user-defined tags, or Amazon S3 bucket permissions from the source AMI to the new AMI, because AWS doesn’t copy it for you
  
  You can modify your whole EC2 reservation, or just a subset, in one or more of the following ways:
-Switch Availability Zones within the same region.
-Change between EC2-VPC and EC2-Classic.
-Change the instance type within the same instance family (Linux instances only).
++ Switch Availability Zones within the same region.
++ Change between EC2-VPC and EC2-Classic.
++ Change the instance type within the same instance family (Linux instances only).
 
 For example:  m3.xlarge => m3.large, here m3 is type family. Without reservation, you can change to any type!
 
@@ -149,17 +151,17 @@ Each Amazon EBS volume is automatically replicated within its Availability Zone.
 
 You cannot change encrypt status when create a volume from a snapshot. But you can copy an unencrypted volume into an encrypted snapshot or reverse.
 So this is the only way to change root volume into  encrypted status:
-Go to root volume
-Create a snapshot, which is unencrypted
-Copy to a new encrypted snapshot
-Create an AMI from the new encrypted snapshot
-Create an instance from this AMI, stop old instance
++ Go to root volume
++ Create a snapshot, which is unencrypted
++ Copy to a new encrypted snapshot
++ Create an AMI from the new encrypted snapshot
++ Create an instance from this AMI, stop old instance
 
 It has another way if it is not root volume: 
-Create a new encrypted volume and attach it 
-Copy data into this new volume
-Detach old data unencrypted volume
-Reattach encrypted volume to replace mount path
++ Create a new encrypted volume and attach it 
++ Copy data into this new volume
++ Detach old data unencrypted volume
++ Reattach encrypted volume to replace mount path
 Also you can share an unencrypted snapshot. But you can’t share an encrypted snapshot
 
 The volume is created immediately when it is restored from the snapshot, but the data is loaded lazily. This means that the volume can be accessed upon creation, and if the data being requested has not yet been restored, it will be restored upon first request.
@@ -198,25 +200,13 @@ When using automated backups, Amazon RDS combines the daily backups performed du
 All automated backup snapshots are deleted and cannot be recovered when you delete a DB Instance while manual snapshots  are not deleted.
 
 
-
-Multi-AZ 
-Read replica
-Main purpose
-disaster recovery
-improving performance 
-method
-synchronously
-asynchronously
-Can cross regions
-No
-Yes
-Support all DB engineer
-Yes
-Only open source DB:
-MySQL, MariaDB, PostgreSQL, and Aurora
-Automatically fail over
-Yes
-No
+  | Multi-AZ  | Read replica
+------------ | ------------- | -------------
+Main purpose | disaster recovery | improving performance 
+method | synchronously | asynchronously
+Can cross regions | No | Yes
+Support all DB engineer | Yes | Only open source DB: MySQL, MariaDB, PostgreSQL, and Aurora
+Automatically fail over | Yes | No
 
 Multi-AZ will automatically failed over on another availability zone, the application will use DNS name to point to primary dB instance. It will automatically fail over to the second instance when primary failed. You can also perform a manual failover. Failover is fast, typically one  to two minutes. By the way, the application need to purge connection pool if it has after failover happened . 
 
