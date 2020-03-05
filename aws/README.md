@@ -200,7 +200,7 @@ When using automated backups, Amazon RDS combines the daily backups performed du
 All automated backup snapshots are deleted and cannot be recovered when you delete a DB Instance while manual snapshots  are not deleted.
 
 
-  | Multi-AZ  | Read replica
+Type | Multi-AZ  | Read replica
 ------------ | ------------- | -------------
 Main purpose | disaster recovery | improving performance 
 method | synchronously | asynchronously
