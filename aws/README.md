@@ -268,6 +268,7 @@ Router table is similar as ACL, but it is usually on VPC level, ACL on subnet le
 
 ### Amazon EC2 multiple layers of security:
 <img src="img/securityLayers.png">
+
 ## Route53
 Route 53 has the following routing policies - Simple, Weighted, Latency, Failover, Multivalue answer, Geoproximity. and Geolocation
 
@@ -296,6 +297,7 @@ When creating a record in Route 53 to other AWS resources, including Application
 
 <img src="img/DnsSolving.png">
 <img src="img/DnsSolving2.png">
+
 ## Message
 SWF(simple workflow)(task oriented API) can add human actions, SQS(simple queue service)(message oriented API) can't
 
@@ -381,6 +383,7 @@ Elastic IPs are totally free, as long as they are being used by an instance. How
 <img src="img/NatInstance.png">
 
 Nat instance needs a little more steps: disable source target...
+
 ### Direct connection and VPN
 Site to site VPN or Direct Connect will use an internal IP address range, so you must make sure that your internal IP addresses do not overlap.
 <img src="img/directConnect.png">
@@ -417,6 +420,7 @@ VPC endpoint is designed in some cases to replace NAT which is costly and latenc
 ### Big picture
 
 <img src="img/networkBigP.png">
+
 ## HA
 High availability !=  fault tolerance:
 The fault tolerant model focus hardware redundancy, does not address software failures, by far the most common reason for downtime.
