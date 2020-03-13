@@ -16,6 +16,9 @@ public enum PositionEnum {
     }
  
     public static PositionEnum fromShortName(String shortName) {
+    	if(shortName == null) {
+    		return null;
+    	}
         switch (shortName) {
         case "D":
             return PositionEnum.Developer;
