@@ -1,4 +1,4 @@
-package com.justa.springboot;
+package com.justa.springboot.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.justa.springboot.db.User;
 import com.justa.springboot.db.UserManager;
 import com.justa.springboot.db.UserRepository;
+import com.justa.springboot.model.User;
 
 // it comes from https://spring.io/guides/gs/accessing-data-mysql/
 

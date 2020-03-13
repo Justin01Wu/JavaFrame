@@ -1,9 +1,11 @@
-package com.justa.springboot.db;
+package com.justa.springboot.model;
 
 import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.Transient;
+
+import com.justa.springboot.db.PositionEnum;
 
 // from https://spring.io/guides/gs/accessing-data-mysql/
 @Entity // This tells Hibernate to make a table out of this class

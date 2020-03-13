@@ -28,7 +28,7 @@
 
 	}
 	
-	function callPostAPI(url) {
+	function callPostAPI(url, withError) {
 		
 		var request = new XMLHttpRequest();
 		
@@ -39,7 +39,13 @@
 		request.onload = function() {
 			callBack(request);
 		}
-		let user = {name:'fromUI', email:'aaa', gender:'male'};
+		let user = {};
+		if(withError){
+			user = {name:'fromUI', email:'aaa', gender:'male'};	
+		}else{
+			user = {name:'fromUI', email:'aaa@bbb.com', gender:'male'};
+		}
+		
 		let payload = JSON.stringify(user)
 		request.send(payload);
 
@@ -54,6 +60,10 @@
 		} else {
 
 			var msg = 'error on status: ' + request.status;
+			let res = JSON.parse(request.response);
+			if(res.message){
+				msg = msg + ", " + res.message; 
+			}
 			info.innerHTML = msg;
 		}
 	}

@@ -1,4 +1,4 @@
-package com.justa.springboot.db;
+package com.justa.springboot.model;
 
 public class UserEvent {
 	

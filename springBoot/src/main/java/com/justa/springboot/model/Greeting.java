@@ -1,4 +1,4 @@
-package com.justa.springboot;
+package com.justa.springboot.model;
 
 public class Greeting {
 	private final long id;

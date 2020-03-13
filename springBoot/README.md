@@ -39,7 +39,7 @@ We don't know a setting is Spring boot reserved setting name or just one was cre
 #### template cache
 By default, Spring boot will load templates into the memory and ignore all modification. 
 It is inconvenient for the developer, So you use this to disable it:
-`spring.thymeleaf.cache=false1`
+`spring.thymeleaf.cache=false`
 
 For production, you should never do it.
 
@@ -54,6 +54,9 @@ It is inconvenient for the developer, So you use this to disable it:
 			<optional>true</optional>
 		</dependency>
 ```
+But it has a side affection: 
++ it will restart the server almost everytime when you change the Java code, you maybe lose the session status if you have it
++ it will restart the server everytime when you change the html or javascript code, which is not necessary
 
 In this way, Spring boot will automatically detect your changing and load them(hot swapping).
 For production, you should never do it.
