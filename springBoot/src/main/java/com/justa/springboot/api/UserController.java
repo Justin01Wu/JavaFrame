@@ -26,7 +26,7 @@ public class UserController {
 
 	@PostMapping(path = "/add") // Map ONLY POST Requests
 	public @ResponseBody String addNewUser(@RequestBody User user) {
-// @ResponseBody means the returned String is the response, not a view name
+			// @ResponseBody means the returned String is the response, not a view name
 
 		userManager.saveUser(user);
 		return "Saved";

@@ -5,7 +5,7 @@ import javax.persistence.Converter;
 
 // from https://thoughts-on-java.org/jpa-21-type-converter-better-way-to/
 
-@Converter(autoApply = true)   // tell the JPA provider to use it to map PositionEnum in any entity
+@Converter(autoApply = true)   // tell the JPA provider to use it to map PositionEnum in any entities
 public class PositionEnumConverter implements AttributeConverter<PositionEnum, String> {
  
     @Override

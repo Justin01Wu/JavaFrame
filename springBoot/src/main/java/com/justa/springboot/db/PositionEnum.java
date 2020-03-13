@@ -21,15 +21,11 @@ public enum PositionEnum {
     	}
         switch (shortName) {
         case "D":
-            return PositionEnum.Developer;
- 
+            return PositionEnum.Developer; 
         case "Q":
-            return PositionEnum.QA;
- 
+            return PositionEnum.QA; 
         case "M":
-            return PositionEnum.Manager;
- 
- 
+            return PositionEnum.Manager;  
         default:
             return null;
         }

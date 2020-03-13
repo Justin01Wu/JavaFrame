@@ -44,10 +44,10 @@ public class User extends BaseEntity  {
 		this.gender = gender;
 	}
 	
-	  @Override
-	  public int hashCode() {
-	    return Objects.hash(getId(), name, email);
-	  }
+	@Override
+	public int hashCode() {
+		return Objects.hash(getId(), name, email);
+	}
 
 	public PositionEnum getPosition() {
 		return position;
