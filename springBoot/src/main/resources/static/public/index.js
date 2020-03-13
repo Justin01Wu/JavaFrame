@@ -39,7 +39,7 @@
 		request.onload = function() {
 			callBack(request);
 		}
-		let user = {name:'fromUI', email:'aaa'};
+		let user = {name:'fromUI', email:'aaa', gender:'male'};
 		let payload = JSON.stringify(user)
 		request.send(payload);
 

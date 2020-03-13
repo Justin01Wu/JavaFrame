@@ -10,6 +10,9 @@ public class PositionEnumConverter implements AttributeConverter<PositionEnum, S
  
     @Override
     public String convertToDatabaseColumn(PositionEnum position) {
+    	if(position == null) {
+    		return null;
+    	}
         return position.getShortName();
     }
  
