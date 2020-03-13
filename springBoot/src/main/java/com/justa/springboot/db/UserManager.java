@@ -1,7 +1,5 @@
 package com.justa.springboot.db;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +27,9 @@ public class UserManager {
 
     @TransactionalEventListener
     public void doAfterCommit(UserEvent event){
-        //process here
+        //process event here
     	System.out.println(" triggered by user saving: " + event.getUser().getId());
+    	// this sample comes from 
+    	// https://stackoverflow.com/questions/32677747/events-after-transaction-commit-spring-jpa
     }
 }
