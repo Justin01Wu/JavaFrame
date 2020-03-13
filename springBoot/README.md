@@ -8,6 +8,7 @@
 - Dependency bound together, hard to adjust
 - Dependency Injection makes code static analysis harder, hard to refactor
 - hard to get rid of it, fill coupled, bad for long existing application
+- some default setting is not good, like logging setting: has thread number, hasn't code line, which is not good for developers
 
 ### Configure
 Spring boot can get configure setting from many resources:
