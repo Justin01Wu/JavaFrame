@@ -5,13 +5,23 @@
 + Solve dependency hell
 
 ### Drawbacks
-- Dependency bound together, hard to adjust
-- Dependency Injection makes code static analysis harder, hard to refactor
-- hard to get rid of it, fill coupled, bad for long existing application
-- some default setting is not good, like logging setting: has thread number, hasn't code line, which is not good for developers:
++ Dependency bound together, hard to adjust
++ Dependency Injection makes code static analysis harder, hard to refactor
++ hard to get rid of it, fill coupled, bad for long existing application
++ some default setting is not good, like logging setting: has thread number, hasn't code line, which is not good for developers:
 ```
     2020-03-16 09:55:41.457  INFO 11928 --- [nio-9090-exec-9] com.justa.springboot.db.UserManager      : triggered by user saving: 6
 ```
+
+### Log
+Need to adjust those items for developers:
++ Date is not necessary, only time, developers can't debug an issue for a whole day 
++ Pid is not necessary, developer env only has an user
++ Thread name, developer env only has an user
++ class name only need one level, developer can easily find the package name in the IDE, name conflict is rare case
++ need add code line number, developers need this to locate the error
+
+ 
 ### Configure
 Spring boot can get configure setting from many resources:
 - Command line parameters
