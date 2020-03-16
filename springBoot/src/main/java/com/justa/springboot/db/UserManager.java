@@ -33,8 +33,12 @@ public class UserManager {
         
     	
         userRepository.save(newUser);
-        UserEvent event = new UserEvent(newUser);
-        applicationEventPublisher.publishEvent(event);
+        if(newUser.getId() %2 == 0) {
+            UserEvent event = new UserEvent(newUser);
+            applicationEventPublisher.publishEvent(event);        	
+        }else {
+        	LOG.info("won't trigger user saving event because userId is odd: " + newUser.getId());
+        }
         
         if(newUser.getEmail() != null && !newUser.getEmail().contains("@")) {
         	String msg = "unexpected email: " + newUser.getEmail();
