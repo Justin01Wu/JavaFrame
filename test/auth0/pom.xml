@@ -15,8 +15,9 @@
 	    <maven.compiler.target>1.8</maven.compiler.target>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<!--
-		Please see below URl for details
+		Please see below URls for details
 		https://www.baeldung.com/maven-java-version
+		http://maven.apache.org/plugins/maven-compiler-plugin/examples/set-compiler-source-and-target.html
 		-->
 	</properties>
 
