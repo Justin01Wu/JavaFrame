@@ -43,7 +43,8 @@
 		if(withError){
 			user = {name:'fromUI', email:'aaa', gender:'male'};	
 		}else{
-			user = {name:'fromUI', email:'aaa@bbb.com', gender:'male'};
+			user = {name:'fromUI', email:'aaa@bbb.com', gender:'male', email2: "2223"};
+			// it supports extra fields because of  spring.jackson.deserialization.FAIL_ON_UNKNOWN_PROPERTIES
 		}
 		
 		let payload = JSON.stringify(user)
