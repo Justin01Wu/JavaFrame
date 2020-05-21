@@ -74,6 +74,10 @@ But it has a side affection:
 In this way, Spring boot will automatically detect your changing and load them(hot swapping).
 For production, you should never do it.
 
+### Spring related tips
++ @Autowired doesn't work on static variables, so you have to use instance variables
++ @AllArgsConstructor will automatically wire all instance variables without @Autowired when you have only one implementation
+
 ### security
 When security is enabled, many inner URL is blocked, we need to set exceptions for those URL. 
 But some inner path is hidden in the code, we don't know the URL. 
