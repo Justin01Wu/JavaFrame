@@ -75,7 +75,7 @@ In this way, Spring boot will automatically detect your changing and load them(h
 For production, you should never do it.
 
 ### Spring related tips
-+ @Autowired doesn't work on static variables, so you have to use instance variables
++ @Autowired will get nullPointerException on static variables, even it didn't complain. So you have to use instance variables
 + @AllArgsConstructor will automatically wire all instance variables without @Autowired when you have only one implementation
 
 ### security
