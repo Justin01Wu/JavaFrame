@@ -2,6 +2,7 @@ package com.justa.springboot.model;
 
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 
@@ -16,6 +17,7 @@ public class User extends BaseEntity  {
 	@Transient   // it means JPA won't persist this field
 	private String gender;
 	
+	@Column(length = 25)
 	private PositionEnum position;
 	
 	private String email;
