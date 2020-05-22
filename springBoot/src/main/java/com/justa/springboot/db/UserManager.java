@@ -41,7 +41,7 @@ public class UserManager {
         }
         
         if(newUser.getEmail() != null && !newUser.getEmail().contains("@")) {
-        	String msg = "unexpected email: " + newUser.getEmail();
+        	String msg = "unexpected email format: " + newUser.getEmail();
         	throw new ResponseStatusException(HttpStatus.BAD_REQUEST, msg, null);
         	// https://www.baeldung.com/spring-response-status-exception
         }

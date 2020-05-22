@@ -9,19 +9,19 @@
 	<h1>Spring boot demo</h1>
 	
 	
-	<button onClick=API_UTIL.callApi('/api/greeting');>Get your greeting 1</button>
+	<button onClick=API_UTIL.callApi('/api/greeting');>Get your greeting in a string</button>
     
-    <button onClick=API_UTIL.callApi('/api/greeting2');>Get your greeting 2</button>
-    
-    
-    <button onClick=API_UTIL.callApi('/api/greeting3');>Get your greeting 3</button>
+    <button onClick=API_UTIL.callApi('/api/greeting2');>Get your greeting in JSON from an object</button>
     
     
-    <button onClick="API_UTIL.callPostAPI('/api/users/add', true);">add a user fail</button>
+    <button onClick=API_UTIL.callApi('/api/greeting3');>Get your greeting in JSON from a string</button>
     
-    <button onClick=API_UTIL.callPostAPI('/api/users/add');>add a user</button>
     
-    <br/>
+    <button onClick="API_UTIL.callPostAPI('/api/users/add', true);">add a user fail with incorrect email</button>
+    
+    <button onClick=API_UTIL.callPostAPI('/api/users/add');>add a user with extra fields</button>
+    
+    <br/><br/>
     API return: <label id="ApiLabel"></label><br/>
         
     <br/>
