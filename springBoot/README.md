@@ -131,7 +131,7 @@ Hibernate will automatically find many errors when it is starting. For example:
 - please go [here](https://thoughts-on-java.org/hibernate-enum-mappings/) for details. 
 
 ### Swagger
-+ Swagger will automatically generate sample json based on your current Java Json mapper
++ Swagger will automatically generate sample json based on your current setting for your Java Json mapper(like Jackson)
 + it won't fail if the java object is not a pure java bean, but the result is incorrect.
     for example, you has a pair of methods on doubleAsString, then it will generate`"doubleAsString": "string"`
     
