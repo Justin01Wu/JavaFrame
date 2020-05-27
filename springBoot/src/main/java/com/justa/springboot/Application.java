@@ -1,7 +1,5 @@
 package com.justa.springboot;
 
-import java.util.Arrays;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -11,7 +9,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 // from https://spring.io/guides/gs/spring-boot/
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.justa.springboot"})
 public class Application {
 
 	private static final Logger logger = LoggerFactory.getLogger(Application.class);
