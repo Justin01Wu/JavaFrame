@@ -1,7 +1,12 @@
 package com.justa.springboot.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
+@Configuration
+@PropertySource("classpath:service.properties") 
+// will load compliance.user.list from application firstly, then load from service.properties if didn't find it 
 public class ComplianceService {
 
     private String[] userList;
@@ -27,6 +32,10 @@ public class ComplianceService {
         }
         return false;
     }
+
+	public String[] getUserList() {
+		return userList;
+	}
 
 
 }
