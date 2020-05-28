@@ -6,12 +6,13 @@ import javax.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ComplexBean {
 	
-	public ComplexBean(SimpleBean simpleBean1) {		
+	public ComplexBean(SimpleBeanExt simpleBean1) {		
 		super();
 		log.info("stage1 : calling the constructor");
 		this.simpleBean1 = simpleBean1;
@@ -20,14 +21,16 @@ public class ComplexBean {
 
 	private static final Logger log = LoggerFactory.getLogger(ComplexBean.class);
 	
-	private SimpleBean simpleBean1;
+	private SimpleBeanExt simpleBean1;
 	
 
 	private SimpleBean simpleBean2;
 
 	@Autowired
+	@Qualifier("SimpleBean")  
+	// without @Qualifier it will fail because we have two types of SimpleBean: SimpleBean and SimpleBeanExt
 	public void setSimpleBean2(SimpleBean simpleBean2) {
-		log.info("stage2 : calling the setter");
+		log.info("stage2 : calling the setter: " + simpleBean2.getClass().getSimpleName());
 		this.simpleBean2 = simpleBean2;
 	}
 
