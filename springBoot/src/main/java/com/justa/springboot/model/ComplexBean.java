@@ -1,6 +1,7 @@
 package com.justa.springboot.model;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +33,13 @@ public class ComplexBean {
 
 	
 	@PostConstruct
-	public void initMethod() {
+	public void init() {
+	   log.info("stage3 : calling the initMethod");
+	}
+	
+	
+	@PreDestroy
+	public void destroy() {
 	   log.info("stage4 : calling the initMethod");
 	}
 

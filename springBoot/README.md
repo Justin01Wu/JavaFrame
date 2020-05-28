@@ -81,6 +81,7 @@ For production, you should never do it.
 + Spring bean must be marked as stereotype annotations: @Component or its children: @Repository, @Service, @Controller
 	otherwise, it will complain 
 + Spring used this order to initialize a bean:  constructor(can have parameter), setter, initiMethod(with @PostConstruct) 
+    By the way, @PostConstruct comes from JSR250
 
 ### security
 When security is enabled, many inner URL is blocked, we need to set exceptions for those URL. 
