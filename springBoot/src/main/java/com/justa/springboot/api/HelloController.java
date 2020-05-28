@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.justa.springboot.model.ComplexBean;
 import com.justa.springboot.model.Greeting;
 
 import io.micrometer.core.instrument.Counter;
@@ -17,6 +18,9 @@ public class HelloController {
 	
 	private MeterRegistry meterRegistry;
 	private Counter myCounter;
+	
+	@Autowired
+	private ComplexBean bean;
 	
 	@Autowired
 	public HelloController(	MeterRegistry meterRegistry) {

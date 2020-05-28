@@ -78,6 +78,9 @@ For production, you should never do it.
 + @Autowired will get nullPointerException on static variables, even it didn't complain on the compiling. 
     So you have to use instance variables
 + @AllArgsConstructor will automatically wire all instance variables without @Autowired when you have only one implementation
++ Spring bean must be marked as stereotype annotations: @Component or its children: @Repository, @Service, @Controller
+	otherwise, it will complain 
++ Spring used this order to initialize a bean:  constructor(can have parameter), setter, initiMethod(with @PostConstruct) 
 
 ### security
 When security is enabled, many inner URL is blocked, we need to set exceptions for those URL. 
