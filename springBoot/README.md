@@ -7,7 +7,7 @@
 ### Drawbacks
 + Dependency bound together, hard to adjust
 + Dependency Injection makes code static analysis harder, hard to refactor
-+ hard to get rid of it, fill coupled, bad for long existing application
++ hard to get rid of it, fully coupled with Spring, bad for long existing application
 + some default setting is not good, like logging setting: has thread number, hasn't code line, which is not good for developers:
 ```
     2020-03-16 09:55:41.457  INFO 11928 --- [nio-9090-exec-9] com.justa.springboot.db.UserManager      : triggered by user saving: 6
