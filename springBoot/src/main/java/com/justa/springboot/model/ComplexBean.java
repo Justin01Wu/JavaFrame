@@ -43,7 +43,7 @@ public class ComplexBean {
 	
 	@PreDestroy
 	public void destroy() {
-	   log.info("stage4 : calling the initMethod");
+	   log.info("stage4 : calling the destroy method");
 	}
 
 
