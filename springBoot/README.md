@@ -82,9 +82,21 @@ For production, you should never do it.
 + @Autowired will get nullPointerException on static variables, even it didn't complain on the compiling. 
     So you have to use instance variables
 + You can use @Qualifier to specify a dedicated type of the bean when you have multiple implementations:
-	+ define a name on the bean: `@Component("SimpleBean")`
-	+ use a name on the @Qualifier: `@Qualifier("SimpleBean")`
+    +  define a name on the bean: `@Component("SimpleBean")`
+    +  use a name on the @Qualifier: `@Qualifier("SimpleBean")`
++ you can use @Scope to define a bean scope: `@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)`    
++ @Autowired cannot be used to autowire no bean values, so you have to use @Value	
++ There are JSR equivalent
+    + @Component -> @Named
+	+ @Qualifier -> @Qualifier
+	+  @Autowired -> @Inject
+	+  @Autowired + @Qualifier -> @Resource
 	
+#### @Value 
++ @Value can inject a string from configure file: `@Value("${driver.class.name}")`
++ @Value can also inject a string from another bean: `@Value("#{dbProps.driverClassName}")`
+
+
 #### others    
     
 + @AllArgsConstructor will automatically wire all instance variables without @Autowired when you have only one implementation
