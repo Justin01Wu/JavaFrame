@@ -76,8 +76,17 @@ In this way, Spring boot will automatically detect your changing and load them(h
 For production, you should never do it.
 
 ### Spring related tips
+#### @Autowired
++ @Autowired can apply to instance variables, constructor and setter
++ @Autowired can also apply to a no setter method if it will be called by spring 
 + @Autowired will get nullPointerException on static variables, even it didn't complain on the compiling. 
     So you have to use instance variables
++ You can use @Qualifier to specify a dedicated type of the bean when you have multiple implementations:
+	+ define a name on the bean: `@Component("SimpleBean")`
+	+ use a name on the @Qualifier: `@Qualifier("SimpleBean")`
+	
+#### others    
+    
 + @AllArgsConstructor will automatically wire all instance variables without @Autowired when you have only one implementation
 + Spring bean must be marked as stereotype annotations: @Component or its children: @Repository, @Service, @Controller
 	otherwise, it will complain 

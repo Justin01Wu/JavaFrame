@@ -12,24 +12,24 @@ import org.springframework.stereotype.Component;
 @Component
 public class ComplexBean {
 	
-	public ComplexBean(SimpleBeanExt simpleBean1) {		
-		super();
-		log.info("stage1 : calling the constructor");
+	public ComplexBean(
+			@Qualifier("SimpleBean") SimpleBean simpleBean1
+			// without @Qualifier it will fail because we have two types of SimpleBean: SimpleBean and SimpleBeanExt		
+			) {		
+		log.info("stage1 : calling the constructor with " + simpleBean1.getClass().getSimpleName());
 		this.simpleBean1 = simpleBean1;
 	}
 
 
 	private static final Logger log = LoggerFactory.getLogger(ComplexBean.class);
 	
-	private SimpleBeanExt simpleBean1;
+	private SimpleBean simpleBean1;
 	
 
-	private SimpleBean simpleBean2;
+	private SimpleBeanExt simpleBean2;
 
-	@Autowired
-	@Qualifier("SimpleBean")  
-	// without @Qualifier it will fail because we have two types of SimpleBean: SimpleBean and SimpleBeanExt
-	public void setSimpleBean2(SimpleBean simpleBean2) {
+	@Autowired	
+	public void setSimpleBean2(SimpleBeanExt simpleBean2) {
 		log.info("stage2 : calling the setter: " + simpleBean2.getClass().getSimpleName());
 		this.simpleBean2 = simpleBean2;
 	}
