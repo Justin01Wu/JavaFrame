@@ -84,7 +84,9 @@ For production, you should never do it.
 + You can use @Qualifier to specify a dedicated type of the bean when you have multiple implementations:
     +  define a name on the bean: `@Component("SimpleBean")`
     +  use a name on the @Qualifier: `@Qualifier("SimpleBean")`
-+ you can use @Scope to define a bean scope: `@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)`    
++ you can use @Scope to define a bean scope: `@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)`
++ @Bean annotates a method that creates a bean in a configuration class;
+    @Component annotates classes to mark them as bean definitions for the Spring Container    
 + @Autowired cannot be used to autowire no bean values, so you have to use @Value	
 + There are JSR equivalent
     + @Component -> @Named
