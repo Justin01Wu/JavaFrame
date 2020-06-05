@@ -137,6 +137,8 @@ This means schema.sql and data.sql won't work by default
 To make sure our Code matched the database, we can set to this:
 - spring.jpa.hibernate.ddl-auto=validate<img src="img/schema_validate_failure.png">
 
+Hibernate usually is case sensitive, even the database server is case insensitive 
+
 ### general mapping
 Hibernate will automatically find many errors when it is starting. For example:
 - it will throw this error if getter didn't match setter:
