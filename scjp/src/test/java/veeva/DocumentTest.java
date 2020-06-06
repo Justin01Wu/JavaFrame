@@ -10,15 +10,29 @@ import static org.junit.Assert.assertEquals;
 public class DocumentTest {	
 
 	@Test
-	public void testget25CharwithoutCutWord() {		
-		
+	public void testGet25CharwithoutCutWord_Cut() {
+		String result = Document.get25CharwithoutCutWord("How the Xray shows your health status");
+		assertEquals("How the Xray shows your health...", result);		
+	}
+	
+	@Test
+	public void testGet25CharwithoutCutWord_NoCut() {		
 		String result = Document.get25CharwithoutCutWord("Inventory list of sadkha .");
 		assertEquals("Inventory list of sadkha .", result);
-		
-		result = Document.get25CharwithoutCutWord("How the Xray shows your hralth");
-		assertEquals("How the Xray shows your hralth", result);
-		
 	}
+	
+	@Test
+	public void testGet25CharwithoutCutWordOnDuplicateWord() {		
+		String result = Document.get25CharwithoutCutWord("Justin called himself Justin.");
+		assertEquals("Justin called himself Justin...", result);		
+	}
+	
+	@Test
+	public void testGet25CharwithoutCutWord_singleLongWord() {		
+		String result = Document.get25CharwithoutCutWord("JustinCalledHimselfJustinJustinJustin");
+		assertEquals("JustinCalledHimselfJustin", result);		
+	}
+
 
 
 	@Test
