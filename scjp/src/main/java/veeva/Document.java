@@ -37,6 +37,11 @@ public class Document {
 	
 	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");	
 	
+	
+	private static int KB = 1024;
+	private static int MB = 1024 * KB;
+	private static int GB = 1024 * MB;
+	
     String name;
     String description;
     String createdBy;
@@ -47,12 +52,12 @@ public class Document {
 
 	public String toString() {
 		String size = null;
-		if(this.sizeInBytes >1000000000) {
-			size = (this.sizeInBytes / 1000000000) + " gb";
-		}else if(this.sizeInBytes >1000000) {
-			size = (this.sizeInBytes / 1000000) + " mb";
-		}else if(this.sizeInBytes >1000) {
-			size = (this.sizeInBytes / 1000) + " kb";
+		if(this.sizeInBytes > GB) {
+			size = (this.sizeInBytes / GB) + " gb";
+		}else if(this.sizeInBytes > MB) {
+			size = (this.sizeInBytes / MB) + " mb";
+		}else if(this.sizeInBytes > KB) {
+			size = (this.sizeInBytes / KB) + " kb";
 		}else  {
 			size = (this.sizeInBytes ) + " bytes";
 		}
@@ -90,9 +95,8 @@ public class Document {
 		return s;
 	}
 	
-
-
-    public void printDocumentsReport(List<Document> documents) {
+	
+	Map<String, List<Document>> sort(List<Document> documents) {
     	Map<String, List<Document>> sortedKeyDocument = new TreeMap<>();
     	for(Document doc: documents) {
     		String key = doc.createdBy.toUpperCase();
@@ -106,8 +110,20 @@ public class Document {
     	
     	for(String key :  sortedKeyDocument.keySet()) {
     		List<Document> list = sortedKeyDocument.get(key);
-    		System.out.println(key);
     		Collections.sort(list, new SortbyCreatedTime()); 
+    	}
+    	return sortedKeyDocument;
+    	
+	}
+
+
+    public void printDocumentsReport(List<Document> documents) {
+    	
+    	Map<String, List<Document>> sortedKeyDocument = sort(documents);
+    	
+    	for(String key :  sortedKeyDocument.keySet()) {
+    		List<Document> list = sortedKeyDocument.get(key);
+    		System.out.println(key);
 
     		for(Document doc: list) {
     			System.out.println(doc);

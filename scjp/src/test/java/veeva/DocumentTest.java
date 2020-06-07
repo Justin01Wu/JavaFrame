@@ -3,6 +3,7 @@ package veeva;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -23,20 +24,20 @@ public class DocumentTest {
 	
 	@Test
 	public void testGet25CharwithoutCutWordOnDuplicateWord() {		
-		String result = Document.get25CharwithoutCutWord("Justin called himself Justin.");
+		String result = Document.get25CharwithoutCutWord("Justin called himself Justin because his legal name is hard to pronounce.");
 		assertEquals("Justin called himself Justin...", result);		
 	}
 	
 	@Test
 	public void testGet25CharwithoutCutWord_singleLongWord() {		
-		String result = Document.get25CharwithoutCutWord("JustinCalledHimselfJustinJustinJustin");
+		String result = Document.get25CharwithoutCutWord("JustinCalledHimselfJustinJustinJustinerhdhrtydhfghd");
 		assertEquals("JustinCalledHimselfJustin", result);		
 	}
 
 
 
 	@Test
-	public void testPrintDocumentsReport() {
+	public void testSort() {
 		
 		List<Document> list =  new ArrayList<>();
 		
@@ -76,7 +77,25 @@ public class DocumentTest {
 		doc.sizeInBytes = 87000000000l;		
 		list.add(doc);		
 		
-		doc.printDocumentsReport(list);
+		Map<String, List<Document>> result = doc.sort(list);
+		
+		int i=1;
+    	for(String key :  result.keySet()) {
+    		List<Document> list2 = result.get(key);
+    		if(i==1 || i==2) {
+    			assertEquals(key, "ANDY ANDREWS");
+    		}
+
+    		for(Document doc2: list2) {
+    			String docStr = doc2.toString();
+    			if(i==1) assertEquals(docStr, "  Bobby Timmons Biography, An exhaustive look at the hjdf... , 12 bytes, 2020-05-24, 2020-05-24");
+    			if(i==2) assertEquals(docStr, "  Apple Sauce, Study of apple sauces. , 81 gb, 2020-05-25, 2020-05-25");
+    			if(i==3) assertEquals(docStr, "  Xray, How the Xray shows your hralth , 11 kb, 2019-06-26, 2019-06-26");
+    			if(i==4) assertEquals(docStr, "  Computers, Inventory list of sadkha . , 423 bytes, 2020-06-07, 2020-06-07");
+    			
+    			i++;
+    		}
+    	}
 
 	}
 	
