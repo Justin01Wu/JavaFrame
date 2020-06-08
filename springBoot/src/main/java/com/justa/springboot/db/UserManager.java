@@ -1,5 +1,7 @@
 package com.justa.springboot.db;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
@@ -7,16 +9,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.justa.springboot.Application;
 import com.justa.springboot.model.User;
 import com.justa.springboot.model.UserEvent;
 
-@Component
+@Service
 public class UserManager {
 
 	private static final Logger LOG = LoggerFactory.getLogger(UserManager.class);
@@ -45,6 +46,13 @@ public class UserManager {
         	throw new ResponseStatusException(HttpStatus.BAD_REQUEST, msg, null);
         	// https://www.baeldung.com/spring-response-status-exception
         }
+        
+    }
+    
+    @Transactional(Transactional.TxType.NEVER)
+    public List<User> getUserByNameAndPosition(String name, PositionEnum position) {        
+    	
+        return userRepository.getUsersByNameAndPosition(name, position);
         
     }
 

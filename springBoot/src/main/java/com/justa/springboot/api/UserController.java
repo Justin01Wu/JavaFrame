@@ -1,13 +1,17 @@
 package com.justa.springboot.api;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.justa.springboot.db.PositionEnum;
 import com.justa.springboot.db.UserManager;
 import com.justa.springboot.db.UserRepository;
 import com.justa.springboot.model.User;
@@ -42,6 +46,19 @@ public class UserController {
 			// This returns a JSON or XML with the users
 		return userRepository.findAll();
 	}
+	
+	@GetMapping(path = "/query")
+	public @ResponseBody List<User> getUserByNameAndPosition(
+			@RequestParam(name = "name") String name, 
+			@RequestParam(name = "position") PositionEnum position) {
+		
+		// here position must be enum.name(), other wise it will throw ConversionFailedException
+		// So you can define customized converter by implementing Converter interface  : 
+		//    https://www.baeldung.com/spring-enum-request-param
+		
+		return userManager.getUserByNameAndPosition(name, position);
+	}
+	
 	
 	@GetMapping(path = "/complianceList", produces={"application/json"})
 	public @ResponseBody String getComplianceList() {
