@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.justa.springboot.db.PositionEnum;
-import com.justa.springboot.db.UserManager;
+import com.justa.springboot.db.UserService;
 import com.justa.springboot.db.UserRepository;
 import com.justa.springboot.model.User;
 import com.justa.springboot.service.ComplianceService;
@@ -28,7 +28,7 @@ public class UserController {
 	private UserRepository userRepository;
 	
 	@Autowired
-	private UserManager userManager;
+	private UserService userManager;
 	
 	@Autowired
 	private ComplianceService cs;

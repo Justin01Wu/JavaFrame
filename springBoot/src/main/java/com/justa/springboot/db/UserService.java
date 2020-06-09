@@ -18,9 +18,9 @@ import com.justa.springboot.model.User;
 import com.justa.springboot.model.UserEvent;
 
 @Service
-public class UserManager {
+public class UserService {
 
-	private static final Logger LOG = LoggerFactory.getLogger(UserManager.class);
+	private static final Logger LOG = LoggerFactory.getLogger(UserService.class);
 	
     // You need this Spring bean
     @Autowired
