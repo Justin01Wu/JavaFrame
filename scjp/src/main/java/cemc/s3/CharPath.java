@@ -74,6 +74,7 @@ public class CharPath {
 			n.parent = node;
 			n.nPos = nPos;
 			n.c =  c;
+			n.hPos = pos;
 			
 			if(nPos == length-1) {
 				String str = n.getStringChain();
@@ -84,7 +85,6 @@ public class CharPath {
 				}
 				continue;
 			}
-			n.hPos = pos;
 			n.left = node.left;
 			n.right = node.right;
 			if(pos <n.left) n.left = pos;

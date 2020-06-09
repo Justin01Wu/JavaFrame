@@ -33,8 +33,8 @@ public class NeedleSearch {
 	
 	public static void main(String[] args) {
 		
-		String needle ="ggggggll";
-		String hays = "lglgggggvqglnuzjvtvitezoymuiytggggllggsamztqrfoslgggglggqtrsinggllggggmetbkhxhskglgggglglgetqwoaggglgggljjgisojggllgggggggllkrmilgggglgghgeajxqasaolgggglggdurlgggglggnqcggggllggvfmftggggggllbgwgidifqt";
+		String needle ="ffxewmweexpmiipfmfgw";
+		String hays = "fwfewpmegeiwfmipxmxffefppfemifxgmmewxwiwkmnerxcholtimemipxgewifewfmpfxfwnfemefmppxwfwiiefmwfxgtvwfiiwpegfexmwmxmffpeinpskbjazpvfwxwegieffmwxmpfmpeihrzx";
 		
 		int total = getTotalOcc(needle, hays);
 		System.out.println(total);
