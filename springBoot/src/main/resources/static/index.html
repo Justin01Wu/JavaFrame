@@ -16,11 +16,6 @@
     
     <button onClick=API_UTIL.callApi('/api/greeting3');>Get your greeting in JSON from a string</button>
     
-    <button onClick=API_UTIL.callApi('/api/users/complianceList');>Get compliance list</button>    
-    
-    <button onClick=API_UTIL.callApi('/api/users/query?name=Justin&position=Developer');>query user by name and position</button>    
-    
-    
     <button onClick="API_UTIL.callPostAPI('/api/users/add', true);">add a user fail with incorrect email</button>
     
     <button onClick=API_UTIL.callPostAPI('/api/users/add');>add a user with extra fields</button>
@@ -29,7 +24,9 @@
     API return: <label id="ApiLabel"></label><br/>
         
     <br/>
-    <a href="api/users/all" target="_blank">all users</a>    
+    <a href="api/users/all" target="_blank">all users</a><br/>    
+    <a href="/api/users/query?name=Justin&position=Developer" target="_blank">query users for userName and position</a><br/>
+    <a href="/api/users/complianceList" target="_blank">Get compliance list</a>
     
     <br/>
     <br/>
