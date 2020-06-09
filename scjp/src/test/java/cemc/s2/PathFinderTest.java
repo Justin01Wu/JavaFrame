@@ -1,4 +1,4 @@
-package cemc;
+package cemc.s2;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.junit.Test;
+
+import cemc.s2.CellNode;
+import cemc.s2.PathFinder;
 
 public class PathFinderTest {
 

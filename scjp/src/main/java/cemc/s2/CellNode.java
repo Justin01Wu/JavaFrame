@@ -1,4 +1,4 @@
-package cemc;
+package cemc.s2;
 
 public class CellNode {
 	Integer num;
