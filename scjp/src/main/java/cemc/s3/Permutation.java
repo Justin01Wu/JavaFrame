@@ -3,7 +3,7 @@ package cemc.s3;
 // print all permutations of a given string. 
 public class Permutation {
 	public static void main(String[] args) {
-		String str = "ABCDEFGHIJKL";
+		String str = "ABCDE";
 		int n = str.length();
 		Permutation permutation = new Permutation();
 		permutation.permute(str, 0, n - 1);
