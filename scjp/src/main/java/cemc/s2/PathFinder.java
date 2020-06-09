@@ -103,6 +103,9 @@ public class PathFinder {
 		return grid;
 	}
 
+	/** convert original grid into map list data structure for reverse search
+	 * This will save a lot of time of searching because map is sorted data which is o(1) cost
+	 * and grid is not sorted data, which o(2) cost */
 	static Map<Integer, List<CellNode>> generateMap(int[][] grid) {
 		Map<Integer, List<CellNode>> ditc = new HashMap<>();
 		for (int r = 0; r < grid.length; r++) {
@@ -125,10 +128,10 @@ public class PathFinder {
 		return ditc;
 	}
 	
-	static CellNode findLastCell(Map<Integer, List<CellNode>> ditc, int[][] grid) {
+	static CellNode findLastCell(Map<Integer, List<CellNode>> map, int[][] grid) {
 		int r = grid.length - 1;
 		int c = grid[0].length - 1;
-		List<CellNode> list = ditc.get(grid[r][c]);
+		List<CellNode> list = map.get(grid[r][c]);
 		for(CellNode cell: list) {
 			if(cell.x == r+1 && cell.y == c +1 ) {
 				return cell;
@@ -137,17 +140,28 @@ public class PathFinder {
 		return null;
 	}
 
+	/**
+	 * because the nature of escape rule, the reverse search is more efficient than forward search 
+	 * because reverse search don't need to find all possible numbers for product: 
+	 *    in forward searching , we need to find all those for 12:  (1,12), (2,6), (3,4), (6,2), (4,3), (12,1)
+	 *       which is costly 
+	 *     in reverse search, we just need to get product: cell(3,4), we need to search 12
+	 */
 	static CellNode findExit(Map<Integer, List<CellNode>> ditc, int[][] grid) {
 		// start from the last cell
 		CellNode last = findLastCell(ditc, grid);
 		
-		Set<Integer> finishedList = new HashSet<>();
-		Stack<CellNode> posnum = new Stack<>();
+		Set<Integer> finishedNumbers = new HashSet<>();
+		Stack<CellNode> possibleCells = new Stack<>();
 		while (true) {
 			List<CellNode> list = ditc.get(last.product);
 			if (list != null) {
 				for (CellNode cell : list) {
 					cell.parent = last;
+					// use parent to setup a cell chain, which can print the whole path
+					// it costs almost zero, but bring big benefit for testing:
+					//   you can manually verify if the path is correct
+					//   you can add unit test for different data
 	
 					if (cell.product == 1) {
 						System.out.println("yes");
@@ -155,20 +169,20 @@ public class PathFinder {
 						// print("--- %s seconds ---" % (time.time() - start_time))
 						return cell;
 					}
-					if (finishedList.contains(cell.product)) {
+					if (finishedNumbers.contains(cell.product)) {
 						continue;
 					}
-					posnum.push(cell);
-					finishedList.add(cell.product);
+					possibleCells.push(cell);
+					finishedNumbers.add(cell.product);
 
 				}
 			}
-			if (posnum.isEmpty()) {
+			if (possibleCells.isEmpty()) {
 				System.out.println("no");
 				// print("--- %s seconds ---" % (time.time() - start_time))
 				return null;
 			}
-			last = posnum.pop();
+			last = possibleCells.pop();
 		}
 	}
 	
