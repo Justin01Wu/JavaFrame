@@ -9,6 +9,9 @@ public class CharNode {
 	int right;
 	CharNode parent;
 	
+	int startHPos;
+	String chain;
+	
 	String getStringChain() {
 	
 		CharNode node = this;
@@ -30,7 +33,9 @@ public class CharNode {
 			node = node.parent;
 		}
 		
-		return String.valueOf(chars);
+		this.startHPos =  startHPos;
+		this.chain =  String.valueOf(chars);
+		return this.chain;
 		
 	}
 

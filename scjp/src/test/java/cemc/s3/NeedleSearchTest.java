@@ -42,7 +42,7 @@ public class NeedleSearchTest {
 		System.out.println(total);
 	}
 	
-	//@Test
+	@Test
 	public void testGetTotalOcc_2_04() {
 		String needle ="ffxewmweexpmiipfmfgw";
 		String hays = "fwfewpmegeiwfmipxmxffefppfemifxgmmewxwiwkmnerxcholtimemipxgewifewfmpfxfwnfemefmppxwfwiiefmwfxgtvwfiiwpegfexmwmxmffpeinpskbjazpvfwxwegieffmwxmpfmpeihrzx";

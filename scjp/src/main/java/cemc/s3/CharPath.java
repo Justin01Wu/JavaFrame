@@ -80,7 +80,8 @@ public class CharPath {
 				String str = n.getStringChain();
 				if(!finishedStr.contains(str)) {
 					total ++;
-					print(n);
+					//print(n);
+					System.out.println(n.startHPos + " : " + str);
 					finishedStr.add(str);					
 				}
 				continue;
