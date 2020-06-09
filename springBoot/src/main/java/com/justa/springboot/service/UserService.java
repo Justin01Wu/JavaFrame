@@ -1,4 +1,4 @@
-package com.justa.springboot.db;
+package com.justa.springboot.service;
 
 import java.util.List;
 
@@ -14,6 +14,8 @@ import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.justa.springboot.db.PositionEnum;
+import com.justa.springboot.db.UserRepository;
 import com.justa.springboot.model.User;
 import com.justa.springboot.model.UserEvent;
 

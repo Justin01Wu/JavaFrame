@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.justa.springboot.db.PositionEnum;
-import com.justa.springboot.db.UserService;
 import com.justa.springboot.db.UserRepository;
 import com.justa.springboot.model.User;
 import com.justa.springboot.service.ComplianceService;
+import com.justa.springboot.service.UserService;
 
 // it comes from https://spring.io/guides/gs/accessing-data-mysql/
 
