@@ -82,11 +82,7 @@ public class NeedleSearch3 {
 			
 			char newOne = hChars[i+ nChars.length];
 			Integer newNum =  hCharOccs.get(newOne);
-			if(newNum == null) {
-				newNum = 1;
-			}else {
-				newNum = newNum + 1;	
-			}
+			newNum = newNum + 1;	
 			
 			hCharOccs.put(newOne, newNum);
 			

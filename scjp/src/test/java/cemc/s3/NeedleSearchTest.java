@@ -112,7 +112,7 @@ public class NeedleSearchTest {
 		System.out.println(total);
 	}
 	
-	// @Test  need about 16GB memory, so disable it
+	//@Test  //need about 16GB memory, so disable it
 	public void testGetTotalOcc_4_38() throws NumberFormatException, IOException {
 		String file = getFilePathFromClassPath("s3.4-38.in");
 		
