@@ -44,6 +44,7 @@ public class CharPath {
 			return;
 		}
 
+		int i=0;
 		for(Integer pos: positions) {
 			CharNode n = new CharNode();
 			n.nPos = 0;
@@ -52,6 +53,7 @@ public class CharPath {
 			n.left = pos;
 			n.right = pos;
 			getTotalOcc(n);
+			System.out.println(i);
 		}
 
 	}
