@@ -45,7 +45,7 @@ public class SwapCalcator {
 		
 		int abcTotal = calSawpAmountOnABC(data);
 		int acbTotal = calSawpAmountOnACB(data);		
-		if(abcTotal < acbTotal) {
+		if(abcTotal <= acbTotal) {
 			return abcTotal;
 		}else {
 			return acbTotal;
