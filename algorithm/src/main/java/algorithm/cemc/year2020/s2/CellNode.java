@@ -1,4 +1,4 @@
-package cemc.s2;
+package algorithm.cemc.year2020.s2;
 
 public class CellNode {
 	Integer num;

@@ -1,4 +1,4 @@
-package cemc.s2;
+package algorithm.cemc.year2020.s2;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

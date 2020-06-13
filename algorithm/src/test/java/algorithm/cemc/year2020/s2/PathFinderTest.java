@@ -1,4 +1,4 @@
-package cemc.s2;
+package algorithm.cemc.year2020.s2;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -8,8 +8,8 @@ import java.net.URL;
 
 import org.junit.Test;
 
-import cemc.s2.CellNode;
-import cemc.s2.PathFinder;
+import algorithm.cemc.year2020.s2.CellNode;
+import algorithm.cemc.year2020.s2.PathFinder;
 
 public class PathFinderTest {
 

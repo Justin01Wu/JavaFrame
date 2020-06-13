@@ -1,4 +1,4 @@
-package cemc.s3;
+package algorithm.cemc.year2020.s3;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.junit.Test;
+
+import cemc.s3.NeedleSearch3;
 
 public class NeedleSearchTest {
 
