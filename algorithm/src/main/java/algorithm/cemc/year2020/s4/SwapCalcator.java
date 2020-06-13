@@ -44,9 +44,13 @@ public class SwapCalcator {
 		//int length = data.length();
 		
 		int abcTotal = calSawpAmountOnABC(data);
-		//int acbTotal = calSawpAmountOnACB(data);		
+		int acbTotal = calSawpAmountOnACB(data);		
+		if(abcTotal < acbTotal) {
+			return abcTotal;
+		}else {
+			return acbTotal;
+		}
 		
-		return abcTotal;
 	}
 	private int calSawpAmountOnABC(String data) {		
 		int aLeft =0;
@@ -76,10 +80,10 @@ public class SwapCalcator {
 		int aRight = aLeft+ p.aAmount;
 		
 		int cLeft = aRight ;
-		int cRight = cLeft + p.bAmount;
+		int cRight = cLeft + p.cAmount;
 
 		int bLeft = cRight ;
-		int bRight = cLeft+ p.bAmount;
+		int bRight = bLeft+ p.bAmount;
 		
 		String a =  data.substring(aLeft, aRight);
 		String b =  data.substring(bLeft, bRight);
