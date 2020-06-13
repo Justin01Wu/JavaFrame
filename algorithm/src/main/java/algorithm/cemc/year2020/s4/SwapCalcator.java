@@ -1,19 +1,27 @@
 package algorithm.cemc.year2020.s4;
 
 public class SwapCalcator {
+	private String data;
 	
+	Present p;
+	
+	public SwapCalcator(String data){
+		this.data = data;
+		p =  getAmount(data.toCharArray());
+	}
 
 	public static void main(String[] args) {
-		//String data = "AAABBCBBACAAC";
-		String data = "BCBCBCACCA";	
+		String data = "AAABBCBBACAAC";
+		//String data = "BCBCBCACCA";	
 		
-		int minSwap = calcSwap(data);
+		SwapCalcator calcator = new SwapCalcator(data);
+		int minSwap = calcator.calcSwap();
 		
 		System.out.println("result="+ minSwap);
 		 
 	}
 	
-	static int calcSwap(String data){
+	int calcSwap(){
 		int minSwap = Integer.MAX_VALUE;
 		
 		//for(int i=0;i<data.length();i++) {
@@ -22,7 +30,7 @@ public class SwapCalcator {
 			// left rotate string
 			String str = data.substring(i) + data.substring(0, i);
 			int total = calcSwapForOneStr(str);
-			System.out.println(total);	
+			//System.out.println(total);	
 			if(total <minSwap) {
 				minSwap = total;
 			}
@@ -31,10 +39,16 @@ public class SwapCalcator {
 		return minSwap;
 	}
 	
-	private static int calcSwapForOneStr(String data) {
-		Present p = getAmount(data.toCharArray());
+	private int calcSwapForOneStr(String data) {
+		
 		//int length = data.length();
 		
+		int abcTotal = calSawpAmountOnABC(data);
+		//int acbTotal = calSawpAmountOnACB(data);		
+		
+		return abcTotal;
+	}
+	private int calSawpAmountOnABC(String data) {		
 		int aLeft =0;
 		int aRight = aLeft+ p.aAmount;
 		
@@ -54,13 +68,34 @@ public class SwapCalcator {
 		Present[] presents = {pa, pb, pc};
 		
 		int total = calSawpAmount(presents);
-		
 		return total;
 	}
 	
-	private static int calSawpAmount(Present[] presents) {
+	private int calSawpAmountOnACB(String data) {		
+		int aLeft =0;
+		int aRight = aLeft+ p.aAmount;
 		
+		int cLeft = aRight ;
+		int cRight = cLeft + p.bAmount;
+
+		int bLeft = cRight ;
+		int bRight = cLeft+ p.bAmount;
 		
+		String a =  data.substring(aLeft, aRight);
+		String b =  data.substring(bLeft, bRight);
+		String c =  data.substring(cLeft, cRight);
+		
+		Present pa = getAmount(a.toCharArray());
+		Present pb = getAmount(b.toCharArray());
+		Present pc = getAmount(c.toCharArray());
+		Present[] presents = {pa, pb, pc};
+		
+		int total = calSawpAmount(presents);
+		return total;
+	}
+	
+	
+	private static int calSawpAmount(Present[] presents) {		
 		
 		// swap ab
 		int bInAGroup = presents[0].bAmount;
