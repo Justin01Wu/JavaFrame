@@ -1,4 +1,4 @@
-package cemc.s3;
+package algorithm.cemc.year2020.s3;
 
 import java.util.ArrayList;
 import java.util.HashMap;

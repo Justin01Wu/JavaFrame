@@ -9,8 +9,6 @@ import java.net.URL;
 
 import org.junit.Test;
 
-import cemc.s3.NeedleSearch3;
-
 public class NeedleSearchTest {
 
 	@Test

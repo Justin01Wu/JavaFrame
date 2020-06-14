@@ -1,5 +1,38 @@
 package algorithm.cemc.year2020.s4;
 
+
+//from https://www.cemc.uwaterloo.ca/contests/computing/2020/ccc/seniorEF.pdf
+/*
+
+Problem S4: Swapping Seats
+Problem Description
+There are N people sitting at a circular table for a long session of negotiations. Each person
+belongs to one of the three groups: A, B, or C. A group is happy if all of its members are sitting
+contiguously in a block of consecutive seats. You would like to make all groups happy by some
+sequence of swap operations. In each swap operation, two people exchange seats with each other.
+What is the minimum number of swaps required to make all groups happy?
+
+Input Specification
+The input consists of a single line containing N (1 ≤ N ≤ 1 000 000) characters, where each
+character is A, B, or C. The i-th character denotes the group of the person initially sitting at the i-th
+seat at the table, where seats are numbered in clockwise order.
+For 4 of the 15 available marks, the input has no C characters and N ≤ 5 000.
+For an additional 4 of the 15 available marks, the input has no C characters.
+For an additional 4 of the 15 available marks, N ≤ 5 000.
+
+Output Specification
+Output a single integer, the minimum possible number of swaps.
+
+Sample Input
+BABCBCACCA
+
+Output for Sample Input
+2
+
+Explanation of Output for Sample Input
+In one possible sequence, the first swap results in the seating layout AABCBCBCCA. After the
+second swap, the layout is AABBBCCCCA.
+*/		
 public class SwapCalcator {
 	private String data;
 	
@@ -24,34 +57,35 @@ public class SwapCalcator {
 	int calcSwap(){
 		int minSwap = Integer.MAX_VALUE;
 		
-		//for(int i=0;i<data.length();i++) {
-		for(int i=0;i<data.length();i++) {
+		for(int i=0;i<data.length();i++) {			
 			
-			// left rotate string
+			// left rotate string one seat every time
 			String str = data.substring(i) + data.substring(0, i);
 			int total = calcSwapForOneStr(str);
+			
 			//System.out.println(total);	
 			if(total <minSwap) {
 				minSwap = total;
-			}
-			
+			}			
 		}
 		return minSwap;
 	}
 	
-	private int calcSwapForOneStr(String data) {
-		
-		//int length = data.length();
+	private int calcSwapForOneStr(String data) {	
 		
 		int abcTotal = calSawpAmountOnABC(data);
+		// ABC also means BCA, CAB, because the string itself rotate
+		
 		int acbTotal = calSawpAmountOnACB(data);		
+		// ACB also means CBA, BAC, because the string itself rotate
+		
 		if(abcTotal <= acbTotal) {
 			return abcTotal;
 		}else {
 			return acbTotal;
-		}
-		
+		}		
 	}
+	
 	private int calSawpAmountOnABC(String data) {		
 		int aLeft =0;
 		int aRight = aLeft+ p.aAmount;
@@ -116,8 +150,6 @@ public class SwapCalcator {
 		int bInCGroup = presents[2].bAmount;
 		SwapResult sawpBC = calSwap(cInBGroup, bInCGroup);
 		
-		//
-
 		int total  = sawpAB.total + sawpAC.total + sawpBC.total;
 		int remain = sawpAB.remain + sawpAC.remain + sawpBC.remain;
 		

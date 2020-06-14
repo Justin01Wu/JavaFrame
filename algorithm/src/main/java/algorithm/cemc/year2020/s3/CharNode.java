@@ -1,4 +1,4 @@
-package cemc.s3;
+package algorithm.cemc.year2020.s3;
 
 public class CharNode {
 	
