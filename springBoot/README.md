@@ -80,7 +80,14 @@ For production, you should never do it.
 + @Autowired can apply to instance variables, constructor and setter
 + @Autowired can also apply to a no setter method if it will be called by spring 
 + @Autowired will get nullPointerException on static variables, even it didn't complain on the compiling. 
-    So you have to use instance variables
+    So you have to use instance variables or use this way:
+	```Java
+	@Value("${app.mysetting:}")
+    public void setMyStaticVar(String value){
+
+        ConfigService.StaticVariable = value;
+    }
+	```
 + You can use @Qualifier to specify a dedicated type of the bean when you have multiple implementations:
     +  define a name on the bean: `@Component("SimpleBean")`
     +  use a name on the @Qualifier: `@Qualifier("SimpleBean")`
