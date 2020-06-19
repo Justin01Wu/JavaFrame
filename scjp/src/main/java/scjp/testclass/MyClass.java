@@ -13,7 +13,8 @@ class MyClass {
         return null;
     }
     
-    public static void main(String[ ] args) {
+    @SuppressWarnings("static-access")
+	public static void main(String[ ] args) {
         MyClass newClass=new MyClass();
         
         MyClass y = newClass.getMyClass();
@@ -23,11 +24,12 @@ class MyClass {
         newClass.print();
     }
     
-    private void print(){
+    @SuppressWarnings("static-access")
+	private void print(){
         System.out.println(MyClass.this.myName);
-        //System.out.println(MyClass.null.myName);  //this is a compile error
-        //System.out.println((MyClass)null.myName); //this is a compile error
-        //System.out.println(null.myName);          //this is a compile error
+        //System.out.println(MyClass.null.myName);  //this is a compile error: MyClass cannot be resolved to a variable         
+        //System.out.println(null.myName);          //this is a compile error: myName cannot be resolved or is not a field
+        System.out.println(((MyClass)null).myName);
     }
     
 }
