@@ -5,19 +5,19 @@
 
 package scjp.testclass;
 
-class MyClass {
+class StaticVariableOnNull {
     static String myName = "SCJP";
     
-    MyClass getMyClass() {
+    StaticVariableOnNull getMyClass() {
         System.out.println(myName);
         return null;
     }
     
     @SuppressWarnings("static-access")
 	public static void main(String[ ] args) {
-        MyClass newClass=new MyClass();
+        StaticVariableOnNull newClass=new StaticVariableOnNull();
         
-        MyClass y = newClass.getMyClass();
+        StaticVariableOnNull y = newClass.getMyClass();
         System.out.println( y.myName );  
         // here y is null, but we can get myName without exception
         
@@ -26,10 +26,10 @@ class MyClass {
     
     @SuppressWarnings("static-access")
 	private void print(){
-        System.out.println(MyClass.this.myName);
+        System.out.println(StaticVariableOnNull.this.myName);
         //System.out.println(MyClass.null.myName);  //this is a compile error: MyClass cannot be resolved to a variable         
         //System.out.println(null.myName);          //this is a compile error: myName cannot be resolved or is not a field
-        System.out.println(((MyClass)null).myName);
+        System.out.println(((StaticVariableOnNull)null).myName);
     }
     
 }
