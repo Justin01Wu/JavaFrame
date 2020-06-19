@@ -9,11 +9,11 @@
 */
 package scjp.testclass.inherit;
 
-class Richmond{
+class Richmond {
 
- Richmond(){   //   private Richmond(){ will result compile error
-    System.out.print("Richmond");
- }
+	Richmond() { // private Richmond(){ will result compile error
+		System.out.print("Richmond");
+	}
 }
 /**
  * test doclet 2223
@@ -21,20 +21,21 @@ class Richmond{
  *
  */
 public class HughJampton extends Richmond{
-    private int i;
-    public static void main(String argv[]){
+    
+	@SuppressWarnings("unused")
+	private int i;
+    
+	public static void main(String argv[]){
         new HughJampton();
-       }
+    }
     
     @SuppressWarnings("unused")
 	private HughJampton(int i){
         this.i = i;
-
     }
 
    HughJampton(){
-   System.out.print("HughJampton");
-
+	   System.out.print("HughJampton");
     }
 
 

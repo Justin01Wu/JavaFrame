@@ -4,10 +4,14 @@ package scjp.testbasic.flowcontrol;
 
 public class BlankFinal {
 
-    private final int i = 0; // Initialized final
+    @SuppressWarnings("unused")
+	private final int i = 0; // Initialized final
     
-    private final int j; // Blank final
-    private final String p; // Blank final reference
+    @SuppressWarnings("unused")
+	private final int j; // Blank final
+    
+    @SuppressWarnings("unused")
+	private final String p; // Blank final reference
     
     // Blank finals MUST be initialized in the constructor:
     public BlankFinal() {

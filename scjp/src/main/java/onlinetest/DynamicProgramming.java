@@ -51,7 +51,7 @@ public class DynamicProgramming {
 			return tryTimes;
 		}
 		
-		int left = getMaxLayers(tryTimes-1,eggs-1);  // the current egg brake, so handle the rest
+		int left = getMaxLayers(tryTimes-1,eggs-1);  // the current egg break, so handle the rest
 		int right = getMaxLayers(tryTimes-1, eggs);  // the current egg didn't break; keep try it again
 		return left + right + 1;
 		
