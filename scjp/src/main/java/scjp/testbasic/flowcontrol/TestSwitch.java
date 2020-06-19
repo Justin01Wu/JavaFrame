@@ -6,7 +6,7 @@
 //   --------------
 //  This is the default output
 
-//  the "break" is signifficant
+//  the "break" is significant
 package scjp.testbasic.flowcontrol;
 
 public class TestSwitch {
@@ -24,7 +24,7 @@ public class TestSwitch {
                 System.out.println("This is the default output");
                 break;
             case 10:
-                System.out.println("ten");
+                System.out.println("ten");   // missed a break here
             case 20:
                 System.out.println("twenty");
                 break;

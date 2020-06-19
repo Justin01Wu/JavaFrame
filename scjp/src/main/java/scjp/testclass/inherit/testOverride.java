@@ -9,7 +9,8 @@ class thisbase{
         System.out.println("thisbase.getY");
         return "thisbase.getY";
     }
-    private int getZ(){return 0;}
+    @SuppressWarnings("unused")
+	private int getZ(){return 0;}
 }
 
 public class testOverride extends thisbase{

@@ -1,14 +1,10 @@
 /*  it come from :
  * http://blog.csdn.net/SmartTony/archive/2008/01/24/2062295.aspx
- * Gues what will be returned from t.get() ?
+ * Guess what will be returned from t.get() ?
  *   2 or 4 ? the answer is 4
  */
 package scjp.testbasic.flowcontrol;
 
-/**
- *
- * @author justinwu
- */
 public class FinallyReturn {
 
     public static void main(String args[]) {

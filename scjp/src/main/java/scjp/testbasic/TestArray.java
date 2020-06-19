@@ -3,7 +3,10 @@ package scjp.testbasic;
 public class TestArray {
 
   public static void main(String[] args) {
-   long[] x={12L,89L};
+   
+	  @SuppressWarnings("unused")
+	  long[] x={12L,89L};
+   
    int [] y={34,56,567,889};
 
    int[] z={4};

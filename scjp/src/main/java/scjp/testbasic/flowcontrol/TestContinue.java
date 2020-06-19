@@ -1,7 +1,8 @@
 package scjp.testbasic.flowcontrol;
 
 public class TestContinue {
-    public static void main(String argv[]) {
+    @SuppressWarnings("unused")
+	public static void main(String argv[]) {
         
         String myString;
         int x = 100;

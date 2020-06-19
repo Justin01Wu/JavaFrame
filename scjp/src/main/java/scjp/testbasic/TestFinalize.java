@@ -23,11 +23,14 @@ public class TestFinalize{
     
     public TestFinalize(){
         
-        Archer a = new Archer();
+        @SuppressWarnings("unused")
+		Archer a = new Archer();
+        
         a=null;
         System.gc();
         
-        int x=1;
+        @SuppressWarnings("unused")
+		int x=1;
         
         System.out.println("hi");
         

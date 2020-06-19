@@ -14,11 +14,11 @@ public class Thirsk{
         t.a19();
     }
     public void a19(){
-        TreeMap tm = new TreeMap();
-        tm.put("a","Bill");
-        tm.put("b","Kathy");
+        TreeMap<String, String> tm = new TreeMap<>();  // TreeMap is sorted on key value
         tm.put("c","Carl");
-        Iterator it = tm.keySet().iterator();
+        tm.put("a","Bill");
+        tm.put("b","Kathy");        
+        Iterator<String> it = tm.keySet().iterator();
         while(it.hasNext()){
             System.out.print(tm.get(it.next()));
         }
