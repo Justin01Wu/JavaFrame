@@ -5,7 +5,6 @@ package scjp.generic;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Collections;
 
 public class Test {
 
@@ -16,9 +15,9 @@ public class Test {
     }
 
     public static void main(String[] args) {
-        List<BaseClass> aList = new ArrayList();
+        List<BaseClass> aList = new ArrayList<>();
 
-        List<ExtendedClass> bList = new ArrayList();
+        List<ExtendedClass> bList = new ArrayList<>();
 
         addAll(aList); //can compile
 

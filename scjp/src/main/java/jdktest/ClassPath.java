@@ -58,12 +58,18 @@ public class ClassPath {
     //Main method
     public static void main(String[] args) {
         Candy a1 = new Candy();
-        jdktest.second.Pet apet = new jdktest.second.Pet();
+        
+        @SuppressWarnings("unused")
+		jdktest.second.Pet apet = new jdktest.second.Pet();
+        
         System.out.println(a1.getPath());
         try {
-            Class mm = Class.forName("jdktest.Candy");
+        
+        	@SuppressWarnings("unused")
+			Class<?> mm = Class.forName("jdktest.Candy");
             //mm.getResource();
-            Class xx = Gum.class;
+        	
+            Class<Gum> xx = Gum.class;
             Object vv = xx.newInstance();
             System.out.println(vv.getClass().getName());
         } catch (Exception e) {

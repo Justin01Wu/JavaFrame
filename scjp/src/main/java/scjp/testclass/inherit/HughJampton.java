@@ -25,7 +25,9 @@ public class HughJampton extends Richmond{
     public static void main(String argv[]){
         new HughJampton();
        }
-    private HughJampton(int i){
+    
+    @SuppressWarnings("unused")
+	private HughJampton(int i){
         this.i = i;
 
     }

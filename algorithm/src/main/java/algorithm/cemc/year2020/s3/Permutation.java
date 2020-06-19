@@ -1,7 +1,6 @@
 package algorithm.cemc.year2020.s3;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 // print all permutations of a given string. 

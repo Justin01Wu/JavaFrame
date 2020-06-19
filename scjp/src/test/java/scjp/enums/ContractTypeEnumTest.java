@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import scjp.typesafe.LightState4;
-
 public class ContractTypeEnumTest {
 
 	@Test

@@ -3,7 +3,9 @@ package scjp.testclass.inherit;
 
 class mybase {
     //mybase(int i){}
-    private int getX(){return 1;}
+	
+    @SuppressWarnings("unused")
+	private int getX(){return 1;}
 }
 
 abstract class Child extends mybase{

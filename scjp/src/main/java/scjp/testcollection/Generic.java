@@ -6,16 +6,22 @@ import java.util.List;
 public class Generic {
 	
 	
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException {
+		
+		
+		@SuppressWarnings("rawtypes")
 		List x = new ArrayList();
 		List<?> y = new ArrayList<Integer>();
 		x= y;
 		y=x;
 		
+		@SuppressWarnings("unused")
 		List<Object> z = new ArrayList<Object>();
 		//z= y;  compile error
 		z= x;  // no compile error 
 		
+		@SuppressWarnings("unused")
 		List<? extends RuntimeException> aa = new ArrayList<>();
 		// aa.add( new RuntimeException());  // compile error , why?
 		//  aa.add( new IllegalArgumentException());  // compile error , why?
