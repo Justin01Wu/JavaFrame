@@ -30,7 +30,10 @@ public class ProxyFactory {
 		
 		Object object =  Proxy.newProxyInstance(
 				classLoader,
-				new Class<?>[] { ThirdPartyInterface.class },   // must be an interface
+				new Class<?>[] { ThirdPartyInterface.class },   
+				// must be an interface, otherwise it will throw this exception in the running time:
+				//  java.lang.IllegalArgumentException: scjp.proxy.ThirdPartyClass is not an interface
+				
 				new MyInvocationHandler(ob));
 		return (ThirdPartyInterface)object;
 	}
