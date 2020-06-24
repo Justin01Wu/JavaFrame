@@ -34,5 +34,15 @@ public class ProxyFactory {
 				new MyInvocationHandler(ob));
 		return (ThirdPartyInterface)object;
 	}
+	
+	public static void main(String[] args) {
+		ThirdPartyInterface task = ProxyFactory.newInstance(new ThirdPartyClass());
+		task.doA(453);
+		
+		System.out.println();
+		
+		task.doB();
+		
+	}
 
 }
