@@ -30,6 +30,9 @@ public class UserService {
     
 	@Autowired 
 	private UserRepository userRepository;
+	
+	@Autowired 
+	ComplianceService cs;
 
     @Transactional
     public void saveUser(User newUser) {
@@ -53,6 +56,9 @@ public class UserService {
     
     @Transactional(Transactional.TxType.NEVER)
     public List<User> getUserByNameAndPosition(String name, PositionEnum position) {        
+    	
+    	boolean isCompliant = cs.isCompliantUw(name);
+    	LOG.info( name + " isCompliant = " + isCompliant);
     	
         return userRepository.getUsersByNameAndPosition(name, position);
         

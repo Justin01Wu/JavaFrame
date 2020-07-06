@@ -17,6 +17,18 @@ public class UserRepoMonitor {
 	// first * means any return type, second * means any class end with Repository
 	public void beforeFindById(JoinPoint joinPoint) throws Throwable {
 		
+		printEveryThing(joinPoint);		
+
+	}	
+	
+	@Before("execution(* com.justa.springboot.service.ComplianceService.isCompliantUw(..))")
+	public void beforeIsCompliantUw(JoinPoint joinPoint) throws Throwable {
+		
+		printEveryThing(joinPoint);		
+
+	}
+	
+	private static void printEveryThing(JoinPoint joinPoint) {
 		Signature s = joinPoint.getSignature();
 		String methodName = s.getName();
 		logger.info(" ---> Method " + methodName + " is about to be called");
@@ -39,9 +51,9 @@ public class UserRepoMonitor {
 		Object[] objs = joinPoint.getArgs();
 		for(Object obj :objs) {
 			logger.info(" ---> arg  =" + obj);
-		}
-		
-		
-
+		}	
 	}
+	
+
+	
 }
