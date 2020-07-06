@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 public class UserRepoMonitor {
 	private static final Logger logger = LoggerFactory.getLogger(UserRepoMonitor.class);
 
-	@Before("execution(* com.justa.springboot.db.*UserRepository.getUsersByNameAndPosition(..))")
-	// first * means any return type
+	@Before("execution(* com.justa.springboot.db.*Repository.getUsersByNameAndPosition(..))")
+	// first * means any return type, second * means any class end with Repository
 	public void beforeFindById(JoinPoint joinPoint) throws Throwable {
 		
 		Signature s = joinPoint.getSignature();
@@ -25,8 +25,23 @@ public class UserRepoMonitor {
 		logger.info(" ---> kind =" + kind );
 		
 		Class<?> c = s.getDeclaringType();
-		logger.info(" ---> class =" + c.getName() );
-
+		logger.info(" ---> original class =" + c.getName() );
 		
+		c = s.getClass();
+		logger.info(" ---> signuture class =" + c.getName() );
+		
+		String name = s.getName();
+		logger.info(" ---> signuture name =" + name );
+		
+		String ls = s.toLongString();
+		logger.info(" ---> signuture  =" + ls );
+		
+		Object[] objs = joinPoint.getArgs();
+		for(Object obj :objs) {
+			logger.info(" ---> arg  =" + obj);
+		}
+		
+		
+
 	}
 }
