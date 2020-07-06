@@ -60,6 +60,10 @@ public class UserService {
     	boolean isCompliant = cs.isCompliantUw(name);
     	LOG.info( name + " isCompliant = " + isCompliant);
     	
+    	// by default, Spring AOP will use CGLIB to generate proxy for ComplianceService because it has no interface
+    	// by default, Spring AOP will use JDK dynamic proxy to generate proxy for userRepository because it has interfaces
+    	// please set break point here to see the difference
+    	
         return userRepository.getUsersByNameAndPosition(name, position);
         
     }
