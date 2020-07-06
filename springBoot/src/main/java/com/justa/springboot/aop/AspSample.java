@@ -19,6 +19,7 @@ public class AspSample {
 
 	@Before("execution(* com.justa.springboot.db.*Repository.getUsersByNameAndPosition(..))")
 	// first * means any return type, second * means any class end with Repository
+	// will throw exception and stop application if the express has some mistaken
 	public void beforeFindById(JoinPoint joinPoint) throws Throwable {
 		
 		printEveryThing(joinPoint);		
