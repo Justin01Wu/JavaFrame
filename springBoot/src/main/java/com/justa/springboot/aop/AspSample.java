@@ -2,6 +2,7 @@ package com.justa.springboot.aop;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
+//@EnableAspectJAutoProxy(proxyTargetClass = true)  // using CGLIB proxy 
 public class AspSample {
 	private static final Logger logger = LoggerFactory.getLogger(AspSample.class);
 
@@ -22,7 +24,7 @@ public class AspSample {
 	}	
 	
 
-	@Before("@annotation(com.justa.springboot.aop.Loggable)")
+	@After("@annotation(com.justa.springboot.aop.Loggable)")
 	// run AOP on method with annotation Loggable
 	public void beforeIsCompliantUw(JoinPoint joinPoint) throws Throwable {
 		
