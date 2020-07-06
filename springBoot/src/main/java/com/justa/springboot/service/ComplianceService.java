@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.justa.springboot.aop.Loggable;
+
 @Service
 public class ComplianceService {
 	
@@ -26,6 +28,7 @@ public class ComplianceService {
         userList = users.split(",");
     }
 
+    @Loggable
     protected boolean isCompliantUw(final String uwFullName) {
         if ((null==uwFullName) || uwFullName.isEmpty()) {
             return false;

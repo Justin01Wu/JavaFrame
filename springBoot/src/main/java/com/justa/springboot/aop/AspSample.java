@@ -21,7 +21,9 @@ public class AspSample {
 
 	}	
 	
-	@Before("execution(* com.justa.springboot.service.ComplianceService.isCompliantUw(..))")
+
+	@Before("@annotation(com.justa.springboot.aop.Loggable)")
+	// run AOP on method with annotation Loggable
 	public void beforeIsCompliantUw(JoinPoint joinPoint) throws Throwable {
 		
 		printEveryThing(joinPoint);		
