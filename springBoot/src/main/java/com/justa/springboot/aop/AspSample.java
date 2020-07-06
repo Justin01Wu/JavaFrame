@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-public class UserRepoMonitor {
-	private static final Logger logger = LoggerFactory.getLogger(UserRepoMonitor.class);
+public class AspSample {
+	private static final Logger logger = LoggerFactory.getLogger(AspSample.class);
 
 	@Before("execution(* com.justa.springboot.db.*Repository.getUsersByNameAndPosition(..))")
 	// first * means any return type, second * means any class end with Repository
