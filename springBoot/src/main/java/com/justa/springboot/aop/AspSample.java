@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import com.justa.springboot.service.ComplianceService;
+
 @Aspect
 @Component
 //@EnableAspectJAutoProxy(proxyTargetClass = true)  // using CGLIB proxy 
@@ -24,9 +26,9 @@ public class AspSample {
 	}	
 	
 
-	@After("@annotation(com.justa.springboot.aop.Loggable)")
+	@After("@annotation(com.justa.springboot.aop.Loggable) && args(name) && target (service)")
 	// run AOP on method with annotation Loggable
-	public void beforeIsCompliantUw(JoinPoint joinPoint) throws Throwable {
+	public void beforeIsCompliantUw(JoinPoint joinPoint, ComplianceService service, String name) throws Throwable {
 		
 		printEveryThing(joinPoint);		
 
