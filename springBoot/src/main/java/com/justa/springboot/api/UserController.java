@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.justa.springboot.db.PositionEnum;
+import com.justa.springboot.db.UserNativeRepository;
 import com.justa.springboot.db.UserRepository;
 import com.justa.springboot.model.User;
 import com.justa.springboot.service.ComplianceService;
@@ -57,6 +58,17 @@ public class UserController {
 		//    https://www.baeldung.com/spring-enum-request-param
 		
 		return userManager.getUserByNameAndPosition(name, position);
+	}
+	
+	@GetMapping(path = "/queryByPosition")
+	public @ResponseBody List<User> getUserByPosition(
+			@RequestParam(name = "position") PositionEnum position) {
+		
+		// here position must be enum.name(), other wise it will throw ConversionFailedException
+		// So you can define customized converter by implementing Converter interface  : 
+		//    https://www.baeldung.com/spring-enum-request-param
+		
+		return userManager.getUserByPosition(position);
 	}
 	
 	

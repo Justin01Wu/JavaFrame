@@ -3,10 +3,14 @@ package com.justa.springboot.model;
 import java.util.Objects;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Transient;
 
 import com.justa.springboot.db.PositionEnum;
+import com.justa.springboot.db.PositionEnumConverter;
 
 // from https://spring.io/guides/gs/accessing-data-mysql/
 @Entity // This tells Hibernate to make a table out of this class
@@ -18,6 +22,8 @@ public class User extends BaseEntity  {
 	private String gender;
 	
 	@Column(length = 25)
+	//@Convert(converter = PositionEnumConverter.class)
+	//@Enumerated(EnumType.STRING)
 	private PositionEnum position;
 	
 	private String email;

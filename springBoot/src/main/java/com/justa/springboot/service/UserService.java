@@ -15,6 +15,7 @@ import org.springframework.transaction.event.TransactionalEventListener;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.justa.springboot.db.PositionEnum;
+import com.justa.springboot.db.UserNativeRepository;
 import com.justa.springboot.db.UserRepository;
 import com.justa.springboot.model.User;
 import com.justa.springboot.model.UserEvent;
@@ -31,12 +32,14 @@ public class UserService {
 	@Autowired 
 	private UserRepository userRepository;
 	
+    @Autowired
+    UserNativeRepository userNativeRepo;
+    
 	@Autowired 
 	ComplianceService cs;
 
     @Transactional
-    public void saveUser(User newUser) {
-        
+    public void saveUser(User newUser) {        
     	
         userRepository.save(newUser);
         if(newUser.getId() %2 == 0) {
@@ -65,6 +68,13 @@ public class UserService {
     	// please set break point here to see the difference
     	
         return userRepository.getUsersByNameAndPosition(name, position);
+        
+    }
+    
+    @Transactional(Transactional.TxType.NEVER)
+    public List<User> getUserByPosition( PositionEnum position) {        
+    	    	
+        return userNativeRepo.getUsersByPosition( position);
         
     }
 
