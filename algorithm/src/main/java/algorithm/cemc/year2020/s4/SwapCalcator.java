@@ -54,6 +54,8 @@ public class SwapCalcator {
 		 
 	}
 	
+	// please see here for theory:
+	//  https://ccc.amorim.ca/docs/2020/s4/
 	int calcSwap(){
 		int minSwap = Integer.MAX_VALUE;
 		
