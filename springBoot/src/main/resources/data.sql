@@ -5,3 +5,7 @@ INSERT INTO user (name, email, position) VALUES
   ('Justin', 'justin@gmail.com', 'D'),
   ('Rita', 'rita@hotmail.com', 'M'),
   ('Yan', 'None', 'Q');
+  
+INSERT INTO test_bean (ind_orientation) VALUES
+  ('L'),
+  ('P');

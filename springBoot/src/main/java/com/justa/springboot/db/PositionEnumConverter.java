@@ -3,14 +3,11 @@ package com.justa.springboot.db;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-import org.springframework.stereotype.Component;
-
 // from https://thoughts-on-java.org/jpa-21-type-converter-better-way-to/
 
 // TODO please follow the below url to get generic enum converter
 //  https://stackoverflow.com/questions/23564506/is-it-possible-to-write-a-generic-enum-converter-for-jpa
 
-@Component
 @Converter(autoApply = true)   // tell the JPA provider to use it to map PositionEnum in any entities
 public class PositionEnumConverter implements AttributeConverter<PositionEnum, String> {
  
