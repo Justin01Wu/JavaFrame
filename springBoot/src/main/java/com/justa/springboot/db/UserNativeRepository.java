@@ -35,6 +35,7 @@ public class UserNativeRepository {
     
     // for unknown reason, PositionEnumConverter doesn't work on JDBCTemplate
     // so have to use customized mapper, TODO find root cause
+    // for fixing, please see https://stackoverflow.com/questions/25536969/spring-jdbc-postgres-sql-java-8-conversion-from-to-localdate
 	private class UserRowMapper implements RowMapper<User> {
 		public User mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Integer id = rs.getInt("id");
