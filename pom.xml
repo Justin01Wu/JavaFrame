@@ -17,6 +17,7 @@
         <module>mock</module>
 		<module>test</module>
 		<module>jmx</module>
+		<module>beanUtils</module>		
 		<module>mvn-plugin</module>
 		<module>transaction</module>
 		<module>jdbc</module>
