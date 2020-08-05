@@ -47,4 +47,19 @@ public class ComplexBean {
 	}
 
 
+	public SimpleBean getSimpleBean1() {
+		return simpleBean1;
+	}
+
+
+	public void setSimpleBean1(SimpleBean simpleBean1) {
+		this.simpleBean1 = simpleBean1;
+	}
+
+
+	public SimpleBeanExt getSimpleBean2() {
+		return simpleBean2;
+	}
+
+
 }

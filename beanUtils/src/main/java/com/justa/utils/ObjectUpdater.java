@@ -14,7 +14,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 
 public class ObjectUpdater {
 
-	private static Map<Class, PropertyDescriptor[]> descriptorsMap = new HashMap<Class, PropertyDescriptor[]>();
+	private static Map<Class<?>, PropertyDescriptor[]> descriptorsMap = new HashMap<Class<?>, PropertyDescriptor[]>();
 
 	/**
 	 * update targetObject with originalObject if the field in originalObject is NOT null, we will have trouble if the field is primitive type
@@ -31,8 +31,8 @@ public class ObjectUpdater {
 			return;
 		}
 		
-		Class orignalClass = originalObject.getClass();
-		Class updateClass = targetObject.getClass();
+		Class<?> orignalClass = originalObject.getClass();
+		Class<?> updateClass = targetObject.getClass();
 
 //		// you may want to work this check if you need to handle polymorphic
 //		// relations
@@ -43,8 +43,7 @@ public class ObjectUpdater {
 
 		PropertyDescriptor[] descriptors = descriptorsMap.get(orignalClass);
 		if (descriptors == null) {
-			descriptors = PropertyUtils
-					.getPropertyDescriptors(orignalClass);
+			descriptors = PropertyUtils.getPropertyDescriptors(orignalClass);
 			descriptorsMap.put(orignalClass, descriptors);
 		}
 
