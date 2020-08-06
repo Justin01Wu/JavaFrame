@@ -4,6 +4,8 @@ import java.beans.PropertyEditorSupport;
 
 import com.justa.springboot.db.PositionEnum;
 
+
+//from  https://stackoverflow.com/questions/7730529/overriding-beanpropertyrowmapper-to-support-jodatime-datetime
 public class PositionEnumEditor extends PropertyEditorSupport {
     @Override
     public void setAsText(final String text) throws IllegalArgumentException {
