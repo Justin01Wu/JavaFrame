@@ -1,4 +1,6 @@
-package com.justa.springboot.db;
+package com.justa.springboot.db.converter2;
+
+import com.justa.springboot.db.PersistableEnum;
 
 //from https://stackoverflow.com/questions/23564506/is-it-possible-to-write-a-generic-enum-converter-for-jpa
 public enum IndOrientation implements PersistableEnum<String> {

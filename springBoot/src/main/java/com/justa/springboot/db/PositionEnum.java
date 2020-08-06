@@ -1,6 +1,6 @@
 package com.justa.springboot.db;
 
-public enum PositionEnum implements PersistableEnum<String>{
+public enum PositionEnum {
 	
 	Developer("D"),
 	QA("Q"),
@@ -16,20 +16,14 @@ public enum PositionEnum implements PersistableEnum<String>{
     		return null;
     	}
     	for(PositionEnum one: PositionEnum.values()) {
-    		if(one.getValue().equals(shortName)) {
+    		if(one.getShortName().equals(shortName)) {
     			return one;
     		}
     	}
         return null;
-    }
-    
-	@Override
-	public PositionEnum getEnum(String shortName) {
-		return fromShortName(shortName);
-	}
+    }    
 
-	@Override
-	public String getValue() {
+	public String getShortName() {
 		return shortName;
 	}
 }

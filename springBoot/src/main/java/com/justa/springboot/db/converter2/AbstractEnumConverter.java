@@ -1,7 +1,9 @@
-package com.justa.springboot.db;
+package com.justa.springboot.db.converter2;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+
+import com.justa.springboot.db.PersistableEnum;
 
 //from https://stackoverflow.com/questions/23564506/is-it-possible-to-write-a-generic-enum-converter-for-jpa
 @Converter

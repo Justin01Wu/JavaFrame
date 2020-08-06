@@ -3,7 +3,7 @@ package com.justa.springboot.model;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
 
-import com.justa.springboot.db.IndOrientation;
+import com.justa.springboot.db.converter2.IndOrientation;
 
 @Entity 
 public class TestBean extends BaseEntity{
