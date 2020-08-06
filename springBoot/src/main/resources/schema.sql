@@ -15,5 +15,6 @@ DROP TABLE IF EXISTS test_bean;
  
 CREATE TABLE test_bean (
   id INT AUTO_INCREMENT  PRIMARY KEY,
-  ind_orientation VARCHAR(25) NULL
+  ind_orientation VARCHAR(25) NULL,
+  gender int NULL
 );

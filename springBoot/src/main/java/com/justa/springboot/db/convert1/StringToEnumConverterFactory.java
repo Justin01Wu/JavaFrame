@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import com.justa.springboot.db.EnumUtil;
 import com.justa.springboot.db.PersistableEnum;
 
+// from https://www.baeldung.com/spring-type-conversions
 @Component
 public class StringToEnumConverterFactory implements ConverterFactory<String, PersistableEnum<String>> {
 

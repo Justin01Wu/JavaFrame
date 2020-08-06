@@ -8,7 +8,10 @@ import javax.persistence.Converter;
 // TODO please follow the below url to get generic enum converter
 //  https://stackoverflow.com/questions/23564506/is-it-possible-to-write-a-generic-enum-converter-for-jpa
 
-@Converter(autoApply = true)   // tell the JPA provider to use it to map PositionEnum in any entities
+@Converter(autoApply = true)   
+// tell the JPA provider to use it to map PositionEnum in any entities
+// didn't work on JDBCTemplate, so in JDBCTemplate, better to use enum.name() on the column, otherwise it will get conversionException
+// Please see UserNativeRepository for details
 public class PositionEnumConverter implements AttributeConverter<PositionEnum, String> {
  
     @Override

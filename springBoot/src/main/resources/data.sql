@@ -6,6 +6,6 @@ INSERT INTO user (name, email, position) VALUES
   ('Rita', 'rita@hotmail.com', 'M'),
   ('Yan', 'None', 'Q');
   
-INSERT INTO test_bean (ind_orientation) VALUES
-  ('L'),
-  ('P');
+INSERT INTO test_bean (ind_orientation, gender) VALUES
+  ('L', 10),
+  ('P', 20);
