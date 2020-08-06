@@ -16,7 +16,7 @@ public class PositionEnumConverter implements AttributeConverter<PositionEnum, S
     	if(position == null) {
     		return null;
     	}
-        return position.getShortName();
+        return position.getValue();
     }
  
     @Override

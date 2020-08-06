@@ -25,7 +25,7 @@ public class UserNativeRepository {
 
         String sql = "select * from User where position like '%s' order by id desc";
 
-        sql = String.format(sql, position.getShortName());
+        sql = String.format(sql, position.getValue());
 
         //BeanPropertyRowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
         return jdbcTemplate.query(sql, rowMapper);
