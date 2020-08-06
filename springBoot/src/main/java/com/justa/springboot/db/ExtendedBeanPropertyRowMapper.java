@@ -12,11 +12,6 @@ public class ExtendedBeanPropertyRowMapper <T> extends BeanPropertyRowMapper<T> 
         super(class1);
     }
     
-//    @Override
-//    protected void initBeanWrapper(BeanWrapper bw) {
-//    	//bw.
-//    }
-    
     // from https://stackoverflow.com/questions/15411843/spring-jdbc-beanpropertyrowmapper-yes-no-y-n-to-boolean-bean-properties
     @Override
     protected Object getColumnValue(ResultSet rs, int index, PropertyDescriptor pd) throws SQLException {

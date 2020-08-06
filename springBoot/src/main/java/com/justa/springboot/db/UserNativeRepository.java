@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.justa.springboot.db.converter3.PositionEnumExtendedBeanPropertyRowMapper;
 import com.justa.springboot.model.User;
 
 @Repository
@@ -15,8 +16,6 @@ public class UserNativeRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    private RowMapper<User> rowMapper = new UserRowMapper();
-    
     public UserNativeRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -27,15 +26,19 @@ public class UserNativeRepository {
 
         sql = String.format(sql, position.getShortName());
 
-        // PositionEnumConverter doesn't work on JDBCTemplate
-        // so have to use customized mapper UserRowMapper, which is ugly and heavy.
-        // for fixing, please see below:
+        // PositionEnumConverter doesn't work on JDBCTemplate, it will get conversion exception on Position column:             
+          //BeanPropertyRowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
+       
+        // so have to use customized mapper UserRowMapper, which is ugly and heavy:
+        //RowMapper<User> rowMapper = new UserRowMapper();
+        
+        // for details, please see below:
         // (1) https://stackoverflow.com/questions/25536969/spring-jdbc-postgres-sql-java-8-conversion-from-to-localdate
         // (2) https://stackoverflow.com/questions/2751733/map-enum-in-jpa-with-fixed-values
-        // (3) https://stackoverflow.com/questions/34239585/how-to-register-custom-converters-in-spring-boot
+        // (3) https://stackoverflow.com/questions/34239585/how-to-register-custom-converters-in-spring-boot        
         
-        //BeanPropertyRowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
-        ExtendedBeanPropertyRowMapper<User> rowMapper = new ExtendedBeanPropertyRowMapper<>(User.class);
+        //ExtendedBeanPropertyRowMapper<User> rowMapper = new ExtendedBeanPropertyRowMapper<>(User.class);  // this also works
+        PositionEnumExtendedBeanPropertyRowMapper<User> rowMapper = new PositionEnumExtendedBeanPropertyRowMapper<>(User.class);
         
         return jdbcTemplate.query(sql, rowMapper);
     }
