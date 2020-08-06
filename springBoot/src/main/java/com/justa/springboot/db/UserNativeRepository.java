@@ -27,18 +27,20 @@ public class UserNativeRepository {
 
         sql = String.format(sql, position.getShortName());
 
+        // PositionEnumConverter doesn't work on JDBCTemplate
+        // so have to use customized mapper UserRowMapper, which is ugly and heavy.
+        // for fixing, please see below:
+        // (1) https://stackoverflow.com/questions/25536969/spring-jdbc-postgres-sql-java-8-conversion-from-to-localdate
+        // (2) https://stackoverflow.com/questions/2751733/map-enum-in-jpa-with-fixed-values
+        // (3) https://stackoverflow.com/questions/34239585/how-to-register-custom-converters-in-spring-boot
+        
         //BeanPropertyRowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
         ExtendedBeanPropertyRowMapper<User> rowMapper = new ExtendedBeanPropertyRowMapper<>(User.class);
+        
         return jdbcTemplate.query(sql, rowMapper);
     }
     
     
-    // for unknown reason, PositionEnumConverter doesn't work on JDBCTemplate
-    // so have to use customized mapper, TODO find root cause
-    // for fixing, please see below:
-    // https://stackoverflow.com/questions/25536969/spring-jdbc-postgres-sql-java-8-conversion-from-to-localdate
-    // https://stackoverflow.com/questions/2751733/map-enum-in-jpa-with-fixed-values
-    // https://stackoverflow.com/questions/34239585/how-to-register-custom-converters-in-spring-boot
 	private class UserRowMapper implements RowMapper<User> {
 		public User mapRow(ResultSet rs, int rowNum) throws SQLException {
 			Integer id = rs.getInt("id");
