@@ -28,6 +28,7 @@ public class UserNativeRepository {
         sql = String.format(sql, position.getShortName());
 
         //BeanPropertyRowMapper<User> rowMapper = new BeanPropertyRowMapper<>(User.class);
+        ExtendedBeanPropertyRowMapper<User> rowMapper = new ExtendedBeanPropertyRowMapper<>(User.class);
         return jdbcTemplate.query(sql, rowMapper);
     }
     
