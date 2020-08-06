@@ -10,7 +10,8 @@ import javax.persistence.Converter;
 
 @Converter(autoApply = true)   
 // tell the JPA provider to use it to map PositionEnum in any entities
-// didn't work on JDBCTemplate, so in JDBCTemplate, better to use enum.name() on the column, otherwise it will get conversionException
+// didn't work on JDBCTemplate, so in JDBCTemplate, 
+// better to use enum.name() on the column( == @Enumerated(EnumType.STRING) ), otherwise it will get conversionException
 // Please see UserNativeRepository for details
 public class PositionEnumConverter implements AttributeConverter<PositionEnum, String> {
  
