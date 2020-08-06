@@ -8,10 +8,10 @@ import com.justa.springboot.db.EnumUtil;
 import com.justa.springboot.db.PersistableEnum;
 
 @Component
-public class StringToEnumConverterFactory implements ConverterFactory<String, PersistableEnum> {
+public class StringToEnumConverterFactory implements ConverterFactory<String, PersistableEnum<String>> {
 
 	@Override
-	public <T extends PersistableEnum> Converter<String, T> getConverter(Class<T> targetType) {
+	public <T extends PersistableEnum<String>> Converter<String, T> getConverter(Class<T> targetType) {
 
 		return new StringToEnumConverter(targetType);
 	}
