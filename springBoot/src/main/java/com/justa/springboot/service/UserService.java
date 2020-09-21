@@ -1,6 +1,7 @@
 package com.justa.springboot.service;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.transaction.Transactional;
 
@@ -72,18 +73,20 @@ public class UserService {
     }
     
     @Transactional(Transactional.TxType.NEVER)
-    public List<User> getUserByPosition( PositionEnum position) {        
-    	    	
+    public List<User> getUserByPosition( PositionEnum position) {
         return userNativeRepo.getUsersByPosition( position);
-        
     }
     
     @Transactional(Transactional.TxType.NEVER)
-    public Integer getUserCount( ) {        
-    	    	
+    public Integer getUserCount( ) {    	    	
         return userNativeRepo.countUsers();
-        
     }
+    
+    @Transactional(Transactional.TxType.NEVER)
+    public Map<String, Object> findByIdAsMap(Integer id ) {    	    	
+        return userNativeRepo.findByIdAsMap(id);
+    }
+
 
     @TransactionalEventListener
     public void doAfterCommit(UserEvent event){

@@ -3,6 +3,7 @@ package com.justa.springboot.db;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -63,6 +64,11 @@ public class UserNativeRepository {
 	public int countUsers() {
 		String sql = "select count(*) from User";
 		return jdbcTemplate.queryForObject(sql, Integer.class);
+	}
+	
+	public Map<String, Object> findByIdAsMap(Integer id) {
+		String sql = "select * from user where id= ?";
+		return jdbcTemplate.queryForMap(sql, id);
 	}
 
 }
