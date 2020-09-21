@@ -81,11 +81,16 @@ public class UserController {
 	@GetMapping(path = "/{id}")
 	public @ResponseBody Map<String, Object> findByIdAsMap(
 			@PathVariable("id") Integer userId
-			) {
-		
+			) {		
 		return userManager.findByIdAsMap(userId);
 	}
 	
+	
+	@GetMapping(path = "/allAsMap")
+	public @ResponseBody List<Map<String, Object>> findAllAsMaps() {
+			// This returns a JSON or XML with the users
+		return userManager.findAllAsMaps();
+	}
 	
 	@GetMapping(path = "/complianceList", produces={"application/json"})
 	public @ResponseBody String getComplianceList() {

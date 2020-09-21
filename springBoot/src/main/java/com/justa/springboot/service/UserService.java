@@ -87,7 +87,11 @@ public class UserService {
         return userNativeRepo.findByIdAsMap(id);
     }
 
-
+    @Transactional(Transactional.TxType.NEVER)
+    public List<Map<String, Object>> findAllAsMaps() {    	    	
+        return userNativeRepo.findAllAsMaps();
+    }
+    
     @TransactionalEventListener
     public void doAfterCommit(UserEvent event){
         //process event here only after a successful committing

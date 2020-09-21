@@ -69,6 +69,13 @@ public class UserNativeRepository {
 	public Map<String, Object> findByIdAsMap(Integer id) {
 		String sql = "select * from user where id= ?";
 		return jdbcTemplate.queryForMap(sql, id);
+		// didn't handle Enum properly, so just for quick demo or prototype
+	}
+	
+	public List<Map<String, Object>> findAllAsMaps() {
+		String sql = "select * from user";
+		return jdbcTemplate.queryForList(sql);
+		// didn't handle Enum properly, so just for quick demo or prototype
 	}
 
 }
