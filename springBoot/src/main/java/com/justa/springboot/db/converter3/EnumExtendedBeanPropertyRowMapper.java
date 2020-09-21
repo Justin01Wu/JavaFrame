@@ -6,8 +6,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import com.justa.springboot.db.PositionEnum;
 
 //please see https://stackoverflow.com/questions/7730529/overriding-beanpropertyrowmapper-to-support-jodatime-datetime
-public class PositionEnumExtendedBeanPropertyRowMapper <T> extends BeanPropertyRowMapper<T> {
-    public PositionEnumExtendedBeanPropertyRowMapper(Class<T> class1) {
+public class EnumExtendedBeanPropertyRowMapper <T> extends BeanPropertyRowMapper<T> {
+    public EnumExtendedBeanPropertyRowMapper(Class<T> class1) {
         super(class1);
     }
     

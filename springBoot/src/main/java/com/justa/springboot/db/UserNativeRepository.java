@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.justa.springboot.db.converter3.PositionEnumExtendedBeanPropertyRowMapper;
+import com.justa.springboot.db.converter3.EnumExtendedBeanPropertyRowMapper;
 import com.justa.springboot.model.User;
 
 @Repository
@@ -38,7 +38,7 @@ public class UserNativeRepository {
         // (3) https://stackoverflow.com/questions/34239585/how-to-register-custom-converters-in-spring-boot        
         
         //ExtendedBeanPropertyRowMapper<User> rowMapper = new ExtendedBeanPropertyRowMapper<>(User.class);  // this also works
-        PositionEnumExtendedBeanPropertyRowMapper<User> rowMapper = new PositionEnumExtendedBeanPropertyRowMapper<>(User.class);
+        EnumExtendedBeanPropertyRowMapper<User> rowMapper = new EnumExtendedBeanPropertyRowMapper<>(User.class);
         
         return jdbcTemplate.query(sql, rowMapper);
     }
