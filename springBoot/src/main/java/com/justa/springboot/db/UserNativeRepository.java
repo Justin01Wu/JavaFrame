@@ -59,5 +59,10 @@ public class UserNativeRepository {
 			return user;
 		}
 	}
+	
+	public int countUsers() {
+		String sql = "select count(*) from User";
+		return jdbcTemplate.queryForObject(sql, Integer.class);
+	}
 
 }

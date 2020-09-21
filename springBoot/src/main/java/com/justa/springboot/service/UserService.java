@@ -77,6 +77,13 @@ public class UserService {
         return userNativeRepo.getUsersByPosition( position);
         
     }
+    
+    @Transactional(Transactional.TxType.NEVER)
+    public Integer getUserCount( ) {        
+    	    	
+        return userNativeRepo.countUsers();
+        
+    }
 
     @TransactionalEventListener
     public void doAfterCommit(UserEvent event){

@@ -13,6 +13,7 @@
     2020-03-16 09:55:41.457  INFO 11928 --- [nio-9090-exec-9] com.justa.springboot.db.UserManager      : triggered by user saving: 6
 ```
 + it is heavy to start, so not good for lambda style function, which ask to start quickly with tons of instances.
++ it automatically restart even only a HTML page is changed
 
 ### Log
 Need to adjust those items for developers:

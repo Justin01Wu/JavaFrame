@@ -70,6 +70,12 @@ public class UserController {
 		return userManager.getUserByPosition(position);
 	}
 	
+	@GetMapping(path = "/queryUserCount")
+	public @ResponseBody Integer getUserCount() {
+		
+		return userManager.getUserCount();
+	}
+	
 	
 	@GetMapping(path = "/complianceList", produces={"application/json"})
 	public @ResponseBody String getComplianceList() {
