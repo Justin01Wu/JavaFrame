@@ -33,7 +33,9 @@ public class RSAToken {
 		String token = createToken(12345, "Justa",  ttlMillis, kp);
 		System.out.println(token);
 		
-		verifyToken(kp, token);
+		//verifyToken(kp, token);
+		verifyToken(token);  
+		// because public key is already inside the token, so we don't need to pass it in 
 	}
 	
 	public static KeyPair createRSAPair() throws NoSuchAlgorithmException {
@@ -66,6 +68,7 @@ public class RSAToken {
 				.withIssuedAt(now)
 				.withSubject(String.valueOf(userId)).withIssuer("JUSTA")
 				.withClaim("publicKey", encodedPublicKey)
+				// add public Key into token , client side can verify it without secrets
 				.withClaim("userName", userName)
 				.withClaim("justin", "I can add any fields into JWT token")
 				.withClaim("email", "justin.wu@global.local")
@@ -95,7 +98,9 @@ public class RSAToken {
 	    return pk;
 	}
 	
-	public static DecodedJWT verifyToken(KeyPair kp, String token ) throws SecurityException, IOException, JwkException, NoSuchAlgorithmException, InvalidKeySpecException {
+	public static DecodedJWT verifyToken(
+			//KeyPair kp, 
+			String token ) throws SecurityException, IOException, JwkException, NoSuchAlgorithmException, InvalidKeySpecException {
 		
 		JWT parser =  new JWT ();	
 		DecodedJWT jwt = parser.decodeJwt(token);
