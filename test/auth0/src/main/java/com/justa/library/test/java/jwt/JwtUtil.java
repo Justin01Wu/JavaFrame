@@ -1,6 +1,7 @@
 package com.justa.library.test.java.jwt;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Base64;
@@ -44,7 +45,10 @@ public class JwtUtil {
 
 	public static DecodedJWT verifyToken(String token) throws SecurityException, IOException, JwkException {
 
-		Algorithm algorithm = extractAlgorithm(token);
+		
+		//Algorithm algorithm = extractAlgorithm(token);
+		Algorithm algorithm = extractAlgorithm2(token);
+		
 		Verification ver = JWT.require(algorithm);
 		if(algorithm.getName().equals("HS256")) {
 			ver = ver.withIssuer("Jersey2");
@@ -58,7 +62,29 @@ public class JwtUtil {
 
 	}
 
+	private static Algorithm extractAlgorithm2(String token) throws SecurityException, IOException, JwkException {
+		JWT parser =  new JWT ();	
+		DecodedJWT jwt = parser.decodeJwt(token);
+		String alg = jwt.getAlgorithm();
+		
+		if (alg.equals("HS256")) {
+			return Algorithm.HMAC256(JWT_SECRET);
+			
+		}
+		if (alg.equals("RS256")) {
+			String kid = jwt.getClaim(FIELD_NAME).asString();
+			String issuerUri = jwt.getClaim(ISS_FIELD_NAME).asString();
+			
+			Algorithm a = getRSA(kid, issuerUri);
+			return a;
+		}
+		throw new RuntimeException("unknown Algorithm: " + alg );
+	}
+	
+	/** @deprecated, please use extractAlgorithm2*/
+	@Deprecated
 	private static Algorithm extractAlgorithm(String token) throws SecurityException, IOException, JwkException {
+	
 		System.out.println("Attempting to extract algorithm information from token.");
 		final String[] tokenParts = token.split("\\.");
 		if (tokenParts.length != 3) { // Header + Body + Signature
@@ -79,13 +105,20 @@ public class JwtUtil {
 		JsonNode bodyNode = new ObjectMapper().readTree(body);
 
 		String alg = headerNode.get("alg").textValue();
-		Algorithm a = Algorithm.HMAC256(JWT_SECRET);
-		if (a.getName().equals(alg)) {
+		
+		if (alg.equals("HS256")) {
+			Algorithm a = Algorithm.HMAC256(JWT_SECRET);
 			return a;
 		}
 
 		String kid = headerNode.get(FIELD_NAME).textValue();
 		String issuerUri = bodyNode.get(ISS_FIELD_NAME).textValue();
+		
+		Algorithm a = getRSA(kid, issuerUri);
+		return a;
+	}
+	
+	private static Algorithm getRSA(String kid, String issuerUri) throws JwkException, MalformedURLException {
 		// Provider for retrieving public/private keys used by Microsoft to sign the
 		// token
 		String jwksUri;		
@@ -116,6 +149,7 @@ public class JwtUtil {
 
 		// Get the correct algorithm for decoding
 		return Algorithm.RSA256((RSAPublicKey) jwk.getPublicKey(), null);
+
 	}
 
 	public static void printToken(DecodedJWT jwt) {
