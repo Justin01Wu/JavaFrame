@@ -47,7 +47,7 @@ Amazon developed two version of SDK:
 	<dependency>
           <groupId>software.amazon.awssdk</groupId>
           <artifactId>bom</artifactId>
-          <version>2.x.0</version>
+          <version>2.15.18</version>
           <type>pom</type>
           <scope>import</scope>
     </dependency>
