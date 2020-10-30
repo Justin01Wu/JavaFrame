@@ -1,20 +1,36 @@
 package com.justa.test.aws.message;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
+import com.amazonaws.services.sqs.model.MessageAttributeValue;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
 
 // it comes from https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/examples-sqs-messages.html
 public class SendSQSMessages {
 
 	private static final String QUEUE_NAME = "input" ;
+	public static final String SchemaVersion = "SchemaVersion" ;
+	public static final String OperationType = "OperationType" ;
+	
+	private final static Map<String, MessageAttributeValue> MessageAttributes = new HashMap<>();
+	static {
+		MessageAttributeValue operation = new MessageAttributeValue().withStringValue("DATA_SYNC");		
+		operation.setDataType("String");
+		MessageAttributeValue schemaVersion = new MessageAttributeValue().withStringValue("1.0");
+		schemaVersion.setDataType("String");
+		MessageAttributes.put(SchemaVersion, schemaVersion);
+		MessageAttributes.put(OperationType, operation);
+	}
+	
 	
     public static void main(String[] args)    {
-
     	
-        final AmazonSQS sqs = AmazonSQSClientBuilder.defaultClient();//.standard().withRegion("us-east-1").defaultClient();
+    	
+        final AmazonSQS sqs = AmazonSQSClientBuilder.defaultClient();
         
         String queueUrl = sqs.getQueueUrl(QUEUE_NAME).getQueueUrl();
      // receive messages from the queue
@@ -23,7 +39,8 @@ public class SendSQSMessages {
         
         SendMessageRequest sendMessageRequest = new SendMessageRequest()
         		.withQueueUrl(queueUrl)                
-                .withMessageBody(msgBody);
+                .withMessageBody(msgBody)
+                .withMessageAttributes(MessageAttributes);
         
         System.out.println("start to send message..." + new Date());
         

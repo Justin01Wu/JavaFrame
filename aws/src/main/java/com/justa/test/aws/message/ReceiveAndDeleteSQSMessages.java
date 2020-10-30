@@ -2,10 +2,12 @@ package com.justa.test.aws.message;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
 import com.amazonaws.services.sqs.model.Message;
+import com.amazonaws.services.sqs.model.MessageAttributeValue;
 import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
 
 // it comes from https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/examples-sqs-messages.html
@@ -22,8 +24,9 @@ public class ReceiveAndDeleteSQSMessages {
      // receive messages from the queue
         
         ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest(queueUrl)
-        		  .withWaitTimeSeconds(10)     // long poll: wait 10 seconds, max is 20 seconds
-        		  .withMaxNumberOfMessages(10);
+        		.withAttributeNames(SendSQSMessages.SchemaVersion, SendSQSMessages.OperationType)
+        		.withWaitTimeSeconds(10)     // long poll: wait 10 seconds if didn't get msg immediately, max is 20 seconds
+        		.withMaxNumberOfMessages(10);
         
         System.out.println("start to get message..." + new Date());
         
@@ -32,8 +35,19 @@ public class ReceiveAndDeleteSQSMessages {
         	System.out.println("didn't get any message");
         }else{
             for (Message m : messages) {
-            	System.out.println(m.getMessageId());
-            	System.out.println(m.getBody());
+            	System.out.println("msgId: " + m.getMessageId());
+            	System.out.println("body: " + m.getBody());
+            	
+            	Map<String, MessageAttributeValue> attributes = m.getMessageAttributes();
+            	MessageAttributeValue att = attributes.get(SendSQSMessages.SchemaVersion);
+            	if( att!= null) {
+            		System.out.println(SendSQSMessages.SchemaVersion + ": " + att.getStringValue());
+            	}
+            	
+            	att = attributes.get(SendSQSMessages.OperationType);
+            	if( att!= null) {
+            		System.out.println(SendSQSMessages.OperationType + ": " + att.getStringValue());
+            	}
 
             	String receipt  = m.getReceiptHandle();
             	sqs.changeMessageVisibility(queueUrl, receipt, 120);  //default is 30 seconds
