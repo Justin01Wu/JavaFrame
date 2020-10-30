@@ -29,6 +29,34 @@ Edge location are endpoint of AWS which are used for caching, like CDN
 AWS now has 19 regions, 57 AZ, 150 edge locations
 AZs within a single region provide inexpensive, low latency network connectivity to other AZs in the same region. 
 
+## SDK
+Amazon developed two version of SDK:
++ Version 1 :
+
+```
+		<dependency>
+  			<groupId>com.amazonaws</groupId>
+  			<artifactId>aws-java-sdk</artifactId>
+  			<version>1.11.890</version>
+		</dependency>
+```
+
++ Version 2:
+
+```
+	<dependency>
+          <groupId>software.amazon.awssdk</groupId>
+          <artifactId>bom</artifactId>
+          <version>2.x.0</version>
+          <type>pom</type>
+          <scope>import</scope>
+    </dependency>
+```
+
+In the future, Version 2 will replace version 1. But in this moment(year 2020), Version 1 still has more functions than version2, so it is hard to migrate all code into version 2.
+
+The difference: https://docs.aws.amazon.com/sdk-for-java/v2/migration-guide/whats-different.html
+
 ## S3
 
 Storage gateway: 
