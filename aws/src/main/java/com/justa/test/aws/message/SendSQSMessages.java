@@ -3,6 +3,7 @@ package com.justa.test.aws.message;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClientBuilder;
@@ -29,6 +30,13 @@ public class SendSQSMessages {
 	
     public static void main(String[] args)    {
     	
+    	// we can use the following way to control accessKey programmatically 
+//		Properties props = System.getProperties();
+//		props.setProperty("aws.accessKeyId", "AKIA44WGAELBKZPOLJ6T");
+//		props.setProperty("aws.secretKey", "mySecretyKey");
+//		props.setProperty("aws.region", "us-east-1");
+    	
+    	// AWS default client will use this order to get assessKey (1) environment (2)  Java system properties (3) .aws/credential ... 
     	
         final AmazonSQS sqs = AmazonSQSClientBuilder.defaultClient();
         
