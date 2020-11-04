@@ -7,10 +7,12 @@ Tips
 	A sentence is not finished [new line] sencond sentence
 	E-mail message items display the information bar as expected when the line breaks are removed.
 ```
-	+ To stop it, youjust need to finish a sentence:
+
+   + To stop it, you just need to finish a sentence:
 ```
 	A sentence is finished. [new line] sencond sentence.
 ```
+
 
 
 
