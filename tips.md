@@ -5,7 +5,7 @@ Tips
 + Outlook will automatically remove line breaks when the sentence is not finished:
 ```
 	A sentence is not finished [new line] sencond sentence
-	E-mail message items display the information bar as expected when the line breaks are removed.
+	Line breaks are removed in the message.
 ```
 
    + To stop it, you just need to finish a sentence:
