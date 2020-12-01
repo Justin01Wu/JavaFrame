@@ -16,7 +16,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
 
 // from https://stackoverflow.com/questions/14375920/java-addressbook-input-data-into-a-jtable
 public class Main {
@@ -24,7 +23,7 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		
 		JFrame frame = new JFrame();
-        frame.setSize(768, 300);
+        frame.setSize(768, 500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
 //        JButton addButton = new JButton("Add");
@@ -46,28 +45,45 @@ public class Main {
 //        frame.getContentPane().add(addButton);
 
         JButton editButton = new JButton("CheckOut");
-        editButton.setBounds(109, 228, 169, 23);
+        editButton.setBounds(109, 428, 169, 23);
         frame.getContentPane().add(editButton);
 
         JButton delButton = new JButton("Reset");
-        delButton.setBounds(208, 228, 89, 23);
+        delButton.setBounds(308, 428, 89, 23);
         frame.getContentPane().add(delButton);        
 
         JMenuBar menuBar = createMenuBar();
         frame.getContentPane().add(menuBar);
 
-        JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(10, 32, 732, 151);
+        JScrollPane scrollPane = getProductPane();
         frame.getContentPane().add(scrollPane);
 
-        JTable table = getTable();
-        scrollPane.setViewportView(table);
+        JScrollPane orderPane = getOrderPane();
+        frame.getContentPane().add(orderPane);
 
         frame.setVisible(true);
 
     }
 	
-	static JTable getTable() throws IOException {
+	static JScrollPane getProductPane() throws IOException {
+		JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBounds(10, 32, 732, 151);
+        JTable table = getProductTable();
+        scrollPane.setViewportView(table);
+        return scrollPane;
+        
+	}
+	
+	static JScrollPane getOrderPane() throws IOException {
+		JScrollPane pane = new JScrollPane();
+		pane.setBounds(10, 232, 732, 151);
+        JTable table = getProductTable();
+        pane.setViewportView(table);
+        return pane;
+        
+	}
+	
+	static JTable getProductTable() throws IOException {
         AbstractTableModel dataTable = getDataTable();
         JTable table = new JTable();
         table.setModel(dataTable);

@@ -10,12 +10,18 @@ import java.util.Vector;
 
 public class FileProcessor {
 	
-	public static void main(String[] args) throws IOException {
-		FileProcessor fp =  new FileProcessor();
-		fp.getProducts();
+	private List<Product> products;
+	
+	public FileProcessor() throws IOException {
+		products = loadProducts();		
 	}
 	
-	public List<Product> getProducts() throws IOException {
+	public static void main(String[] args) throws IOException {
+		FileProcessor fp =  new FileProcessor();
+		fp.loadProducts();
+	}
+	
+	private List<Product> loadProducts() throws IOException {
 		List<Product> products =  new ArrayList<>();
 		InputStream is = FileProcessor.class.getClassLoader().getResourceAsStream("products.txt");
 		BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
@@ -32,7 +38,6 @@ public class FileProcessor {
 	
 	public Vector<Vector<Object>> getProductsData() throws IOException {
 		Vector<Vector<Object>> result =  new Vector<>();
-		List<Product> products = this.getProducts();
 		for(Product p : products) {
 			result.add(p.getDataVector());
 		}
@@ -56,5 +61,9 @@ public class FileProcessor {
 		return p;
 		
 		
+	}
+
+	public List<Product> getProducts() {
+		return products;
 	}
 }
