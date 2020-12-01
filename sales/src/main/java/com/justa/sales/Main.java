@@ -1,7 +1,10 @@
 package com.justa.sales;
 
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.Vector;
 
@@ -10,7 +13,6 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
@@ -25,25 +27,25 @@ public class Main {
         frame.setSize(768, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        JButton addButton = new JButton("Add");
-        addButton.setBounds(10, 228, 89, 23);
-        addButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-                JOptionPane.showInputDialog("First Name: ");
-                JOptionPane.showInputDialog("Last Name: ");
-                JOptionPane.showInputDialog("Address: ");
-                JOptionPane.showInputDialog("Town: ");
-                JOptionPane.showInputDialog("County: ");
-                JOptionPane.showInputDialog("Post Code: ");
-                JOptionPane.showInputDialog("Phone Number: ");
-
-            }
-        });
+//        JButton addButton = new JButton("Add");
+//        addButton.setBounds(10, 228, 89, 23);
+//        addButton.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//
+//                JOptionPane.showInputDialog("First Name: ");
+//                JOptionPane.showInputDialog("Last Name: ");
+//                JOptionPane.showInputDialog("Address: ");
+//                JOptionPane.showInputDialog("Town: ");
+//                JOptionPane.showInputDialog("County: ");
+//                JOptionPane.showInputDialog("Post Code: ");
+//                JOptionPane.showInputDialog("Phone Number: ");
+//
+//            }
+//        });
         frame.getContentPane().setLayout(null);
-        frame.getContentPane().add(addButton);
+//        frame.getContentPane().add(addButton);
 
-        JButton editButton = new JButton("Create Order");
+        JButton editButton = new JButton("CheckOut");
         editButton.setBounds(109, 228, 169, 23);
         frame.getContentPane().add(editButton);
 
@@ -58,21 +60,38 @@ public class Main {
         scrollPane.setBounds(10, 32, 732, 151);
         frame.getContentPane().add(scrollPane);
 
-        JTable table = new JTable();
-        AbstractTableModel dataTable = getTable();
-        table.setModel(dataTable);
+        JTable table = getTable();
         scrollPane.setViewportView(table);
 
         frame.setVisible(true);
 
     }
 	
-	static AbstractTableModel getTable() throws IOException {
+	static JTable getTable() throws IOException {
+        AbstractTableModel dataTable = getDataTable();
+        JTable table = new JTable();
+        table.setModel(dataTable);
+		table.addMouseListener(new MouseAdapter() {
+		    public void mousePressed(MouseEvent mouseEvent) {
+		        JTable table =(JTable) mouseEvent.getSource();
+		        Point point = mouseEvent.getPoint();
+		        int row = table.rowAtPoint(point);
+		        if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
+		            // your valueChanged overridden method 
+		        	System.out.println(table.getSelectedRow());
+		        }
+		    }
+		});
+        return table;
+	}
+	
+	static AbstractTableModel getDataTable() throws IOException {
 		
         FileProcessor fp =  new FileProcessor();
 		Vector<Vector<Object>> data = fp.getProductsData();
 		Vector<String> columns = Product.getColumns();
-		AbstractTableModel table = new DefaultTableModel(data, columns);
+		AbstractTableModel table = new MyModel(data, columns);
+
 		return table;
 		
 	}
