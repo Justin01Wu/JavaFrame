@@ -46,16 +46,19 @@ public class FileProcessor {
 	
 	private static Product createProduct(String line) {
 		String[] fields = line.split(",");
-		if(fields.length != 5) {
+		if(fields.length != 6) {
 			throw new RuntimeException("unexpected data in the file products.txt: " + line);
 		}
 		Product p = new Product();
-		p.setName(fields[0].trim());
-		p.setDesc(fields[1].trim());
-		p.setSpec(fields[2].trim());
-		Double price =Double.valueOf(fields[3].trim()); 
+		Integer id = Integer.valueOf(fields[0].trim());
+		p.setId(id);		
+
+		p.setName(fields[1].trim());
+		p.setDesc(fields[2].trim());
+		p.setSpec(fields[3].trim());
+		Double price =Double.valueOf(fields[4].trim()); 
 		p.setPrice(price);
-		Integer amount = Integer.valueOf(fields[4].trim());
+		Integer amount = Integer.valueOf(fields[5].trim());
 		p.setAmount(amount);		
 		
 		return p;

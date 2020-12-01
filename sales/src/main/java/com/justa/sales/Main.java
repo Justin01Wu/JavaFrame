@@ -16,10 +16,21 @@ import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
 
 // from https://stackoverflow.com/questions/14375920/java-addressbook-input-data-into-a-jtable
 public class Main {
 	
+	private static FileProcessor fp = null;
+	private static JTable orderTable = new JTable();
+	static{
+		try {
+			fp =  new FileProcessor();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+	}
 	public static void main(String[] args) throws IOException {
 		
 		JFrame frame = new JFrame();
@@ -52,9 +63,6 @@ public class Main {
         delButton.setBounds(308, 428, 89, 23);
         frame.getContentPane().add(delButton);        
 
-        JMenuBar menuBar = createMenuBar();
-        frame.getContentPane().add(menuBar);
-
         JScrollPane scrollPane = getProductPane();
         frame.getContentPane().add(scrollPane);
 
@@ -77,14 +85,19 @@ public class Main {
 	static JScrollPane getOrderPane() throws IOException {
 		JScrollPane pane = new JScrollPane();
 		pane.setBounds(10, 232, 732, 151);
-        JTable table = getProductTable();
-        pane.setViewportView(table);
+		Vector<Vector<Object>> data = new Vector<>();
+		Vector<String> columns = Product.getColumns();
+		DefaultTableModel dataTable = new DefaultTableModel(data, columns);
+        orderTable.setModel(dataTable);
+
+        pane.setViewportView(orderTable);
         return pane;
         
 	}
 	
 	static JTable getProductTable() throws IOException {
         AbstractTableModel dataTable = getDataTable();
+        
         JTable table = new JTable();
         table.setModel(dataTable);
 		table.addMouseListener(new MouseAdapter() {
@@ -92,9 +105,21 @@ public class Main {
 		        JTable table =(JTable) mouseEvent.getSource();
 		        Point point = mouseEvent.getPoint();
 		        int row = table.rowAtPoint(point);
+		        System.out.println(row);
 		        if (mouseEvent.getClickCount() == 2 && table.getSelectedRow() != -1) {
 		            // your valueChanged overridden method 
 		        	System.out.println(table.getSelectedRow());
+		        	for(Product p : fp.getProducts()) {
+		        		if(p.getId() == table.getSelectedRow() + 1) {
+		        			System.out.println(p);
+		        			
+		        			DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
+		        			model.addRow(p.getData());
+		        			break;
+		        		}
+		        		
+		        	}
+
 		        }
 		    }
 		});
@@ -103,7 +128,6 @@ public class Main {
 	
 	static AbstractTableModel getDataTable() throws IOException {
 		
-        FileProcessor fp =  new FileProcessor();
 		Vector<Vector<Object>> data = fp.getProductsData();
 		Vector<String> columns = Product.getColumns();
 		AbstractTableModel table = new MyModel(data, columns);
@@ -112,62 +136,6 @@ public class Main {
 		
 	}
 	
-	static JMenuBar createMenuBar() {
-        JMenuBar menuBar = new JMenuBar();
-        menuBar.setBounds(0, 0, 742, 21);
-
-        JMenu mnFile = createFileMenu();
-        menuBar.add(mnFile);
-
-        JMenu menuEdit = createEditMenu();
-        menuBar.add(menuEdit);
-        
-        return menuBar;
-	}
-	
-	static JMenu createFileMenu() {
-
-        JMenu mnFile = new JMenu("File");
-        // Declares and adds items to the menu
-        JMenuItem menuItemNew = new JMenuItem("New");
-        mnFile.add(menuItemNew);
-
-        JMenuItem menuItemOpen = new JMenuItem("Open");
-        mnFile.add(menuItemOpen);
-
-        JMenuItem menuItemSave = new JMenuItem("Save");
-        mnFile.add(menuItemSave);
-
-        JMenuItem menuItemSaveAs = new JMenuItem("Save As..");
-        mnFile.add(menuItemSaveAs);
-
-        JMenuItem menuItemPrint = new JMenuItem("Print");
-        mnFile.add(menuItemPrint);
-
-        JMenuItem menuItemQuit = new JMenuItem("Quit");
-        menuItemQuit.addActionListener(new exitApp());
-        mnFile.add(menuItemQuit);
-
-        
-        return mnFile;
-	}
-	
-	static JMenu createEditMenu() {
-        JMenu menuEdit = new JMenu("Edit");
-
-        JMenuItem menuItemEditSelectedPerson = new JMenuItem(
-                "Edit Selected Person");
-        menuEdit.add(menuItemEditSelectedPerson);
-
-        JMenuItem menuItemSortByName = new JMenuItem("Sort By Name");
-        menuEdit.add(menuItemSortByName);
-
-        JMenuItem menuItemSortPostCode = new JMenuItem("Sort By Post Code");
-        menuEdit.add(menuItemSortPostCode);
-        return menuEdit;
-	}
-	
-
 
     static class exitApp implements ActionListener {
 
