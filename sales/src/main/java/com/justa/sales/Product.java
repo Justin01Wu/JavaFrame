@@ -1,5 +1,7 @@
 package com.justa.sales;
 
+import java.util.Vector;
+
 public class Product {
 	private String name;
 	private String desc;
@@ -47,6 +49,31 @@ public class Product {
 		data[4]= amount;
 		data[5]= 0;
 		return data;
+	}
+	
+	public Vector<Object> getDataVector() {
+		Vector<Object> result = new Vector<>();
+		Object[] a = getData();
+		for(Object o : a ) {
+			result.add(o);
+		}
+		return result;
+	}
+	
+	
+	public static Vector<String> getColumns(){
+		Vector<String> result = new Vector<>();
+
+			result.add("Name");
+			result.add("Desc");
+			result.add("Spec");
+			result.add("price");
+			result.add("amount");
+			result.add("orderNum");
+			
+
+		return result;
+
 	}
 	
 

@@ -2,6 +2,8 @@ package com.justa.sales;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,21 +13,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
 // from https://stackoverflow.com/questions/14375920/java-addressbook-input-data-into-a-jtable
 public class Main {
-
-	static String[] columnNames = {"Name",  "Desc", "Spec", "price","amount", "orderNum"};
 	
-	static Object[][] data = {
-			{"Iphone11", "Iphone11, the latest iphone",  "64gb", 12.34d, 14, 0},
-		    {"XPS13", "Dell XPS 11 desktop",		     "16GB", 899.99d, 24, 0},
-		    {"Bao", "Bao",		     "Xiao", 99999999.99d, 1, 0}
-		};	
-	
-	public static void main(String[] args) {
-		JTable table = new JTable(data, columnNames);		
+	public static void main(String[] args) throws IOException {
 		
 		JFrame frame = new JFrame();
         frame.setSize(768, 300);
@@ -64,13 +58,24 @@ public class Main {
         scrollPane.setBounds(10, 32, 732, 151);
         frame.getContentPane().add(scrollPane);
 
-        table = new JTable();
-        table.setModel(new DefaultTableModel(data, columnNames));
+        JTable table = new JTable();
+        AbstractTableModel dataTable = getTable();
+        table.setModel(dataTable);
         scrollPane.setViewportView(table);
 
         frame.setVisible(true);
 
     }
+	
+	static AbstractTableModel getTable() throws IOException {
+		
+        FileProcessor fp =  new FileProcessor();
+		Vector<Vector<Object>> data = fp.getProductsData();
+		Vector<String> columns = Product.getColumns();
+		AbstractTableModel table = new DefaultTableModel(data, columns);
+		return table;
+		
+	}
 	
 	static JMenuBar createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
