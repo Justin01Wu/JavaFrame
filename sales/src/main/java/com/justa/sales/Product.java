@@ -38,5 +38,16 @@ public class Product {
 		this.amount = amount;
 	}
 	
+	public Object[] getData() {
+		Object[] data = new Object[6];
+		data[0]= name;
+		data[1]= desc;
+		data[2]= spec;
+		data[3]= price;
+		data[4]= amount;
+		data[5]= 0;
+		return data;
+	}
+	
 
 }
