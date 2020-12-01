@@ -16,19 +16,12 @@ import javax.swing.table.DefaultTableModel;
 // from https://stackoverflow.com/questions/14375920/java-addressbook-input-data-into-a-jtable
 public class Main {
 
-	static String[] columnNames = {"Name",
-            "Desc",
-            "Spec",
-            "price",
-            "amount"};
+	static String[] columnNames = {"Name",  "Desc", "Spec", "price","amount", "orderNum"};
 	
 	static Object[][] data = {
-		    {"Iphone11", "Iphone11, the latest iphone",
-		     "64gb", 12.34d, 14},
-		    {"XPS13", "Dell XPS 11 desktop",
-		     "16GB", 899.99d, 24},
-		    {"Bao", "Bao",
-		     "Xiao", 9999.99d, 1}
+			{"Iphone11", "Iphone11, the latest iphone",  "64gb", 12.34d, 14, 0},
+		    {"XPS13", "Dell XPS 11 desktop",		     "16GB", 899.99d, 24, 0},
+		    {"Bao", "Bao",		     "Xiao", 99999999.99d, 1, 0}
 		};	
 	
 	public static void main(String[] args) {
@@ -57,11 +50,11 @@ public class Main {
         frame.getContentPane().setLayout(null);
         frame.getContentPane().add(addButton);
 
-        JButton editButton = new JButton("Edit");
-        editButton.setBounds(109, 228, 89, 23);
+        JButton editButton = new JButton("Create Order");
+        editButton.setBounds(109, 228, 169, 23);
         frame.getContentPane().add(editButton);
 
-        JButton delButton = new JButton("Delete");
+        JButton delButton = new JButton("Reset");
         delButton.setBounds(208, 228, 89, 23);
         frame.getContentPane().add(delButton);        
 
