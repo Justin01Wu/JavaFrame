@@ -1,4 +1,4 @@
-package com.justa.sales;
+package com.yan.sales;
 
 import java.util.Vector;
 
@@ -9,13 +9,13 @@ public class Product {
 	private String desc;
 	private String spec;
 	private double price;
-	private int amount;
+	private int stock;
 
-	public int getId() {
+	public int getID() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setID(int id) {
 		this.id = id;
 	}
 
@@ -51,28 +51,23 @@ public class Product {
 		this.price = price;
 	}
 
-	public int getAmount() {
-		return amount;
+	public int getStock() {
+		return stock;
 	}
 
-	public void setAmount(int amount) {
-		this.amount = amount;
+	public void setStock(int stock) {
+		this.stock = stock;
 	}
 
 	public Object[] getData() {
-		Object[] data = new Object[7];
+		Object[] data = new Object[6];
 		data[0] = id;
 		data[1] = name;
 		data[2] = desc;
 		data[3] = spec;
 		data[4] = price;
-		data[5] = amount;
-		data[6] = 0;
+		data[5] = stock;
 		return data;
-	}
-
-	public String toString() {
-		return id + "," + name + "," + desc + "," + spec + ", ";
 	}
 
 	public Vector<Object> getDataVector() {
@@ -86,16 +81,32 @@ public class Product {
 
 	public static Vector<String> getColumns() {
 		Vector<String> result = new Vector<>();
-		result.add("ID");
+
+		result.add("Product ID");
 		result.add("Name");
 		result.add("Desc");
-		result.add("Spec");
-		result.add("price");
-		result.add("amount");
-		result.add("orderNum");
+		result.add("Specs");
+		result.add("Price");
+		result.add("Stock");
 
 		return result;
 
 	}
 
+	public static Vector<String> getOrderColumns() {
+		Vector<String> result = new Vector<>();
+
+		result.add("Product ID");
+		result.add("Name");
+		result.add("Desc");
+		result.add("Specs");
+		result.add("Price");
+
+		return result;
+
+	}
+
+	public String toString() {
+		return id + "," + name + "," + desc + "," + spec + ", ";
+	}
 }

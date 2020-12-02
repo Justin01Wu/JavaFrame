@@ -1,3 +1,4 @@
-1, Iphone11, Iphone11 the latest iphone,  64gb, 12.34d, 14
-2, XPS13, Dell XPS 11 desktop,16GB, 899.99d, 24
-3, Bao, Bao,		     Xiao, 99999999.99d, 1
+1, Iphone11, Iphone11 the latest Iphone,  64gb, 12.34d, 14
+2, XPS11, Dell XPS 11 desktop,16GB, 899.99d, 24
+3, Hope diamond, Biggest diamond in the world, 6000 carats, 999999.99d, 1 
+4, XPS13, Dell XPS 13 desktop,16GB, 899.99d, 11 
