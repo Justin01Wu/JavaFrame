@@ -22,8 +22,10 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 //  https://wstutorial.com/misc/jwt-java-public-key-rsa.html
 //  https://www.novixys.com/blog/how-to-generate-rsa-keys-java/
 public class RSAToken {
-	// RSAToken has a big benefit, it has public key inside token, so client can verify it without security
-	
+	// RSAToken has a big benefit, it has public key inside token, so client can verify it without secret	
+	// Also client can get public key from issuer on OpenId specification:  https://ldapwiki.com/wiki/Openid-configuration
+	// Above ways are not safe way, because other people can create their own RSA key and pass it to you.
+	// So usually it must combine with white list	
 	public static void main(String[] args) throws Exception {
 
 		KeyPair kp = createRSAPair();
