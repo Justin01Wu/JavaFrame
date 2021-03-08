@@ -29,7 +29,7 @@ public class TestPreferences {
 		
 		Date now = new Date();
 		prefs.putLong("lastRunTime", now.getTime());	
-		// it will be saved into windows registry if it is on windows platform
+		// it will be saved into windows registry Computer\HKEY_CURRENT_USER\Software\JavaSoft\Prefs if it is on windows platform
 		
 	}
 	
