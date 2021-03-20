@@ -14,9 +14,6 @@ Tips
 ```
 
 
-
-
-
 ## Java Tips
 
 
