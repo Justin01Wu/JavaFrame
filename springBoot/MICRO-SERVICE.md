@@ -9,7 +9,7 @@ So I mainly discuss drawbacks here:
 
 - How do you know an application is too big to be a monolithic? 
   Many applications are severely hurt by bad designs, bad code quality, unclear requirement, unclear road map, wrong technical direction. 
-  They are cheated that the micro-service can solve maintainance issues
+  They are cheated that the micro-service can solve maintenance issues
 - We had RPC, Web service, RMI , SOA and Corba before, why do so many people think micro-service is the silver bullet?
 - Heterogeneous environment is our difficulties, they usually come from companies merging. 
    But now people used micro-service to open Pandora's box: 
@@ -17,7 +17,7 @@ So I mainly discuss drawbacks here:
    https://blog.overops.com/5-ways-to-not-f-up-your-microservices-in-production/
 - How to manage the array of Microservices?
    We have 10 Micro-Services, We have QA, Dev, UAT,and Prod. 
-   so we need to manage 40 Micro-Service instances which is risky: 
+   so we need to manage 40 Micro-Service instances which is risk: 
    which code will be merged into which branch of which services and deploy to where
 - Strategy question: 
    I found many good questions on micro-services in a few days, 
