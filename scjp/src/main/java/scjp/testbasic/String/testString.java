@@ -1,5 +1,5 @@
 
-//String has no length limition, But if String too big and run out of JVM memory
+//String has no length limitation, But if String too big and run out of JVM memory
 // it will throw a java.lang.OutOfMemoryError
 
 package scjp.testbasic.String;

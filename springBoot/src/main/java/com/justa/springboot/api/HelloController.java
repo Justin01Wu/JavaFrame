@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.justa.springboot.AppConfig;
 import com.justa.springboot.model.ComplexBean;
 import com.justa.springboot.model.Greeting;
 
@@ -23,6 +24,9 @@ public class HelloController {
 	private ComplexBean bean;
 	
 	@Autowired
+	private AppConfig config;
+	
+	@Autowired
 	public HelloController(	MeterRegistry meterRegistry) {
 		this.meterRegistry = meterRegistry;
 		
@@ -34,13 +38,13 @@ public class HelloController {
 
   @RequestMapping("/api/greeting")
   public String greeting() {
-    return "Greetings from Spring Boot!";
+    return "Greetings from Spring Boot! name=" + config.getName();
   }
   
   @RequestMapping("/api/greeting2")
   //@ResponseBody
   public Greeting greeting2() {
-    return new Greeting(1, "greeting2");
+    return new Greeting(1, "greeting2", config.getRange());
  
   }
   

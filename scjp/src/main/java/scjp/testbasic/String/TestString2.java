@@ -24,24 +24,26 @@ public class TestString2 {
         
         if (x1 == y1) {
             System.out.println("x1==y1");
+        } else {
+        	System.out.println("x1 != y1");
         }
         
         if (x1.equals(y1)) {
             System.out.println("x1 equals y1");
         }
         
-        String x2 =new String("String1");
+        String x2 = new String("String1");
         String y2 = new String("String1");
         
         if (x2 == y2) {
             System.out.println("x2==y2");
+        }else {
+        	System.out.println("x2 != y2");
         }
         
         if (x2.equals(y2)) {
             System.out.println("x2 equals y2");
         }
-        
-        
         
     }
     
