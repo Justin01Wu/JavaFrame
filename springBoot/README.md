@@ -13,7 +13,6 @@
     2020-03-16 09:55:41.457  INFO 11928 --- [nio-9090-exec-9] com.justa.springboot.db.UserManager      : triggered by user saving: 6
 ```
 + it is heavy to start, so not good for lambda style function, which ask to start quickly with tons of instances.
-+ it automatically restart even only a HTML page is changed
 
 ### Log
 Need to adjust those items for developers:
@@ -112,8 +111,23 @@ For production, you should never do it.
 + @AllArgsConstructor will automatically wire all instance variables without @Autowired when you have only one implementation
 + Spring bean must be marked as stereotype annotations: @Component or its children: @Repository, @Service, @Controller
 	otherwise, it will complain 
-+ Spring used this order to initialize a bean:  constructor(can have parameter), setter, initiMethod(with @PostConstruct) 
+    + @Component is a generic stereotype for any Spring-managed component.
+    + @Service annotates classes at the service layer.
+    + @Repository annotates classes at the persistence layer, which will act as a database repository.	
+    + @Repository’s job is to catch persistence-specific exceptions and re-throw them as one of Spring’s unified unchecked exceptions.
++ Spring used this order to initialize a bean:  constructor(can have parameter), setter, initMethod(with @PostConstruct) 
     By the way, @PostConstruct comes from JSR250
+
+
+### Spring includes 7 different Bean scopes:
+
++ Singleton, this is default scope, it used as Stateless session management
++ Prototype, on Stateful session management 
++ Request, web related
++ Session, web related
++ Global session, similar to the Session scope but it’s only applicable in the context of Portlet based web applications.
++ Application, very similar to the Singleton scope, different for each of the contexts
++ Websocket
 
 ### security
 When security is enabled, many inner URL is blocked, we need to set exceptions for those URL. 

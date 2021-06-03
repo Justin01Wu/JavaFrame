@@ -10,7 +10,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 // from https://spring.io/guides/gs/spring-boot/
-@SpringBootApplication(scanBasePackages = {"com.justa.springboot"})
+
+@SpringBootApplication(  // it combines @Configuration, @ComponentScan and @EnableAutoConfiguration 
+		scanBasePackages = {"com.justa.springboot"}
+		//,exclude = {NoConfig.class}  // try to exclude, but failed, TODO: fix it
+		// https://www.baeldung.com/spring-data-disable-auto-config   
+		// can replace with spring.autoconfigure.exclude in config file
+		)
 @EnableScheduling
 public class Application {
 

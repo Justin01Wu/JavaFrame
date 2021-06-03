@@ -8,5 +8,6 @@ import org.springframework.context.annotation.PropertySource;
 // this is global, will affect the whole application
 // will load compliance.user.list from application firstly, then load from service.properties if didn't find it 
 public class AppConfig {
+	// in this way, you can centralize config 
 
 }
