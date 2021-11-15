@@ -8,7 +8,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-// test custimized converter
+// test customized converter
 public class CustomizedConverter {
 	
 	public static void main(String[] args) throws MalformedURLException {
