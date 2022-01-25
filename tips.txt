@@ -2,7 +2,7 @@
     search files with string DnfEDMLocationAccountMBean.class under a folder(include all jars) 
 	forfiles /S /M *.jar /C "cmd /c jar -tvf @file | findstr /C:"DnfEDMLocationAccountMBean.class" && echo @path"
 	
-	create a symbolic link for the folder:
+	create a symbolic link for the folder :
 	mklink /J mylink C:\samples\javascript
 	
 	you can mock a static method without declare static in jmockit
