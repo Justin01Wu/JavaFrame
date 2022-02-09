@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.justa.springboot.db.Contract2Repository;
 import com.justa.springboot.model.Contract2;
+import com.justa.springboot.model.ContractInfoExt;
 
 @Controller 
 @RequestMapping(path = "/api/program/") 
@@ -25,6 +26,14 @@ public class Contract2Controller {
 			) {
 			
 		List<Contract2> result = cRepo.getContractsByProgramId(programId);
+		return result;
+	}
+	@GetMapping(path = "{programId}/fullContracts")
+	public @ResponseBody List<ContractInfoExt> getFullContractsByProgramId(
+			@PathVariable("programId") Integer programId
+			) {
+			
+		List<ContractInfoExt> result = cRepo.getFullContractsByProgramId(programId);
 		return result;
 	}
 }

@@ -5,20 +5,23 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Contract2 {
+public class Contract2 implements ContractInfo{
 
 	@Id
-	private Integer id;
+	private Integer id;	
+	
 	private Integer programId;
 
 	@Column(length = 250)
 	private String name;
-	private Integer parentId;
-	private Character type;
 	
-	@Column(name = "event_limit")
-	private double eventLimit;
+	
+	private Integer parentId;
+	private Character type;	
+	
+	private Double eventLimit;
 
+	@Override
 	public Integer getId() {
 		return id;
 	}
@@ -27,6 +30,7 @@ public class Contract2 {
 		this.id = id;
 	}
 
+	@Override
 	public Integer getProgramId() {
 		return programId;
 	}
@@ -35,6 +39,7 @@ public class Contract2 {
 		this.programId = programId;
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -43,6 +48,7 @@ public class Contract2 {
 		this.name = name;
 	}
 
+	@Override
 	public Integer getParentId() {
 		return parentId;
 	}
@@ -51,6 +57,7 @@ public class Contract2 {
 		this.parentId = parentId;
 	}
 
+	@Override
 	public Character getType() {
 		return type;
 	}
@@ -59,11 +66,12 @@ public class Contract2 {
 		this.type = type;
 	}
 
-	public double getEventLimit() {
+	@Override
+	public Double getEventLimit() {
 		return eventLimit;
 	}
 
-	public void setEventLimit(double eventLimit) {
+	public void setEventLimit(Double eventLimit) {
 		this.eventLimit = eventLimit;
 	}
 

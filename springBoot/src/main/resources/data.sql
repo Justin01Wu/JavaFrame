@@ -6,11 +6,11 @@ INSERT INTO user (name, email, position) VALUES
   ('Rita', 'rita@hotmail.com', 'M'),
   ('Yan', 'None', 'Q');
   
-INSERT INTO test_bean (ind_orientation, gender) VALUES
+INSERT INTO TestBean (indOrientation, gender) VALUES
   ('L', 10),
   ('P', 20);
   
-INSERT INTO contract2 (id, program_id, name, type, event_limit, parent_id ) VALUES
+INSERT INTO contract2 (id, programId, name, type, eventLimit, parentId ) VALUES
   (1, 398, 'L1A', null, 2000, null ),
   (2, 398, 'L2A', 'C', 	3000, 1),
   (3, 398, 'L2B', 'I', 	3500, 1),
