@@ -15,7 +15,7 @@
 		<spring.version>4.3.25.RELEASE</spring.version>
 		
 		<!-- Hibernate / JPA -->
-		<hibernate.version>4.3.5.Final</hibernate.version>
+		<hibernate.version>5.4.24.Final</hibernate.version>
 	
 		
 	</properties>
