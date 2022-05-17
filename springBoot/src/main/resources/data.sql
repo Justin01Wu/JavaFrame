@@ -14,4 +14,4 @@ INSERT INTO contract2 (id, programId, name, type, eventLimit, parentId ) VALUES
   (1, 398, 'L1A', null, 2000, null ),
   (2, 398, 'L2A', 'C', 	3000, 1),
   (3, 398, 'L2B', 'I', 	3500, 1),
-  (4, 398, 'L3A', 'C', 	4000, 2);
+  (4, 398, 'L3A', 'I', 	4000, 2);

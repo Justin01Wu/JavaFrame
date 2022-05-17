@@ -1,21 +1,21 @@
 package com.justin.test.hibernate.bean;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CategorizedItemTest {
 	
-	private static Log log = LogFactory.getLog(CategorizedItemTest.class);
+	private static Logger log = LoggerFactory.getLogger(CategorizedItemTest.class);
 	
 	private static EntityManagerFactory factory;
 	private EntityManager entityManager;

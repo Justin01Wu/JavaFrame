@@ -10,11 +10,15 @@ import javax.persistence.Persistence;
 
 import org.hibernate.Session;
 import org.hibernate.jdbc.Work;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.justin.test.hibernate.bean.Department;
 import com.justin.test.hibernate.bean.Employee;
 
 public class App {
+	
+	private static final Logger log = LoggerFactory.getLogger(App.class);
 	
 	private static EntityManagerFactory factory = Persistence.createEntityManagerFactory("thePersistenceUnit");
 	
@@ -34,11 +38,11 @@ public class App {
         
 		Department department = new Department("hr");
 		
-		System.out.println(department.getId());
+		log.info(department.getId().toString());
 		
 		entityManager.persist(department);
 		
-		System.out.println(department.getId());
+		log.info(department.getId().toString());
 		
 
 		Employee employee = new Employee("simple employee", department);
@@ -71,7 +75,7 @@ public class App {
 		
 		entityManager.getTransaction().commit();
 		
-		System.out.println("done: insert department from WORK");
+		log.info("done: insert department from WORK");
 		
 		entityManager.close();
 		
@@ -80,7 +84,7 @@ public class App {
 	
     private static void jdbcInsertDept( Connection conn) throws SQLException {
     	
-    	System.out.println("insert department from WORK...");
+    	log.info("insert department from WORK...");
     	
     	String sql = "INSERT INTO department ( NAME) VALUES ( ?)";
 		PreparedStatement ps = conn.prepareStatement(sql);

@@ -16,18 +16,18 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class EmployeeTest {
 	
-	private static Log log = LogFactory.getLog(EmployeeTest.class);
+	private static Logger log = LoggerFactory.getLogger(EmployeeTest.class);
 	
 	private static EntityManagerFactory factory;
 	private EntityManager entityManager;
