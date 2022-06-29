@@ -38,14 +38,11 @@ public class AppTest
 	
 	//@Test
 	public void a_value_can_be_updated(){
-
-
-
 	    
 	    System.out.println(originalJson);
 	    JsonNode updatedJson = JsonPath.using(configuration).parse(originalJson)
 	    		.set("$.session.name", "__newValueA")
-	    		//.add("$.session2", "__newValueB")
+	    		//.add("$.session2", "__newValueB")  // this will throw PathNotFoundException
 	    		.json();	    
 
 	    System.out.println(updatedJson.toPrettyString());
