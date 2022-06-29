@@ -1,12 +1,12 @@
 package com.justa;
 
+import org.junit.Test;
+
+import com.fasterxml.jackson.databind.JsonNode;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
-import com.jayway.jsonpath.internal.filter.ValueNodes.JsonNode;
 import com.jayway.jsonpath.spi.json.JacksonJsonNodeJsonProvider;
 import com.jayway.jsonpath.spi.mapper.JacksonMappingProvider;
-
-import junit.framework.Test;
 
 /**
  * Unit test for simple App.
