@@ -15,6 +15,7 @@
 		<module>avro</module>
 		<module>ews</module>
 		<module>jackson</module>
+		<module>jasonPath</module>
 		<module>jjwt</module>
 		<module>json</module>
 		<module>kafka</module>
