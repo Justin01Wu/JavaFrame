@@ -57,8 +57,8 @@ public class AppTest
 		System.out.println(originalJson);
 		JSONObject json = (JSONObject)new JSONParser(JSONParser.DEFAULT_PERMISSIVE_MODE).parse(originalJson);
 		JSONObject session = JsonPath.read(json, "$.session");
-		session.appendField("new__field", "new__value");
-		session.put("name", "Justin2");
+		session.appendField("new__field", "new__value");   		// add a new field
+		session.put("name", "Justin2");   						// update an existing field
 		System.out.println(JsonFormatter.prettyPrint(json.toJSONString()) );
 		
 	}
