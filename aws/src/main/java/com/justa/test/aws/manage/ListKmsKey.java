@@ -29,6 +29,8 @@ public class ListKmsKey {
 			System.out.println("manager = "  + dResult.getKeyMetadata().getKeyManager());
 			System.out.println("enabled = "  + dResult.getKeyMetadata().getEnabled());
 			System.out.println("created = "  + dResult.getKeyMetadata().getCreationDate());
+			
+			System.out.println();	
 		}
 		
 

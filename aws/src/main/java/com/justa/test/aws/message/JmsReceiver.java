@@ -41,9 +41,9 @@ public class JmsReceiver {
 			while (true) {
 				System.out.println("Waiting for messages");
 				// Wait 1 minute for a message
-				Message message = consumer.receive(TimeUnit.SECONDS.toMillis(10));
+				Message message = consumer.receive(TimeUnit.SECONDS.toMillis(20));
 				if (message == null) {
-					System.out.println("Shutting down after 10 seconds of silence");
+					System.out.println("Shutting down after 20 seconds of silence");
 					break;
 				}
 				System.out.println("message: expired on " + new Date(message.getJMSExpiration()));
