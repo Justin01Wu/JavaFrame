@@ -27,6 +27,7 @@
 -->		
 
 <!--  for SQL server -->
+<!-- 
 		<properties>        	
 			<property name="connection.driver_class" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 			<property name="hibernate.connection.url" value="jdbc:sqlserver://CAVCDBDEV01:1433;databaseName=Justin_test" />
@@ -36,6 +37,18 @@
 			<property name="hibernate.connection.password" value ="vcapstest" />
 			<property name="hibernate.show_sql" value="true" />
 		</properties>
+	 -->
+	 	
+<!--  for H2 -->
+		<properties>        	
+			<property name="connection.driver_class" value="org.h2.Driver" />
+			<property name="hibernate.connection.url" value="jdbc:h2:mem:testdb" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
+			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
+			<property name="hibernate.connection.username" value="sa" />
+			<property name="hibernate.connection.password" value ="" />
+			<property name="hibernate.show_sql" value="true" />
+		</properties>		
 		
 		
 	</persistence-unit>

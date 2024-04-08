@@ -3,9 +3,13 @@ package com.justin.test.hibernate;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** SessionFactory utils */
 public class HibernateUtil {
+	
+	private static final Logger log = LoggerFactory.getLogger(HibernateUtil.class);
 
 	private static final SessionFactory sessionFactory = buildSessionFactory();
 
@@ -18,7 +22,7 @@ public class HibernateUtil {
             SessionFactory sessionFactory = configuration.buildSessionFactory(ssrb.build());
             return sessionFactory;
 		} catch (Throwable ex) {
-			System.err.println("SessionFactory creation failed." + ex);
+			log.error("SessionFactory creation failed." + ex);
 			throw new ExceptionInInitializerError(ex);
 		}
 	}

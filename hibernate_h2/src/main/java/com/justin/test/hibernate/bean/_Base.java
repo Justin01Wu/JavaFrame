@@ -20,14 +20,14 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.persistence.Version;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 @MappedSuperclass
 public abstract class _Base implements java.io.Serializable {	
 
-	private static Log log = LogFactory.getLog(_Base.class);
+	private static Logger log = LoggerFactory.getLogger(_Base.class);
 	
 	private static final long serialVersionUID = -2850861829678496203L;
 	

@@ -11,14 +11,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.jdbc.Work;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.justin.test.hibernate.HibernateUtil;
 
@@ -29,7 +29,7 @@ import com.justin.test.hibernate.HibernateUtil;
  */
 public class DepartmentTest {
 	
-	private static Log log = LogFactory.getLog(DepartmentTest.class);
+	private static Logger log = LoggerFactory.getLogger(DepartmentTest.class);
 	
 	private static EntityManagerFactory factory;
 	private EntityManager entityManager;
