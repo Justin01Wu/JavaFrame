@@ -12,7 +12,7 @@ public class TestStringBuffer{
        System.out.println("JVM IS USING MEMORY:"+
                           (Runtime.getRuntime().totalMemory()/1024/1024)+
                           "M");
-       Runtime.getRuntime().traceMethodCalls(true);
+       //Runtime.getRuntime().traceMethodCalls(true);
 
        int count = 0;
        while(true)
