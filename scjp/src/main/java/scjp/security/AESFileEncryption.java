@@ -11,7 +11,6 @@ import java.security.spec.KeySpec;
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
-import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
@@ -19,35 +18,54 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 
 public class AESFileEncryption {
-	private static final String ALGORITHM = "AES";
 	private static final String TRANSFORMATION = "AES/CBC/PKCS5Padding"; // CBC mode with PKCS5Padding
+	private static final int IV_LENGTH = 16;
 
-	public static void encryptFile(File inputFile, File outputFile, SecretKey secretKey, IvParameterSpec iv)
-			throws Exception {
+	public static void encryptFile(File inputFile, File outputFile, SecretKey secretKey) throws Exception {
+		SecureRandom secureRandom = new SecureRandom();
+		byte[] ivBytes = new byte[IV_LENGTH];
+		secureRandom.nextBytes(ivBytes);
+		IvParameterSpec iv = new IvParameterSpec(ivBytes);
+
 		Cipher cipher = Cipher.getInstance(TRANSFORMATION);
 		cipher.init(Cipher.ENCRYPT_MODE, secretKey, iv);
 
 		try (FileInputStream inputStream = new FileInputStream(inputFile);
-				CipherOutputStream outputStream = new CipherOutputStream(new FileOutputStream(outputFile), cipher)) {
-			byte[] buffer = new byte[1024];
-			int bytesRead;
-			while ((bytesRead = inputStream.read(buffer)) != -1) {
-				outputStream.write(buffer, 0, bytesRead);
+				FileOutputStream fileOutputStream = new FileOutputStream(outputFile)) {
+
+			// Prefix ciphertext with IV so decryption can reconstruct exact cipher state.
+			fileOutputStream.write(ivBytes);
+
+			try (CipherOutputStream outputStream = new CipherOutputStream(fileOutputStream, cipher)) {
+				byte[] buffer = new byte[1024];
+				int bytesRead;
+				while ((bytesRead = inputStream.read(buffer)) != -1) {
+					outputStream.write(buffer, 0, bytesRead);
+				}
 			}
 		}
 	}
 
-	public static void decryptFile(File inputFile, File outputFile, SecretKey secretKey, IvParameterSpec iv)
-			throws Exception {
-		Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-		cipher.init(Cipher.DECRYPT_MODE, secretKey, iv);
+	public static void decryptFile(File inputFile, File outputFile, SecretKey secretKey) throws Exception {
+		byte[] ivBytes = new byte[IV_LENGTH];
 
-		try (CipherInputStream inputStream = new CipherInputStream(new FileInputStream(inputFile), cipher);
-				FileOutputStream outputStream = new FileOutputStream(outputFile)) {
-			byte[] buffer = new byte[1024];
-			int bytesRead;
-			while ((bytesRead = inputStream.read(buffer)) != -1) {
-				outputStream.write(buffer, 0, bytesRead);
+		try (FileInputStream fileInputStream = new FileInputStream(inputFile)) {
+			int ivRead = fileInputStream.read(ivBytes);
+			if (ivRead != IV_LENGTH) {
+				throw new IllegalArgumentException("Invalid encrypted file: missing IV header.");
+			}
+
+			IvParameterSpec iv = new IvParameterSpec(ivBytes);
+			Cipher cipher = Cipher.getInstance(TRANSFORMATION);
+			cipher.init(Cipher.DECRYPT_MODE, secretKey, iv);
+
+			try (CipherInputStream inputStream = new CipherInputStream(fileInputStream, cipher);
+					FileOutputStream outputStream = new FileOutputStream(outputFile)) {
+				byte[] buffer = new byte[1024];
+				int bytesRead;
+				while ((bytesRead = inputStream.read(buffer)) != -1) {
+					outputStream.write(buffer, 0, bytesRead);
+				}
 			}
 		}
 	}
@@ -59,17 +77,8 @@ public class AESFileEncryption {
 			return;
 		}
 		try {
-			// 1. Generate AES Key
-			KeyGenerator keyGen = KeyGenerator.getInstance(ALGORITHM);
-			keyGen.init(256); // 128, 192, or 256 bits			
-			
+			// 1. Build AES key from the provided password.
 			SecretKey secretKey = getKeyFromPassword(args[2], "mySalt123!");
-
-			// 2. Generate IV (Initialization Vector)
-			SecureRandom secureRandom = new SecureRandom();
-			byte[] ivBytes = new byte[16]; // 16 bytes for AES block size
-			secureRandom.nextBytes(ivBytes);
-			IvParameterSpec iv = new IvParameterSpec(ivBytes);
 
 			// 3. Define input file
 			File originalFile = new File(args[1]);
@@ -86,12 +95,12 @@ public class AESFileEncryption {
 				File encryptedFile = new File(args[1] + ".enc");
 
 				System.out.println("Encrypting file...");
-				encryptFile(originalFile, encryptedFile, secretKey, iv);
+				encryptFile(originalFile, encryptedFile, secretKey);
 				System.out.println("File encrypted successfully:" + encryptedFile.getAbsolutePath());
 			} else if (args[0].equals("D")) {
 				File decryptedFile = new File(args[1] + ".dec");
 				System.out.println("Decrypting file...");
-				decryptFile(originalFile, decryptedFile, secretKey, iv);
+				decryptFile(originalFile, decryptedFile, secretKey);
 				System.out.println("File decrypted successfully: " + decryptedFile.getAbsolutePath());
 			} else {
 				System.out.println("Invalid operation. Use 'E' for encrypt or 'D' for decrypt.");
