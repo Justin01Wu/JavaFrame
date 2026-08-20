@@ -11,7 +11,7 @@ public class JSFUtilTest {
 	// A reusable mock-up class to be applied in specific tests.
 	public static final class JSFUtilMock extends MockUp<JSFUtil> {
 		
-		@Mock(invocations = 1)
+		@Mock
 		void $init() {   // this line means we mock constructor JSFUtil(){}
 			
 		}

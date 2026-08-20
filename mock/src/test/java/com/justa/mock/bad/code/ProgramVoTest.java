@@ -1,10 +1,11 @@
 package com.justa.mock.bad.code;
 
 import static org.junit.Assert.assertEquals;
-import mockit.Deencapsulation;
 import mockit.Invocation;
 import mockit.Mock;
 import mockit.MockUp;
+
+import java.lang.reflect.Field;
 
 import org.junit.Test;
 
@@ -21,7 +22,7 @@ public final class ProgramVoTest {
 			System.out.println("Static is bypassed");
 		}   
 		
-		@Mock(invocations = 1)
+		@Mock
 		void $init(Invocation inv) {   // this line means we mock constructor ProgramVo(){}
 			System.out.println("default constructor is bypassed");
 			ProgramVo programVo = inv.getInvokedInstance();
@@ -29,7 +30,7 @@ public final class ProgramVoTest {
 			
 			new JSFUtilMock();  // start mock magic 
 			JSFUtil jSFUtil = new JSFUtil();
-	        Deencapsulation.setField( programVo, "jsfUtils", jSFUtil);
+	        injectField(programVo, "jsfUtils", jSFUtil);
 	        System.out.println("   ProgramVo ->  injected jSFUtil");
 
 		}   
@@ -37,6 +38,16 @@ public final class ProgramVoTest {
 		@Mock
 		public String getName() {
 			return "name6789";
+		}
+
+		private static void injectField(Object target, String fieldName, Object value) {
+			try {
+				Field field = target.getClass().getDeclaredField(fieldName);
+				field.setAccessible(true);
+				field.set(target, value);
+			} catch (ReflectiveOperationException e) {
+				throw new RuntimeException("Failed to set field '" + fieldName + "'", e);
+			}
 		}
 	}
 
@@ -72,4 +83,3 @@ public final class ProgramVoTest {
 
 
 }
-
