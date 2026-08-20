@@ -9,7 +9,7 @@
 	<session-factory>
 		<property name="hibernate.connection.driver_class">org.h2.Driver</property>
 		
-		<property name="hibernate.connection.url">jdbc:h2:mem:mytest</property>
+		<property name="hibernate.connection.url">jdbc:h2:mem:mytest;MODE=LEGACY</property>
 		<!--  connect to a in memory database, because of H2 feature, you don't need to install db sever or create db before do this -->
 		
 		<property name="hibernate.connection.username">sa</property>

@@ -42,7 +42,7 @@
 <!--  for H2 -->
 		<properties>        	
 			<property name="connection.driver_class" value="org.h2.Driver" />
-			<property name="hibernate.connection.url" value="jdbc:h2:mem:testdb" />
+			<property name="hibernate.connection.url" value="jdbc:h2:mem:testdb;MODE=LEGACY" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
 			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
 			<property name="hibernate.connection.username" value="sa" />
