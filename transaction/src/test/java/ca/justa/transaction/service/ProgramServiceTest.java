@@ -44,7 +44,7 @@ public class ProgramServiceTest {
         Class.forName("org.h2.Driver");
         
         // connect to an in-memory database, because of H2 feature, you don't need to install db sever or create db before do this 
-        Connection con = DriverManager.getConnection("jdbc:h2:mem:unittest;MODE=MSSQLServer;DB_CLOSE_DELAY=-1", "sa", "");
+		Connection con = DriverManager.getConnection("jdbc:h2:mem:unittest;MODE=LEGACY;DB_CLOSE_DELAY=-1", "sa", "");
         
         //  By default, closing the last connection to a database closes the database. 
         // For an in-memory database, this means the content is lost. 
@@ -55,7 +55,8 @@ public class ProgramServiceTest {
         
         
         // here you create the table
-        String s = "CREATE TABLE program (id INTEGER, name char(50))";
+		// H2 2.x preserves CHAR padding more strictly; VARCHAR avoids trailing-space comparison issues.
+		String s = "CREATE TABLE program (id INTEGER, name varchar(50))";
         Statement sst = con.createStatement();
         sst.executeUpdate(s); 
         
@@ -268,7 +269,7 @@ public class ProgramServiceTest {
 		
 
 			Program program = programService.getProgramById(99999);
-			assertEquals(program.getName(), "from work gghjas");
+			assertEquals("from work gghjas", program.getName());
 	}
 		
 
