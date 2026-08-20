@@ -123,7 +123,7 @@ public class ProgramServiceTest {
 		try{
 			programService.addProgramAndContract(program, contract);
 			fail("addProgramAndContract should throw DataException ");
-		}catch(DataException|DataIntegrityViolationException|PersistenceException e){
+		}catch(DataIntegrityViolationException|PersistenceException e){
 			System.out.println(e.getMessage());
 		}
 		
