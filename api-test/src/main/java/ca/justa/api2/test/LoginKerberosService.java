@@ -4,7 +4,7 @@ import javax.security.auth.Subject;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
-import javax.xml.bind.DatatypeConverter;
+import java.util.Base64;
 
 import org.apache.http.client.CookieStore;
 
@@ -20,7 +20,7 @@ public class LoginKerberosService {
 	
 	public static void login(String user, String passwordBase64, final String url, final CookieStore httpCookieStore) throws LoginException {
 		
-        byte[] decodedBytes = DatatypeConverter.parseBase64Binary(passwordBase64);
+		byte[] decodedBytes = Base64.getDecoder().decode(passwordBase64);
         
         String password = new String(decodedBytes); // my windows domain password
         //password="wrong password";
