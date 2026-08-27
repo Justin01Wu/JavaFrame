@@ -8,6 +8,12 @@
 	<version>1.0</version>
 	<name>lambda-example</name>
 
+	<properties>
+		<!-- Make file encoding explicit for IDE + Maven builds -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	</properties>
+
 	<dependencies>
 	
 		<dependency>

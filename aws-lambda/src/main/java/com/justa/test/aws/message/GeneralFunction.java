@@ -17,7 +17,7 @@ public class GeneralFunction implements RequestHandler<MyDataDto, MyDataDto> {
 		// this will be null because it is @JsonIgnore field
 		
 		Date now = new Date();
-		input.setValue( new Double(now.getTime()));
+		input.setValue( Double.valueOf(now.getTime()));
 		input.setCreatedAt(now);
 		input.setDesc("my desc234");
 		

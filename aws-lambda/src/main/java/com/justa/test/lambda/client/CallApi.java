@@ -4,8 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.security.cert.X509Certificate;
@@ -26,7 +26,7 @@ public class CallApi {
 		initHttpsWithoutValidation();  // skip invalid ssl certificate validation 
 		
 		String apiUrl = "https://bod76cqgu4.execute-api.us-east-1.amazonaws.com/default/returnMyName";
-		URL url = new URL(apiUrl);
+		URL url = URI.create(apiUrl).toURL();
 		System.out.println("call api : "+ apiUrl);
 		
 		// setup connection
