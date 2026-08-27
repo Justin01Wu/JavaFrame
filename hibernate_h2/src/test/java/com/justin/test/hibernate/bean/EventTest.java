@@ -6,8 +6,6 @@ import org.hibernate.Session;
 import org.junit.Test;
 
 import com.justin.test.hibernate.HibernateUtil;
-import com.justin.test.hibernate.bean.Event;
-import com.justin.test.hibernate.bean.EventTypeEnum;
 
 /**
  * test Event bean , see hibernate.cfg.xml for details 
